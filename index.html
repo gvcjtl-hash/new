@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sterling & Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Barlow+Condensed:wght@500;600;700&family=Special+Elite&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* Sterling & Vale — front door, matching the same visual system as every
+     other page (topbar/grain/paper-card depth). No HTML ids/JS changed. */
+  :root{
+    --red:#B84E28;--red-dark:#8A3A1D;--red-bright:#D9713F;--red-glow:rgba(184,78,40,.28);
+    --gold:#D79A2C;--gold-dark:#A87816;--teal:#2F6B67;--teal-dark:#1D4F4F;
+    --ink:#2B211A;--ink-2:#362B21;--gray:#E4D9BE;--gray-soft:#F3E9D2;--gray-line:#D3C4A0;
+    --muted:#6B5D4A;--white:#FBF6EA;--good:#2F6B67;--bad:#A32B2B;
+    --wood-light:#8a6b45;--wood-dark:#5C4230;
+    --paper-card:linear-gradient(160deg,#FDF9EE 0%,#F6EED9 45%,#EDDFBE 100%);
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Barlow', Georgia, serif;
+    color: var(--ink);
+    background: var(--gray-soft);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2 { font-family: 'Yeseva One', Georgia, serif; font-weight: 400; }
+
+  .grain-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
+
+  .topbar{height:56px;display:flex;align-items:center;padding:0 20px;position:relative;z-index:2;
+    background:repeating-linear-gradient(179deg,rgba(30,18,8,.16) 0px,rgba(30,18,8,.16) 1px,transparent 2px,transparent 5px),linear-gradient(100deg,var(--wood-light),var(--wood-dark) 60%,var(--wood-light));
+    border-bottom:3px solid var(--gold-dark);box-shadow:0 3px 10px rgba(43,26,13,.3)}
+  .topbar::before,.topbar::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:radial-gradient(circle at 32% 30%,#f2d488,var(--gold-dark) 70%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5),inset 0 0 1px rgba(255,255,255,.4)}
+  .topbar::before{left:8px}
+  .topbar::after{right:8px}
+  .topbar .mark{font-family:'Special Elite',Courier,monospace;color:var(--gold);font-size:.9rem;letter-spacing:1.5px}
+  .topbar .cx{margin-left:auto;font-family:'Special Elite',Courier,monospace;font-size:.75rem;color:rgba(251,246,234,.7)}
+
+  .hero-banner{position:fixed;top:56px;left:0;right:0;bottom:0;overflow:hidden;z-index:0}
+  .hero-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+  .hero-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,14,8,.15) 0%,rgba(20,14,8,.05) 30%,rgba(20,14,8,.25) 100%)}
+
+  .content-wrap{position:relative;z-index:1;min-height:calc(100vh - 56px);display:flex;align-items:center;justify-content:center;padding:34px 20px}
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: var(--paper-card);
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    padding: 30px 30px 26px;
+    box-shadow: 0 1px 1px rgba(43,33,26,.18),0 6px 14px rgba(43,33,26,.28),0 14px 28px rgba(43,33,26,.16),8px 8px 0 var(--ink);
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: -8px; left: 32px;
+    width: 26px; height: 8px;
+    border-radius: 2px;
+    background: linear-gradient(180deg,#f2d488,var(--gold-dark) 75%,#7a5a12);
+    box-shadow: 0 1px 2px rgba(0,0,0,.5);
+  }
+
+  .dana-intro{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .dana-intro img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--gold-dark);box-shadow:2px 2px 0 var(--ink);flex:0 0 auto}
+  .dana-intro p{font-family:'Special Elite',Courier,monospace;font-size:.8rem;line-height:1.5;color:var(--ink-2);margin:0}
+  .dana-intro p b{color:var(--red-dark)}
+
+  h1 {
+    font-size: 1.7rem;
+    letter-spacing: 0.01em;
+    margin: 0 0 4px;
+    color: var(--red-dark);
+  }
+  .subhead {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.45;
+  }
+  .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+  .tab {
+    flex: 1;
+    padding: 11px 8px;
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 0.82rem;
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .tab:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+  .tab:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+  .tab.active {
+    background: var(--red);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  label {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin: 14px 0 4px;
+  }
+  input {
+    width: 100%;
+    padding: 11px 12px;
+    background: var(--white);
+    border: 2px solid var(--gray-line);
+    border-radius: 3px;
+    color: var(--ink);
+    font-family: 'Barlow', Georgia, serif;
+    font-size: 0.95rem;
+  }
+  input:focus { outline: none; border-color: var(--red); }
+  .hint { font-size: 0.75rem; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+  button.primary {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    font-family: 'Special Elite', Courier, monospace;
+    letter-spacing: .5px;
+    background: var(--red);
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    color: var(--white);
+    font-size: 0.92rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s, box-shadow .12s;
+  }
+  button.primary:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+  button.primary:active:not(:disabled) { transform: translate(4px,4px); box-shadow: 0 0 0 var(--ink); }
+  button.primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .msg { margin-top: 14px; font-size: 0.85rem; min-height: 1.2em; font-weight: 600; }
+  .msg.error { color: var(--bad); }
+  .msg.ok { color: var(--good); }
+  .link-btn {
+    background: none; border: none; color: var(--red-dark); text-decoration: underline;
+    cursor: pointer; font-size: 0.8rem; padding: 0; margin-top: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  .signed-in { text-align: center; }
+  .signed-in .codename { font-family: 'Yeseva One', Georgia, serif; color: var(--red-dark); font-size: 1.7rem; margin: 8px 0 24px; }
+  .signed-in button { width: auto; padding: 10px 20px; }
+  .welcome-line { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; color: var(--muted); margin: 0 0 4px; }
+  .resume-box { text-align: left; background: var(--white); border: 2px solid var(--ink); border-radius: 3px; padding: 16px 18px; margin: 0 0 18px; box-shadow: 3px 3px 0 var(--ink); }
+  .resume-box p { margin: 0 0 14px; line-height: 1.5; font-size: .92rem; color: var(--ink-2); }
+  .resume-box .page-code { font-family: 'Special Elite', Courier, monospace; color: var(--red-dark); }
+  .resume-actions { display: flex; flex-direction: column; gap: 10px; }
+  .resume-actions button.primary { margin-top: 0; }
+  button.primary.secondary { background: var(--white); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+  button.primary.secondary:hover:not(:disabled){ background: var(--gray-soft); }
+  .hidden { display: none; }
+
+  .chapters { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 18px; }
+  .chapter-card { position: relative; display: flex; flex-direction: column; text-decoration: none;
+    background: var(--white); border: 2px solid var(--ink); border-radius: 3px;
+    padding: 14px 13px 12px; box-shadow: 3px 3px 0 var(--ink); min-height: 92px;
+    transition: transform .15s var(--ease), box-shadow .15s var(--ease);
+  }
+  .chapter-card:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+  .chapter-card .n { width: 22px; height: 22px; border-radius: 50%;
+    background: radial-gradient(circle at 32% 30%, #f2d488, var(--gold-dark) 70%, #7a5a12);
+    color: #3a2a0a; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,.5), inset 0 1px 1px rgba(255,255,255,.4); margin-bottom: 6px;
+  }
+  .chapter-card h4 { font-size: 0.85rem; color: var(--ink); margin-bottom: 2px; }
+  .chapter-card p { font-size: 0.72rem; color: var(--muted); margin: 0; }
+  .chapter-card.locked { opacity: .5; pointer-events: none; }
+  .chapter-card.locked .n { background: radial-gradient(circle at 32% 30%, #ccc, #999 70%, #777); }
+
+  @media (max-width:560px){
+    .dana-intro{flex-direction:column;text-align:center}
+  }
+</style>
+</head>
+<body>
+<div class="grain-overlay" aria-hidden="true"></div>
+
+<header class="topbar">
+  <span class="mark">STERLING &amp; VALE</span>
+  <span class="cx">Employee Access</span>
+</header>
+
+<div class="hero-banner">
+  <img src="assets/backgrounds/practicefloor-banner.png" alt="The Sterling &amp; Vale agency floor" onerror="this.parentElement.style.display='none'">
+</div>
+
+<div class="content-wrap">
+<div class="card" id="authCard">
+
+  <div id="loggedOutView">
+    <div class="dana-intro">
+      <img src="assets/characters/dana-neutral.png" alt="Dana" onerror="this.parentElement.style.display='none'">
+      <p><b>Dana:</b> Welcome to the agency. New hire, or coming back to the account?</p>
+    </div>
+    <h1>Sterling &amp; Vale</h1>
+    <p class="subhead">Every new hire gets a codename — no real names on file here. Pick a codename you’ll remember, a 4-digit PIN, and a recovery phrase only you know.</p>
+
+    <div class="tabs">
+      <button class="tab" id="tabLogin" onclick="showTab('login')">Returning</button>
+      <button class="tab active" id="tabSignup" onclick="showTab('signup')">New Hire</button>
+    </div>
+
+    <!-- SIGN UP -->
+    <div id="signupForm">
+      <p class="hint" style="margin-top:0;margin-bottom:14px;">Pick a codename (your display name here), a 4-digit PIN, and a recovery phrase you’ll remember if you forget the PIN. No legal name or email.</p>
+      <label for="su_codename">Choose Your Codename</label>
+      <input id="su_codename" type="text" placeholder="e.g. Maverick" autocomplete="off">
+
+      <label for="su_pin">Set a 4-digit PIN</label>
+      <input id="su_pin" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+
+      <label for="su_recovery">Set a Recovery Phrase</label>
+      <input id="su_recovery" type="text" placeholder="Something only you would remember" autocomplete="off">
+      <p class="hint">We don't collect your name, email, or any other identifying information —
+        just this codename, PIN, and recovery phrase, all of which you chose yourself.</p>
+
+      <button class="primary" id="signupBtn" onclick="handleSignup()">Start at Sterling &amp; Vale</button>
+      <div class="msg" id="signupMsg"></div>
+    </div>
+
+    <!-- LOG IN -->
+    <div id="loginForm" class="hidden">
+      <label for="li_codename">Codename</label>
+      <input id="li_codename" type="text" placeholder="e.g. Maverick" autocomplete="off">
+
+      <label for="li_pin">PIN</label>
+      <input id="li_pin" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+
+      <button class="primary" id="loginBtn" type="button" onclick="handleLogin()">Log In</button>
+      <div class="msg" id="loginMsg"></div>
+      <button class="link-btn" onclick="showTab('recovery')">Forgot your PIN?</button>
+    </div>
+
+    <!-- RECOVERY -->
+    <div id="recoveryForm" class="hidden">
+      <label for="rc_codename">Codename</label>
+      <input id="rc_codename" type="text" placeholder="e.g. Maverick" autocomplete="off">
+
+      <label for="rc_recovery">Recovery Phrase</label>
+      <input id="rc_recovery" type="text" placeholder="What you set at signup" autocomplete="off">
+
+      <label for="rc_newpin">New 4-digit PIN</label>
+      <input id="rc_newpin" type="password" inputmode="numeric" maxlength="4" placeholder="••••">
+
+      <button class="primary" id="recoveryBtn" onclick="handleRecovery()">Reset PIN</button>
+      <div class="msg" id="recoveryMsg"></div>
+      <button class="link-btn" onclick="showTab('login')">Back to log in</button>
+    </div>
+  </div>
+
+  <!-- SIGNED-IN STATE -->
+  <div class="signed-in hidden" id="loggedInView">
+    <p class="welcome-line" id="welcomeLine">Welcome back,</p>
+    <div class="codename" id="welcomeCodename">—</div>
+
+    <div class="resume-box hidden" id="resumePrompt">
+      <p id="resumeText">You left off in the replay. Pick up where you stopped?</p>
+      <div class="resume-actions">
+        <button class="primary" type="button" id="resumeYes">Yes — continue there</button>
+        <button class="primary secondary" type="button" id="resumeNo">No — choose a chapter</button>
+      </div>
+    </div>
+
+    <div class="chapters hidden" id="chapterSelect">
+      <a class="chapter-card" href="week1/index.html">
+        <span class="n">1</span>
+        <h4>Integrated Marketing Communications</h4>
+        <p>The model, the mix, the plan.</p>
+      </a>
+      <a class="chapter-card" href="week2/index.html">
+        <span class="n">2</span>
+        <h4>Brand Management</h4>
+        <p>Image, equity, and the shelf.</p>
+      </a>
+      <a class="chapter-card" href="week3/index.html">
+        <span class="n">3</span>
+        <h4>Buyer Behaviors</h4>
+        <p>Search, evaluation, and the buying center.</p>
+      </a>
+      <a class="chapter-card" href="week4/index.html">
+        <span class="n">4</span>
+        <h4>The IMC Planning Process</h4>
+        <p>Research, segments, position, objectives, budget — 1978.</p>
+      </a>
+      <a class="chapter-card" href="week5/index.html">
+        <span class="n">5</span>
+        <h4>Advertising Campaign Management</h4>
+        <p>Theory, spend, agency, brief — 1982. Sam’s last year.</p>
+      </a>
+      <a class="chapter-card" href="week6/index.html">
+        <span class="n">6</span>
+        <h4>Advertising Design</h4>
+        <p>Strategy, appeal, execution, source — 1989. Denise.</p>
+      </a>
+      <a class="chapter-card" href="week7/index.html">
+        <span class="n">7</span>
+        <h4>Traditional Media</h4>
+        <p>Reach, frequency, the mix — 1992. Denise.</p>
+      </a>
+      <a class="chapter-card" href="week8/index.html">
+        <span class="n">8</span>
+        <h4>Digital Marketing</h4>
+        <p>Screens join the mix — 1998. Denise retires.</p>
+      </a>
+      <a class="chapter-card" href="week9/index.html">
+        <span class="n">9</span>
+        <h4>Social Media</h4>
+        <p>The conversation is the medium — 2000. Sang Lee.</p>
+      </a>
+      <a class="chapter-card" href="week10/index.html">
+        <span class="n">10</span>
+        <h4>Alternative Marketing</h4>
+        <p>Buzz, guerrilla, placement — 2003. Sang Lee.</p>
+      </a>
+      <a class="chapter-card" href="week11/index.html">
+        <span class="n">11</span>
+        <h4>Database &amp; Direct</h4>
+        <p>Names, offers, the close — 2008. Sang retires.</p>
+      </a>
+      <a class="chapter-card" href="week12/index.html">
+        <span class="n">12</span>
+        <h4>Sales Promotions</h4>
+        <p>The offer without torching the brand — 2011. Ryan.</p>
+      </a>
+      <a class="chapter-card" href="week13/index.html">
+        <span class="n">13</span>
+        <h4>PR &amp; Sponsorships</h4>
+        <p>Reputation and the unpaid line — 2014. Ryan.</p>
+      </a>
+      <a class="chapter-card" href="week14/index.html">
+        <span class="n">14</span>
+        <h4>Regulations &amp; Ethics</h4>
+        <p>What you can say, what you should — 2017. Beth.</p>
+      </a>
+      <a class="chapter-card" href="week15/index.html">
+        <span class="n">15</span>
+        <h4>Evaluating IMC</h4>
+        <p>Did it work — 2020. Beth.</p>
+      </a>
+      <a class="chapter-card" href="week16/index.html">
+        <span class="n">16</span>
+        <h4>You run the floor</h4>
+        <p>Capstone — 2026. The intern has the keys.</p>
+      </a>
+    </div>
+
+    <button class="primary" style="background:#B84E28;margin-top:16px;" onclick="handleLogout()">Log Out</button>
+  </div>
+
+</div>
+</div>
+
+<script>
+  // Basic UI behavior (tab switching) must never depend on the Supabase
+  // module import succeeding — this always runs.
+  window.showTab = function (which) {
+    document.getElementById('signupForm').classList.toggle('hidden', which !== 'signup')
+    document.getElementById('loginForm').classList.toggle('hidden', which !== 'login')
+    document.getElementById('recoveryForm').classList.toggle('hidden', which !== 'recovery')
+    document.getElementById('tabSignup').classList.toggle('active', which === 'signup')
+    document.getElementById('tabLogin').classList.toggle('active', which === 'login' || which === 'recovery')
+  }
+
+  // Returning visitors (anyone who has completed signup on this browser before)
+  // land on the Returning/login tab by default instead of New Hire.
+  if (localStorage.getItem('sv_hasAccount')) {
+    showTab('login')
+  }
+</script>
+<script type="module">
+  let signUpCodename, signInCodename, signOut, onAuthStateChange, resetPinWithRecovery, loadReplayBookmark, getSession
+  let authReady = false
+
+  function showAuthLoadError(err) {
+    console.error('Supabase client failed to load:', err)
+    const notice = document.createElement('p')
+    notice.id = 'authLoadError'
+    notice.className = 'msg error'
+    notice.style.textAlign = 'center'
+    notice.style.marginBottom = '14px'
+    const onFile = location.protocol === 'file:'
+    notice.textContent = onFile
+      ? 'Sign-in could not load. Open this site through a web server (http://localhost or your Netlify URL), not as a file on disk.'
+      : 'Sign-in could not load (' + (err && err.message ? err.message : 'network error') + '). Check your connection and refresh.'
+    if (!document.getElementById('authLoadError')) {
+      document.getElementById('authCard').prepend(notice)
+    }
+  }
+
+  try {
+    ;({ signUpCodename, signInCodename, signOut, onAuthStateChange, resetPinWithRecovery, loadReplayBookmark, getSession } =
+      await import('./shared/supabase-client.js'))
+    authReady = true
+  } catch (err) {
+    showAuthLoadError(err)
+  }
+
+  function setMsg(id, text, isError) {
+    const el = document.getElementById(id)
+    el.textContent = text
+    el.className = 'msg ' + (isError ? 'error' : 'ok')
+  }
+
+  window.handleSignup = async function () {
+    if (!authReady || !signUpCodename) {
+      setMsg('signupMsg', 'Sign-in is not ready yet. Refresh the page or use http://localhost instead of opening the file directly.', true)
+      return
+    }
+    const codename = document.getElementById('su_codename').value.trim()
+    const pin = document.getElementById('su_pin').value.trim()
+    const recovery = document.getElementById('su_recovery').value.trim()
+
+    if (!codename || !/^\d{4}$/.test(pin) || !recovery) {
+      setMsg('signupMsg', 'Fill in a codename, a 4-digit PIN, and a recovery phrase.', true)
+      return
+    }
+    try {
+      document.getElementById('signupBtn').disabled = true
+      await signUpCodename(codename, pin, recovery)
+      localStorage.setItem('sv_hasAccount', '1')
+      sessionStorage.setItem('sv_welcomeNew', '1')
+      setMsg('signupMsg', 'Welcome aboard — you\'re logged in.', false)
+    } catch (err) {
+      setMsg('signupMsg', err.message, true)
+    } finally {
+      document.getElementById('signupBtn').disabled = false
+    }
+  }
+
+  window.handleLogin = async function () {
+    if (!authReady || !signInCodename) {
+      setMsg('loginMsg', 'Sign-in is not ready yet. Refresh the page or use http://localhost instead of opening the file directly.', true)
+      return
+    }
+    const codename = document.getElementById('li_codename').value.trim()
+    const pin = document.getElementById('li_pin').value.trim()
+    if (!codename || !/^\d{4}$/.test(pin)) {
+      setMsg('loginMsg', 'Enter your codename and 4-digit PIN.', true)
+      return
+    }
+    try {
+      document.getElementById('loginBtn').disabled = true
+      await signInCodename(codename, pin)
+      localStorage.setItem('sv_hasAccount', '1')
+    } catch (err) {
+      setMsg('loginMsg', err.message, true)
+    } finally {
+      document.getElementById('loginBtn').disabled = false
+    }
+  }
+
+  window.handleRecovery = async function () {
+    if (!authReady || !resetPinWithRecovery) {
+      setMsg('recoveryMsg', 'Account recovery is not ready yet. Refresh the page or use http://localhost instead of opening the file directly.', true)
+      return
+    }
+    const codename = document.getElementById('rc_codename').value.trim()
+    const recovery = document.getElementById('rc_recovery').value.trim()
+    const newPin = document.getElementById('rc_newpin').value.trim()
+    if (!codename || !recovery || !/^\d{4}$/.test(newPin)) {
+      setMsg('recoveryMsg', 'Fill in your codename, recovery phrase, and a new 4-digit PIN.', true)
+      return
+    }
+    try {
+      document.getElementById('recoveryBtn').disabled = true
+      await resetPinWithRecovery(codename, recovery, newPin)
+      setMsg('recoveryMsg', 'PIN reset. Log in with your new PIN.', false)
+      setTimeout(() => showTab('login'), 1200)
+    } catch (err) {
+      setMsg('recoveryMsg', 'Could not reset PIN yet — the reset-pin function may not be deployed. ' + err.message, true)
+    } finally {
+      document.getElementById('recoveryBtn').disabled = false
+    }
+  }
+
+  window.handleLogout = async function () {
+    if (signOut) await signOut()
+  }
+
+  let pendingBookmark = null
+
+  function showChapterSelect() {
+    document.getElementById('resumePrompt').classList.add('hidden')
+    document.getElementById('chapterSelect').classList.remove('hidden')
+  }
+
+  function showResumePrompt(bookmark) {
+    pendingBookmark = bookmark
+    const parts = bookmark.pageCode.split('.')
+    const weekNum = parts[0] || bookmark.week
+    const section = bookmark.section || `${parts[0]}.${parts[1]}`
+    const page = bookmark.page || parts[2]
+    document.getElementById('resumeText').innerHTML =
+      'You left off at <b>Week ' + weekNum + '</b>, section <b>' + section + '</b>, page <b>' + page +
+      '</b> <span class="page-code">(' + bookmark.pageCode + ')</span>. Start there?'
+    document.getElementById('resumePrompt').classList.remove('hidden')
+    document.getElementById('chapterSelect').classList.add('hidden')
+  }
+
+  document.getElementById('resumeYes').addEventListener('click', function () {
+    if (pendingBookmark && pendingBookmark.resumePath) {
+      window.location.href = pendingBookmark.resumePath
+    }
+  })
+  document.getElementById('resumeNo').addEventListener('click', showChapterSelect)
+
+  async function renderSession(session, event) {
+    const loggedOut = document.getElementById('loggedOutView')
+    const loggedIn = document.getElementById('loggedInView')
+    const hasUser = session && session.user
+    if (hasUser) {
+      loggedOut.classList.add('hidden')
+      loggedIn.classList.remove('hidden')
+      const codename = session.user?.user_metadata?.codename || '(codename unavailable)'
+      document.getElementById('welcomeCodename').textContent = codename
+
+      const isNewHire = sessionStorage.getItem('sv_welcomeNew') === '1'
+      if (isNewHire) {
+        sessionStorage.removeItem('sv_welcomeNew')
+        document.getElementById('welcomeLine').textContent = 'Welcome,'
+        pendingBookmark = null
+        showChapterSelect()
+      } else {
+        document.getElementById('welcomeLine').textContent = 'Welcome back,'
+        let bookmark = null
+        if (loadReplayBookmark) {
+          try {
+            bookmark = await loadReplayBookmark()
+          } catch (e) {
+            console.warn('Could not load replay bookmark', e)
+          }
+        }
+        if (bookmark && bookmark.resumePath) {
+          showResumePrompt(bookmark)
+        } else {
+          pendingBookmark = null
+          showChapterSelect()
+        }
+      }
+    } else {
+      pendingBookmark = null
+      loggedOut.classList.remove('hidden')
+      loggedIn.classList.add('hidden')
+      document.getElementById('resumePrompt').classList.add('hidden')
+      document.getElementById('chapterSelect').classList.remove('hidden')
+    }
+  }
+
+  // Initial session, sign-in, and sign-out.
+  if (onAuthStateChange) {
+    onAuthStateChange((session, event) => {
+      renderSession(session, event)
+    })
+    if (getSession) {
+      getSession()
+        .then(function (session) { return renderSession(session, 'INITIAL') })
+        .catch(function (e) { console.warn('Could not read session on load', e) })
+    }
+  }
+</script>
+
+</body>
+</html>

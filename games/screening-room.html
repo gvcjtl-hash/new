@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Screening Room &middot; Sterling &amp; Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Barlow+Condensed:wght@500;600;700&family=Special+Elite&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#B84E28;--red-dark:#8A3A1D;--red-bright:#D9713F;
+  --gold:#D79A2C;--gold-dark:#A87816;--teal:#2F6B67;--teal-dark:#1D4F4F;
+  --ink:#2B211A;--ink-2:#362B21;--gray:#E4D9BE;--gray-soft:#F3E9D2;--gray-line:#D3C4A0;
+  --muted:#6B5D4A;--white:#FBF6EA;--paper:#F3E9D2;--good:#2F6B67;--good-bg:#E1EDEA;--bad:#A32B2B;--bad-bg:#F4E3DE;
+  --wood-light:#8a6b45;--wood-dark:#5C4230;
+  --paper-card:linear-gradient(160deg,#FDF9EE 0%,#F6EED9 45%,#EDDFBE 100%);
+  --beam:#F7E9C4;--screen-lit:#E9EADB;--screen-dim:#CFD2C2;
+  --ease:cubic-bezier(.22,1,.36,1);--top:56px;--bot:66px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',Georgia,serif;color:var(--ink);background:#101711;line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:'Yeseva One',Georgia,serif;font-weight:400}
+.eyebrow,.mark{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.04em}
+.navbtn{font-family:'Special Elite',Courier,monospace}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.skip-link{position:absolute;left:-999px;top:0;z-index:500;background:var(--ink);color:#fff;padding:10px 16px;font-weight:bold;text-decoration:none}
+.skip-link:focus{left:0}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+.topbar,.botbar{flex:0 0 auto;display:flex;align-items:center;padding:0 18px;background:repeating-linear-gradient(179deg,rgba(30,18,8,.16) 0px,rgba(30,18,8,.16) 1px,transparent 2px,transparent 5px),repeating-linear-gradient(179deg,rgba(255,222,180,.05) 0px,transparent 1px,transparent 10px,rgba(255,222,180,.06) 11px,transparent 24px),linear-gradient(100deg,var(--wood-light),var(--wood-dark) 60%,var(--wood-light));z-index:20;position:relative}
+.topbar{height:var(--top);gap:14px;border-bottom:3px solid var(--gold-dark);box-shadow:0 3px 10px rgba(43,26,13,.3)}
+.botbar{height:var(--bot);justify-content:space-between;gap:12px;border-top:3px solid var(--gold-dark);box-shadow:0 -3px 10px rgba(43,26,13,.3)}
+.topbar::before,.topbar::after,.botbar::before,.botbar::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:radial-gradient(circle at 32% 30%,#f2d488,var(--gold-dark) 70%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5),inset 0 0 1px rgba(255,255,255,.4)}
+.topbar::before,.botbar::before{left:8px}
+.topbar::after,.botbar::after{right:8px}
+.topbar .mark{font-weight:400;letter-spacing:1px;color:var(--gold);font-size:.86rem;white-space:nowrap}
+.topbar .auth{margin-left:auto;font-family:'Special Elite',Courier,monospace;font-size:.72rem;color:rgba(251,246,234,.75);white-space:nowrap}
+.topbar .auth.bad{color:#f0b3a4}
+
+.header-card{position:relative;display:flex;align-items:baseline;gap:9px;background:radial-gradient(circle at 80% 70%,transparent 38%,rgba(90,60,20,.10) 40%,rgba(90,60,20,.13) 42%,transparent 44%),var(--paper);border:1px solid rgba(43,33,26,.35);border-radius:2px;padding:5px 14px 4px 12px;box-shadow:0 3px 7px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.5);transform:rotate(-.4deg);margin:0 auto}
+.header-card::before{content:"";position:absolute;top:-5px;left:16px;width:24px;height:7px;border-radius:2px;background:linear-gradient(180deg,#f2d488,var(--gold-dark) 75%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5)}
+.header-card .to-label{font-family:'Special Elite',Courier,monospace;font-size:.62rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.header-card .mk{font-family:'Special Elite',Courier,monospace;font-weight:400;letter-spacing:.5px;color:var(--red-dark);font-size:.82rem;white-space:nowrap}
+.header-card .cx{font-family:'Special Elite',Courier,monospace;font-size:.7rem;color:var(--muted);white-space:nowrap}
+
+.grain-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
+.deck{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
+.stage{flex:1 1 auto;position:relative;overflow:hidden;box-shadow:inset 0 0 0 10px rgba(0,0,0,.30),inset 0 0 90px rgba(0,0,0,.60);background-color:#101711;background-image:url('../assets/backgrounds/screeningroom-desk.png');background-size:cover;background-position:center 30%;background-repeat:no-repeat}
+.stage::before{content:"";position:absolute;inset:0;z-index:0;background:
+    radial-gradient(700px 520px at 8% 42%,rgba(247,233,196,.14),transparent 66%),
+    linear-gradient(180deg,rgba(6,12,8,.66) 0%,rgba(6,12,8,.38) 22%,rgba(6,12,8,.34) 55%,rgba(6,12,8,.56) 82%,rgba(6,12,8,.86) 100%)}
+.stage-inner{max-width:880px;margin:0 auto;padding:38px 20px 52px;position:relative;z-index:1}
+
+/* ambient projector dust drifting through the beam */
+.dust{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(2px 2px at 12% 44%,rgba(255,240,205,.85),transparent 60%),
+    radial-gradient(1.5px 1.5px at 19% 38%,rgba(255,240,205,.7),transparent 60%),
+    radial-gradient(2px 2px at 26% 50%,rgba(255,240,205,.6),transparent 60%),
+    radial-gradient(1.5px 1.5px at 33% 41%,rgba(255,240,205,.5),transparent 60%);
+  animation:drift 11s linear infinite}
+@keyframes drift{0%{transform:translate3d(0,0,0)}50%{transform:translate3d(14px,-9px,0)}100%{transform:translate3d(0,0,0)}}
+
+.panel{position:relative;background:var(--paper-card);border:2px solid var(--ink);border-radius:4px;box-shadow:0 1px 1px rgba(43,33,26,.18),0 6px 14px rgba(43,33,26,.28),0 14px 28px rgba(43,33,26,.16),7px 7px 0 var(--ink);padding:34px 30px}
+.case-tag{position:absolute;top:22px;right:26px;border:3px solid var(--red-dark);color:var(--red-dark);font-family:'Special Elite',Courier,monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;transform:rotate(-6deg);opacity:.85}
+.panel .eyebrow{color:var(--red-dark);font-size:.78rem;text-transform:uppercase}
+.panel h1{font-size:clamp(1.6rem,4vw,2.2rem);margin:6px 0 14px}
+.panel p{color:var(--ink-2);font-size:.94rem;margin-bottom:14px}
+.panel .task-line{font-family:'Special Elite',Courier,monospace;font-size:.85rem;color:var(--red-dark);margin-bottom:20px}
+.startbtn{font-family:'Special Elite',Courier,monospace;font-size:.95rem;letter-spacing:.5px;border-radius:3px;padding:14px 26px;border:2px solid var(--ink);background:var(--red);color:var(--white);box-shadow:5px 5px 0 var(--ink);transition:transform .12s,box-shadow .12s;width:100%}
+.startbtn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+.startbtn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+.startbtn:disabled{opacity:.5;cursor:not-allowed}
+
+.hud{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.dana-mini{flex:0 0 auto;width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid var(--gold-dark);box-shadow:2px 2px 0 var(--ink);transition:transform .15s var(--ease)}
+.dana-mini img{width:100%;height:100%;object-fit:cover;display:block}
+.dana-mini.pop{transform:scale(1.15)}
+.hud-case{font-family:'Special Elite',Courier,monospace;font-size:.8rem;color:var(--gray)}
+.task-strip{font-family:'Special Elite',Courier,monospace;font-size:.78rem;color:var(--gold);text-align:center;margin-bottom:18px;padding-bottom:14px;border-bottom:2px dashed rgba(215,154,44,.35)}
+.hud,.task-strip,.section-label,.end .verdict,.end .score-line,.end .quip{text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.section-label{font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;color:var(--gray);margin-bottom:8px}
+
+/* ---------- match phases (call sheet, research reel) ---------- */
+.match{display:none}
+.match.on{display:block}
+/* two-step instruction bar for the matching phases */
+.howto{display:flex;align-items:stretch;justify-content:center;gap:10px;max-width:740px;margin:0 auto 18px;flex-wrap:wrap}
+.howto .step{flex:1 1 250px;display:flex;align-items:center;gap:11px;background:rgba(20,16,10,.52);border:1px solid rgba(255,255,255,.13);border-radius:6px;padding:11px 14px;font-size:.92rem;color:rgba(243,233,210,.72);transition:background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
+.howto .step .n{flex:0 0 auto;width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;background:rgba(228,217,190,.18);color:rgba(243,233,210,.8);transition:background .2s var(--ease),color .2s var(--ease)}
+.howto .step.now{border-color:var(--gold);background:rgba(215,154,44,.17);color:var(--white)}
+.howto .step.now .n{background:var(--gold);color:var(--ink)}
+.howto .step.done{opacity:.5}
+
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;align-items:stretch;max-width:740px;margin:0 auto 16px}
+.match-head{font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.7rem;color:var(--gray);text-align:center;padding-bottom:2px;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.fact-card,.stage-btn{border:2px solid var(--ink);border-radius:6px;padding:12px 14px;background:var(--paper-card);cursor:pointer;font-size:.86rem;color:var(--ink-2);box-shadow:2px 2px 0 var(--ink);transition:transform .12s,box-shadow .12s,opacity .15s;display:flex;align-items:center}
+.fact-card:hover:not(.matched),.stage-btn:hover:not(.matched){transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.stage-btn{text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.88rem;justify-content:center;line-height:1.2}
+.fact-card.selected{outline:3px solid var(--gold-dark);outline-offset:2px}
+.fact-card.matched,.stage-btn.matched{opacity:.35;background:var(--good-bg);border-color:var(--good);cursor:default;pointer-events:none}
+.fact-card.shake,.stage-btn.shake{animation:shake .4s}
+.match-feedback{font-family:'Special Elite',Courier,monospace;font-size:.82rem;color:var(--gray);text-align:center;min-height:1.4em;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(4px)}}
+@media (max-width:560px){
+  .match-grid{gap:9px 10px}
+  .fact-card,.stage-btn{padding:10px 11px;font-size:.79rem}
+  .stage-btn{font-size:.8rem}
+}
+
+/* ---------- the projection ---------- */
+.act{display:none}
+.act.on{display:block}
+
+.projection{position:relative;margin:0 auto 18px;max-width:620px}
+.screen{position:relative;aspect-ratio:16/9;border-radius:2px;overflow:hidden;
+  background:radial-gradient(120% 100% at 50% 42%,var(--screen-lit) 0%,var(--screen-lit) 52%,var(--screen-dim) 100%);
+  box-shadow:0 0 0 3px rgba(20,26,18,.9),0 0 44px 10px rgba(247,233,196,.28),0 18px 40px rgba(0,0,0,.6);
+  animation:flicker 3.4s steps(1,end) infinite}
+@keyframes flicker{
+  0%,100%{filter:brightness(1)}
+  46%{filter:brightness(1)}
+  47%{filter:brightness(.955)}
+  48%{filter:brightness(1.02)}
+  49%{filter:brightness(.98)}
+  50%{filter:brightness(1)}
+  82%{filter:brightness(1)}
+  83%{filter:brightness(.965)}
+  84%{filter:brightness(1)}
+}
+.screen::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:6;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size:120px 120px;opacity:.09;mix-blend-mode:multiply;animation:jitter .5s steps(3,end) infinite}
+@keyframes jitter{0%{transform:translate(0,0)}33%{transform:translate(-3px,2px)}66%{transform:translate(2px,-2px)}100%{transform:translate(0,0)}}
+
+.spot-frame{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center}
+.spot-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.spot-fallback{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:26px 30px;color:var(--ink)}
+.spot-fallback .slug{font-family:'Special Elite',Courier,monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.spot-fallback .client{font-family:'Yeseva One',Georgia,serif;font-size:clamp(1.3rem,3.4vw,1.9rem);line-height:1.2}
+.spot-fallback .visual{font-size:.88rem;color:var(--ink-2);max-width:36ch;font-style:italic}
+.spot-fallback .rule{width:56px;height:2px;background:var(--red-dark);opacity:.55}
+
+/* countdown leader */
+.leader{position:absolute;inset:0;z-index:5;display:none;align-items:center;justify-content:center;background:var(--screen-dim);cursor:pointer}
+.leader.on{display:flex}
+.leader svg{width:64%;height:88%}
+.leader .num{font-family:'Special Elite',Courier,monospace;font-size:74px;fill:#2A3226}
+.leader .sweep{transform-origin:150px 150px;animation:sweep .55s linear infinite}
+@keyframes sweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* film burn on a wrong answer */
+.burn{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at 50% 52%,rgba(255,240,190,1) 0%,rgba(226,140,52,.95) 18%,rgba(96,42,14,.92) 34%,rgba(20,14,8,.9) 46%,transparent 62%)}
+.burn.go{animation:burnthrough .85s ease-out}
+@keyframes burnthrough{
+  0%{opacity:0;transform:scale(.05)}
+  22%{opacity:1;transform:scale(.35)}
+  68%{opacity:1;transform:scale(1.5)}
+  100%{opacity:0;transform:scale(2.1)}
+}
+
+/* client note under the screen */
+.note{background:var(--gray-soft);border:1px solid var(--gray-line);border-left:4px solid var(--red-dark);border-radius:3px;padding:13px 17px;font-size:.88rem;color:var(--ink-2);margin:0 auto 20px;max-width:620px}
+.note .who{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;font-size:.68rem;letter-spacing:.07em;color:var(--red-dark);display:block;margin-bottom:5px}
+
+/* answer tiles */
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:18px}
+.opt{border:2px solid var(--ink);border-radius:6px;padding:13px 12px;background:var(--paper-card);cursor:pointer;text-align:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.86rem;line-height:1.25;color:var(--ink);
+  box-shadow:0 1px 1px rgba(43,33,26,.15),0 4px 8px rgba(43,33,26,.22),3px 3px 0 var(--ink);
+  transition:transform .15s var(--ease),box-shadow .15s var(--ease),opacity .15s}
+.opt:hover:not(.tried):not(.locked){transform:translateY(-5px);box-shadow:0 4px 4px rgba(43,33,26,.2),0 10px 20px rgba(43,33,26,.3),5px 6px 0 var(--ink)}
+.opt.tried{opacity:.35;filter:grayscale(60%);cursor:default;pointer-events:none;text-decoration:line-through}
+.opt.right{background:var(--good-bg);border-color:var(--good);color:var(--teal-dark)}
+.opt.shake{animation:shake .4s}
+
+.verdict-box{background:rgba(20,16,10,.5);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:14px 18px;font-size:.92rem;color:var(--gray-soft);min-height:54px;margin-bottom:14px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.verdict-box .who{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.06em;display:block;margin-bottom:5px}
+.verdict-box .who.good{color:#8FD3C6}
+.verdict-box .who.bad{color:#F0B3A4}
+
+/* full debrief sheet after a correct call */
+.verdict-box.full{border-left:4px solid var(--gold);padding:16px 20px 18px}
+.dbf{animation:dbfin .3s var(--ease)}
+@keyframes dbfin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.dbf-tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.66rem;padding:3px 10px;border-radius:2px;color:#0F2622;background:#8FD3C6;margin-bottom:8px}
+.dbf-name{font-family:'Yeseva One',Georgia,serif;font-size:1.12rem;color:var(--gold);margin-bottom:5px;line-height:1.25}
+.dbf-why{font-size:.94rem;color:var(--gray-soft)}
+.dbf-rule{display:flex;align-items:center;gap:12px;margin:16px 0 12px}
+.dbf-rule::before,.dbf-rule::after{content:"";flex:1;height:1px;background:rgba(228,217,190,.22)}
+.dbf-rule span{font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.09em;font-size:.68rem;color:rgba(228,217,190,.6);white-space:nowrap}
+.dbf-list{display:flex;flex-direction:column;gap:9px}
+.dbf-item{display:grid;grid-template-columns:168px 1fr;gap:12px;align-items:start}
+.dbf-item .k{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.76rem;line-height:1.35;color:#F0B3A4;padding-top:1px}
+.dbf-item .v{font-size:.88rem;color:rgba(243,233,210,.86);line-height:1.5}
+@media (max-width:600px){ .dbf-item{grid-template-columns:1fr;gap:2px} }
+
+.hint-toggle{font-family:'Special Elite',Courier,monospace;font-size:.78rem;color:var(--gold);text-decoration:underline;margin-bottom:16px;display:inline-block;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.hint-box{display:none;background:rgba(47,107,103,.22);border-left:3px solid var(--teal);padding:10px 14px;font-size:.85rem;color:var(--gray-soft);margin:-6px 0 18px;border-radius:0 3px 3px 0}
+.hint-box.on{display:block}
+
+.advancebar{display:flex;justify-content:center}
+.advancebtn{font-family:'Special Elite',Courier,monospace;font-size:.95rem;letter-spacing:1px;text-transform:uppercase;border-radius:3px;padding:13px 28px;border:2px solid var(--ink);background:var(--gold);color:var(--ink);box-shadow:5px 5px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.advancebtn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+.advancebtn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+
+/* ---------- filmstrip progress ---------- */
+.filmstrip{margin:22px auto 0;max-width:660px;background:#171C15;border-radius:3px;padding:11px 10px;
+  box-shadow:0 6px 16px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.06);
+  background-image:repeating-linear-gradient(90deg,transparent 0 12px,rgba(0,0,0,.55) 12px 20px,transparent 20px 32px);
+  background-position:0 0,0 100%;background-size:32px 7px;background-repeat:repeat-x}
+.strip-frames{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:6px 0}
+.frm{width:38px;height:28px;border-radius:2px;background:#2A3128;border:1px solid rgba(255,255,255,.10);
+  display:flex;align-items:center;justify-content:center;font-family:'Special Elite',Courier,monospace;font-size:.6rem;color:rgba(228,217,190,.4);
+  transition:background .3s var(--ease),color .3s,transform .3s var(--ease)}
+.frm.clean{background:var(--gold);color:#2A2010;transform:scale(1.06)}
+.frm.messy{background:#6B5D4A;color:#F3E9D2}
+.strip-label{font-family:'Special Elite',Courier,monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(228,217,190,.45);text-align:center;padding-top:2px}
+
+/* ---------- second screen room ---------- */
+.room{display:block;width:100%;max-width:620px;margin:0 auto 6px;border-radius:3px;
+  background:linear-gradient(180deg,#1B2419 0%,#121A12 100%);box-shadow:0 0 0 3px rgba(20,26,18,.9),0 16px 34px rgba(0,0,0,.55)}
+.dev-body{fill:#2C3529;stroke:#4A5744;stroke-width:2}
+.dev-glass{fill:#1A2119;transition:fill .35s var(--ease)}
+.dev.lit .dev-glass{fill:#E7E3C6}
+.dev.lit .dev-body{stroke:var(--gold)}
+.dev-halo{opacity:0;transition:opacity .35s var(--ease)}
+.dev.lit .dev-halo{opacity:1}
+.dev-name{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;fill:rgba(228,217,190,.45);text-transform:uppercase}
+.dev.lit .dev-name{fill:var(--gold)}
+.dev-cap{font-family:'Barlow',Georgia,serif;font-size:12.5px;fill:#F3E9D2;opacity:0;transition:opacity .3s var(--ease)}
+.dev-cap.show{opacity:1}
+.link{fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:220;stroke-dashoffset:220;opacity:.85}
+.link.draw{animation:drawlink .6s var(--ease) forwards}
+@keyframes drawlink{to{stroke-dashoffset:0}}
+.seq-bar{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 auto 18px;max-width:620px}
+.replaybtn{font-family:'Special Elite',Courier,monospace;font-size:.78rem;color:var(--gold);border:1px solid rgba(215,154,44,.5);border-radius:3px;padding:6px 14px;background:rgba(20,16,10,.5)}
+.replaybtn:hover{background:rgba(215,154,44,.18)}
+.replaybtn:disabled{opacity:.4;cursor:not-allowed}
+.seq-status{font-family:'Special Elite',Courier,monospace;font-size:.74rem;color:rgba(228,217,190,.6)}
+
+/* ---------- end screen ---------- */
+.end{display:none;text-align:center}
+.end.on{display:block}
+.end .dana-frame{width:84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid var(--gold-dark);margin:0 auto 16px;box-shadow:3px 3px 0 var(--ink)}
+.end .dana-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.end .verdict{font-size:1.8rem;margin-bottom:6px;color:var(--gold)}
+.end .score-line{font-family:'Special Elite',Courier,monospace;font-size:.9rem;color:var(--gray-soft);margin-bottom:18px}
+.end .quip{max-width:52ch;margin:16px auto 24px;color:var(--gray-soft);font-size:.95rem;font-style:italic;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.reelout{max-width:640px;margin:0 auto 20px;text-align:left;display:flex;flex-direction:column;gap:8px}
+.reelout .row{background:rgba(20,16,10,.5);border:1px solid rgba(255,255,255,.10);border-left:4px solid var(--gold);border-radius:5px;padding:11px 15px;color:var(--gray-soft);font-size:.87rem;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.reelout .row.messy{border-left-color:var(--muted)}
+.reelout .row .hd{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.72rem;color:var(--gold);display:block;margin-bottom:4px}
+.reelout .row.messy .hd{color:rgba(228,217,190,.7)}
+.end .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+.navbtn{font-family:'Special Elite',Courier,monospace;font-size:.85rem;letter-spacing:.5px;border-radius:3px;padding:11px 20px;border:2px solid var(--ink);background:var(--gray);color:var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.navbtn.primary{background:var(--red);color:var(--white)}
+.navbtn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.navbtn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+.botbar .foot-note{font-family:'Special Elite',Courier,monospace;font-size:.72rem;color:rgba(251,246,234,.6)}
+
+@media (prefers-reduced-motion:reduce){
+  .screen,.screen::after,.dust,.leader .sweep{animation:none}
+  .opt,.frm,.dev-glass,.dev-cap{transition:none}
+  .burn.go,.link.draw{animation:none}
+  .link.draw{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="grain-overlay" aria-hidden="true"></div>
+<div class="deck">
+
+  <header class="topbar">
+    <span class="mark">STERLING &amp; VALE</span>
+    <div class="header-card" role="presentation">
+      <span class="to-label">TO:</span>
+      <span class="mk">The Screening Room</span>
+      <span class="cx">Ch.1 &middot; Trend Screening</span>
+    </div>
+    <span class="auth" id="authLine">Connecting&hellip;</span>
+  </header>
+
+  <main class="stage" id="main">
+    <div class="dust" aria-hidden="true"></div>
+    <div class="stage-inner">
+
+      <!-- ===== BRIEFING ===== -->
+      <section class="panel" id="briefing">
+        <span class="case-tag">Screening</span>
+        <div class="eyebrow">Chapter 1 &middot; Practice</div>
+        <h1>The Screening Room</h1>
+        <p id="briefText">Dana has booked the small room at the end of the hall and pulled a stack of reels off the shelf. Some are client spots. Some are research footage of people at home with four screens going at once. Your job is the same either way: watch, and name what you are looking at.</p>
+        <div class="task-line">Three parts. Learn the six trends. Name the trend in five ads. Then read four rooms.</div>
+        <button class="startbtn" id="startBtn" disabled>Kill the Lights</button>
+      </section>
+
+      <!-- ===== ACT 1: CALL SHEET ===== -->
+      <section class="match" id="callSheet">
+        <div class="hud">
+          <span class="dana-mini"><img id="danaMiniA" src="../assets/characters/dana-neutral.png" alt="" onerror="this.parentElement.style.display='none'"></span>
+          <span class="hud-case">Act 1 &middot; The Call Sheet</span>
+        </div>
+        <div class="task-strip">Every ad campaign is built around one of six trends. Learn the six first.</div>
+        <div class="howto" id="csHowto">
+          <div class="step now" data-step="1"><span class="n">1</span><span>Click a note on the left</span></div>
+          <div class="step" data-step="2"><span class="n">2</span><span>Click the trend on the right that matches it</span></div>
+        </div>
+        <div class="match-grid" id="trendGrid"></div>
+        <div class="match-feedback" id="csFeedback">0 of 6 matched.</div>
+      </section>
+
+      <!-- ===== ACT 2: ROLL THE REEL ===== -->
+      <section class="act" id="reelAct">
+        <div class="hud">
+          <span class="dana-mini"><img id="danaMiniB" src="../assets/characters/dana-neutral.png" alt="" onerror="this.parentElement.style.display='none'"></span>
+          <span class="hud-case" id="reelHud"></span>
+        </div>
+        <div class="task-strip" id="reelStrip"></div>
+
+        <div class="projection">
+          <div class="screen" id="reelScreen">
+            <div class="spot-fallback" id="spotFallback"></div>
+            <div class="spot-frame" id="spotFrame"></div>
+            <div class="burn" id="reelBurn" aria-hidden="true"></div>
+            <div class="leader" id="reelLeader" role="button" tabindex="0" aria-label="Skip the countdown">
+              <svg viewBox="0 0 300 300" aria-hidden="true">
+                <circle cx="150" cy="150" r="140" fill="none" stroke="#2A3226" stroke-width="3" opacity=".55"/>
+                <circle cx="150" cy="150" r="104" fill="none" stroke="#2A3226" stroke-width="2" opacity=".35"/>
+                <line x1="150" y1="4" x2="150" y2="296" stroke="#2A3226" stroke-width="2" opacity=".35"/>
+                <line x1="4" y1="150" x2="296" y2="150" stroke="#2A3226" stroke-width="2" opacity=".35"/>
+                <path class="sweep" d="M150 150 L150 10 A140 140 0 0 1 255 62 Z" fill="#2A3226" opacity=".16"/>
+                <text class="num" id="leaderNum" x="150" y="178" text-anchor="middle">3</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="note" id="reelNote"></div>
+
+        <div class="section-label">Which trend is this ad using?</div>
+        <div class="options" id="reelOptions"></div>
+
+        <div class="verdict-box" id="reelVerdict">Click one of the six trends above. If you get it wrong you can try again.</div>
+        <button class="hint-toggle" id="reelHintToggle" style="display:none">Show me a hint</button>
+        <div class="hint-box" id="reelHintBox"></div>
+
+        <div class="advancebar"><button class="advancebtn" id="reelNext" style="display:none">Next Reel</button></div>
+      </section>
+
+      <!-- ===== ACT 3: RESEARCH REEL BRIEF ===== -->
+      <section class="match" id="patternBrief">
+        <div class="hud">
+          <span class="dana-mini"><img id="danaMiniC" src="../assets/characters/dana-neutral.png" alt="" onerror="this.parentElement.style.display='none'"></span>
+          <span class="hud-case">Act 3 &middot; The Research Reel</span>
+        </div>
+        <div class="task-strip">New reel. This one is about people using more than one screen at a time. There are four ways they do it.</div>
+        <div class="howto" id="pbHowto">
+          <div class="step now" data-step="1"><span class="n">1</span><span>Click a description on the left</span></div>
+          <div class="step" data-step="2"><span class="n">2</span><span>Click the name on the right that matches it</span></div>
+        </div>
+        <div class="match-grid" id="patGrid"></div>
+        <div class="match-feedback" id="pbFeedback">0 of 4 matched.</div>
+      </section>
+
+      <!-- ===== ACT 4: SECOND SCREEN ===== -->
+      <section class="act" id="screenAct">
+        <div class="hud">
+          <span class="dana-mini"><img id="danaMiniD" src="../assets/characters/dana-neutral.png" alt="" onerror="this.parentElement.style.display='none'"></span>
+          <span class="hud-case" id="ssHud"></span>
+        </div>
+        <div class="task-strip" id="ssStrip"></div>
+
+        <svg class="room" id="roomSvg" viewBox="0 0 620 340" role="img" aria-labelledby="roomTitle">
+          <title id="roomTitle">A room with a television, a laptop, a tablet and a phone</title>
+          <defs>
+            <radialGradient id="halo">
+              <stop offset="0%" stop-color="#F7E9C4" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="#F7E9C4" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- couch silhouette -->
+          <path d="M0 316 q40 -34 108 -34 h404 q68 0 108 34 v24 H0 Z" fill="#141C14"/>
+          <g id="linkLayer"></g>
+          <!-- TV -->
+          <g class="dev" id="dev-tv">
+            <ellipse class="dev-halo" cx="310" cy="82" rx="190" ry="110" fill="url(#halo)"/>
+            <rect class="dev-body" x="206" y="22" width="208" height="122" rx="5"/>
+            <rect class="dev-glass" x="213" y="29" width="194" height="108" rx="3"/>
+            <rect x="296" y="144" width="28" height="12" fill="#2C3529"/>
+            <rect x="272" y="156" width="76" height="6" rx="3" fill="#2C3529"/>
+            <text class="dev-name" x="310" y="178" text-anchor="middle">Television</text>
+            <text class="dev-cap" id="cap-tv" x="310" y="196" text-anchor="middle"></text>
+          </g>
+          <!-- Laptop -->
+          <g class="dev" id="dev-laptop">
+            <ellipse class="dev-halo" cx="82" cy="228" rx="118" ry="88" fill="url(#halo)"/>
+            <rect class="dev-body" x="30" y="188" width="104" height="66" rx="4"/>
+            <rect class="dev-glass" x="36" y="194" width="92" height="54" rx="2"/>
+            <path class="dev-body" d="M20 254 h124 l10 12 H10 Z"/>
+            <text class="dev-name" x="82" y="284" text-anchor="middle">Laptop</text>
+            <text class="dev-cap" id="cap-laptop" x="82" y="301" text-anchor="middle"></text>
+          </g>
+          <!-- Tablet -->
+          <g class="dev" id="dev-tablet">
+            <ellipse class="dev-halo" cx="310" cy="240" rx="102" ry="80" fill="url(#halo)"/>
+            <rect class="dev-body" x="272" y="196" width="76" height="60" rx="5"/>
+            <rect class="dev-glass" x="278" y="202" width="64" height="48" rx="2"/>
+            <text class="dev-name" x="310" y="284" text-anchor="middle">Tablet</text>
+            <text class="dev-cap" id="cap-tablet" x="310" y="301" text-anchor="middle"></text>
+          </g>
+          <!-- Phone -->
+          <g class="dev" id="dev-phone">
+            <ellipse class="dev-halo" cx="530" cy="232" rx="98" ry="82" fill="url(#halo)"/>
+            <rect class="dev-body" x="512" y="190" width="38" height="68" rx="6"/>
+            <rect class="dev-glass" x="517" y="196" width="28" height="56" rx="3"/>
+            <text class="dev-name" x="531" y="284" text-anchor="middle">Phone</text>
+            <text class="dev-cap" id="cap-phone" x="531" y="301" text-anchor="middle"></text>
+          </g>
+        </svg>
+
+        <div class="seq-bar">
+          <button class="replaybtn" id="replayBtn">&#8635; Run It Again</button>
+          <span class="seq-status" id="seqStatus"></span>
+        </div>
+
+        <div class="section-label">Which pattern is this?</div>
+        <div class="options" id="ssOptions"></div>
+
+        <div class="verdict-box" id="ssVerdict">Watch the room, then click one of the four patterns above. Use Run It Again if you missed it.</div>
+        <button class="hint-toggle" id="ssHintToggle" style="display:none">Show me a hint</button>
+        <div class="hint-box" id="ssHintBox"></div>
+
+        <div class="advancebar"><button class="advancebtn" id="ssNext" style="display:none">Next Reel</button></div>
+      </section>
+
+      <!-- ===== END ===== -->
+      <section class="end" id="endScreen">
+        <div class="dana-frame"><img src="../assets/characters/dana-neutral.png" alt="Dana" id="danaImg" onerror="this.parentElement.style.display='none'"></div>
+        <h2 class="verdict">That's the Reel</h2>
+        <div class="score-line" id="scoreLine"></div>
+        <div class="reelout" id="reelOut"></div>
+        <p class="quip" id="endQuip"></p>
+        <div class="actions">
+          <button class="navbtn primary" id="againBtn">&#8635; Thread a New Reel</button>
+          <a class="navbtn" href="../week1/study.html">&larr; Back to Practice Floor</a>
+        </div>
+      </section>
+
+      <div class="filmstrip" id="filmstrip" style="display:none">
+        <div class="strip-frames" id="stripFrames"></div>
+        <div class="strip-label" id="stripLabel">Screened 0 of 9</div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="botbar">
+    <a class="navbtn" href="../week1/study.html">&larr; Practice Floor</a>
+    <span class="foot-note">Sterling &amp; Vale &middot; MKT 150 &middot; Chapter 1 &middot; practice materials, not graded</span>
+  </footer>
+
+</div>
+
+<script type="module">
+/* ============================================================
+   THE SCREENING ROOM
+   Ch.1 / LO 1.3 - Emerging trends in marketing communications
+   Act 1 call sheet -> Act 2 five spots -> Act 3 pattern brief -> Act 4 four rooms
+   ============================================================ */
+
+const TRENDS = {
+  accountability:{
+    name:'Accountability &amp; Measurable Results',
+    plain:'Accountability and Measurable Results',
+    def:'The client wants proof the spend moved sales, not just impressions. Every dollar has to show its work.',
+    hint:'Ask what the client is trying to <i>prove</i>. If the spot is built so someone can trace the response, that is the trend.'
+  },
+  mobile:{
+    name:'Mobile Marketing',
+    plain:'Mobile Marketing',
+    def:'The campaign lives on phones: texts, apps, and offers aimed at people while they are out.',
+    hint:'Ask what device this was built for. If it only makes sense on a phone in someone\u2019s hand, that is the trend.'
+  },
+  channel:{
+    name:'Changes in Channel Power',
+    plain:'Changes in Channel Power',
+    def:'Control over the sale has moved down the line: away from the maker, toward the retailer, and now toward the shopper.',
+    hint:'Ask who is holding the power in this story. The direction of the shift matters more than the word "channel."'
+  },
+  parity:{
+    name:'Increases in Brand Parity',
+    plain:'Increases in Brand Parity',
+    def:'Buyers see the competing brands as basically the same, so the decision comes down to price.',
+    hint:'Ask whether the brands in this category still feel different to the buyer. If not, watch what the ad falls back on.'
+  },
+  convenience:{
+    name:'Focus on Convenience',
+    plain:'Focus on Convenience',
+    def:'The winning offer is the one that removes steps: delivery, pickup, buy it from the couch.',
+    hint:'Ask what work the customer no longer has to do. Removed steps are the whole promise here.'
+  },
+  cause:{
+    name:'Cause-Related Marketing',
+    plain:'Cause-Related Marketing',
+    def:'The brand ties itself to a cause, building the bond on shared values rather than on the product.',
+    hint:'Ask what is actually being sold. If the product barely appears and the values do, that is the trend.'
+  }
+};
+const TREND_IDS = Object.keys(TRENDS);
+
+const PATTERNS = {
+  grazing:{
+    name:'Content Grazing',
+    def:'Two screens going at once, on completely unrelated things.',
+    hint:'The deciding question: is this person finishing one connected task, or looking at unrelated things at the same time?'
+  },
+  investigative:{
+    name:'Investigative Spider-Webbing',
+    def:'Chasing one topic across several devices to learn more about it.',
+    hint:'The deciding question: is this person finishing one connected task, or looking at unrelated things at the same time?'
+  },
+  quantum:{
+    name:'Quantum Journey',
+    def:'Finishing one task, moving device to device until it is done.',
+    hint:'The deciding question: is this person finishing one connected task, or looking at unrelated things at the same time?'
+  },
+  social:{
+    name:'Social Spider-Webbing',
+    def:'Passing content along to other people across devices.',
+    hint:'The deciding question: is this person finishing one connected task, or looking at unrelated things at the same time?'
+  }
+};
+const PATTERN_IDS = Object.keys(PATTERNS);
+
+/* ---- the spot bank: 12 reels, 5 drawn per playthrough ---- */
+const SPOTS = [
+  { id:'harbor', client:'Harbor &amp; Pine', img:'spot-harbor.jpg', trend:'convenience',
+    visual:'A woman taps her phone at nine at night. The sofa is on her porch by Thursday.',
+    note:'Client wants the delivery window held on screen for the last five full seconds. Nothing else in the spot matters as much as that promise.',
+    why:'The entire pitch is removed steps. Order from the couch, skip the store, have it Thursday.',
+    notIt:{
+      mobile:'She happens to order on a phone, but the phone is not the point. The promise is the porch on Thursday, and it would still be the promise if she ordered by mail.',
+      accountability:'Nothing here is built to be measured. The spot never asks for a traceable response, it just holds a delivery date on screen.',
+      channel:'Nobody in this story is fighting over who controls the sale. The maker, the retailer, and the shopper are all where they were.',
+      parity:'The spot never compares this sofa to anyone else\u2019s and never mentions price. Parity arguments always end up at price.',
+      cause:'There is no cause attached and no values appeal. The whole promise is logistical.'
+    } },
+
+  { id:'verity', client:'Verity Mutual', img:'spot-verity.jpg', trend:'accountability',
+    visual:'A quiet thirty seconds that ends on a code and a single web address.',
+    note:'Their CFO killed the network buy last quarter. This one ends on a code and a landing page built so every quote request traces back to the ad.',
+    why:'Every choice in the spot exists to make the spend traceable. Proving the return is the point.',
+    notIt:{
+      mobile:'A code and a landing page are not a mobile campaign. The measurement is the reason they exist, not the device someone scans them with.',
+      convenience:'Nothing about the customer\u2019s effort changed. What changed is the client\u2019s ability to prove the ad worked.',
+      channel:'Insurance sold direct is not a story about power moving between makers and retailers. Nothing here is about who controls the sale.',
+      parity:'The client never argues that competitors look identical, and never falls back on price.',
+      cause:'No cause and no values appeal. The spot is built around proving a number.'
+    } },
+
+  { id:'nolan', client:'Nolan &amp; Reeve Coffee', img:'spot-nolan.jpg', trend:'parity',
+    visual:'A bag of beans on a shelf beside three other bags that look almost identical.',
+    note:'Research says buyers cannot tell our beans from the other three on the shelf. So the spot leads with the price, and repeats it.',
+    why:'When buyers stop seeing a difference, the decision collapses to price and the creative follows it down.',
+    notIt:{
+      channel:'The shelf is in the story, but the shift is not about who holds power. It is about buyers no longer seeing a difference between the bags on it.',
+      accountability:'Leading with price is not the same as measuring results. Nobody is tracking who responded, they are winning on the only axis left.',
+      mobile:'Nothing here is built for a phone. This is a shelf and a number.',
+      convenience:'Leading with price does not remove a single step for the shopper. The trip is exactly as long as it was.',
+      cause:'There is no cause attached and no values appeal. Only the price.'
+    } },
+
+  { id:'ridgeline', client:'Ridgeline Outdoors', img:'spot-ridgeline.jpg', trend:'channel',
+    visual:'A shopper walks into the store already scrolling a page of comparisons.',
+    note:'People arrive having read six reviews and compared four prices. Client wants the spot to win the argument before anyone walks in.',
+    why:'The shopper now controls the information. Power has moved past the retailer and landed with the consumer.',
+    notIt:{
+      convenience:'Shopping around is not a removed step, it is an added one. The customer is doing more work than before, just earlier.',
+      accountability:'Reviews and price comparisons are research the customer is doing. That is not the client gathering proof.',
+      mobile:'The phone appears, but the trend is who holds the power, not which device the research happened on.',
+      parity:'Nothing says the jackets all look alike. The shopper is comparing precisely because they see differences worth weighing.',
+      cause:'No cause and no values appeal anywhere in the note. This is a purchase decision.'
+    } },
+
+  { id:'calloway', client:'Calloway Fields', img:'spot-calloway.jpg', trend:'cause',
+    visual:'Twenty-six seconds of a water program in three counties. The product appears at the very end.',
+    note:'No product shot until the final four seconds. The rest is the water program the client funds in three counties.',
+    why:'The bond is built on shared values, not on the carton. That is cause-related marketing.',
+    notIt:{
+      parity:'The dairy case may well be full of lookalikes, but this spot never argues on price. It argues on values.',
+      accountability:'Twenty-six seconds with no product and no response mechanism is close to the opposite of a spot built to be counted.',
+      mobile:'Nothing about this is built for a phone or aimed by where someone is standing.',
+      channel:'A water program does not move control of the sale between the maker, the retailer, and the shopper.',
+      convenience:'Nothing about the customer\u2019s effort changes. Not one step is removed.'
+    } },
+
+  { id:'tessari', client:'Tessari Footwear', img:'spot-tessari.jpg', trend:'mobile',
+    visual:'A fifteen second vertical cut, sound off, captions burned in.',
+    note:'Push a coded offer to anyone who walks within two blocks of the store between four and seven. Fifteen seconds, vertical, works with the sound off.',
+    why:'Built for the phone in someone\u2019s hand and aimed by where that person is standing.',
+    notIt:{
+      convenience:'A coded offer is not a removed step. The customer still walks into the store, they are just being caught on the way past.',
+      channel:'Reaching someone two blocks out is a targeting choice. Nobody\u2019s control over the sale has moved.',
+      accountability:'A code could be tracked, but the note never mentions proving anything. It is about catching people where they already are.',
+      parity:'No claim that the shoes look like everyone else\u2019s, and no fallback to price.',
+      cause:'No cause and no values appeal. This is a proximity offer.'
+    } },
+
+  { id:'ardent', client:'Ardent Bank', img:'spot-ardent.jpg', trend:'convenience',
+    visual:'One unbroken shot of someone depositing a check by photograph at a bus stop.',
+    note:'One continuous take, no cuts. The whole spot is a person doing in nine seconds what used to take a trip across town.',
+    why:'What is being sold is a trip nobody has to make anymore.',
+    notIt:{
+      mobile:'It happens on a phone, but the phone is the tool, not the trend. The pitch is the errand that disappeared.',
+      accountability:'One continuous take with no code and no tracked response. There is nothing here anyone is counting.',
+      channel:'A bank and its customer are not a manufacturer and a retailer. Nobody\u2019s control over the sale has shifted.',
+      parity:'The spot never argues that the banks all look alike, and never competes on rate.',
+      cause:'No cause and no values appeal. The whole idea is a saved errand.'
+    } },
+
+  { id:'marlowe', client:'Marlowe Athletic', img:'spot-marlowe.jpg', trend:'accountability',
+    visual:'A campaign board with names and response dates pinned to it.',
+    note:'Client moved the whole fourth quarter out of broadcast and into channels where we can name every single person who responded.',
+    why:'The move is driven by the demand for proof. Broadcast could not produce a name, so the money went where it could.',
+    notIt:{
+      mobile:'The money moved into measurable channels, not specifically onto phones. Some of it may land there, but that is not why it moved.',
+      parity:'Nothing says buyers stopped seeing a difference. The pressure is coming from the finance side, not the shelf.',
+      channel:'Moving budget between media is not the same as power moving between the maker, the retailer, and the shopper.',
+      convenience:'Nothing about the customer\u2019s experience got easier. What changed is what the client can measure.',
+      cause:'No cause and no values appeal anywhere in the note.'
+    } },
+
+  { id:'sundry', client:'Sundry &amp; Co.', img:'spot-sundry.jpg', trend:'parity',
+    visual:'Five rolls of paper towel, five nearly identical claims, one coupon.',
+    note:'Five brands, five versions of the same claim. Our only remaining lever is the coupon, so the spot is built around it.',
+    why:'Parity flattened the differences, so the ad reaches for price because nothing else is left to say.',
+    notIt:{
+      accountability:'Coupons can be counted, and often are. But that is not why this one exists. It exists because five brands say the same thing.',
+      convenience:'A coupon lowers the price, it does not remove a step. The shopping trip is exactly as long as it was.',
+      mobile:'A coupon in a spot is not a phone campaign. No device is doing any work here.',
+      channel:'The shelf is in the story, but nobody\u2019s control over the sale has moved. The problem is that the products stopped looking different.',
+      cause:'No cause and no values appeal. Only a price cut.'
+    } },
+
+  { id:'larkspur', client:'Larkspur Pizza', img:'spot-larkspur.jpg', trend:'mobile',
+    visual:'The spot never shows a computer. Only a thumb, a saved code, and a text going out.',
+    note:'The whole campaign is text messages with a saved code. No app to open, no site to load, and no version of this that works anywhere but a phone.',
+    why:'The campaign does not merely appear on phones, it only exists on them. That is mobile marketing.',
+    notIt:{
+      convenience:'It is convenient, but that is a side effect. What is on display is the channel itself, a campaign that exists nowhere but a phone.',
+      accountability:'The codes could be counted, but the client\u2019s reason is reach. Nothing in the note is about justifying the spend.',
+      channel:'Ordering direct from the restaurant does not shift power between a maker and a retailer. There is no middle to move.',
+      parity:'The note never claims the pizza looks like everyone else\u2019s, and never falls back on price.',
+      cause:'No cause and no values appeal. This is an ordering channel.'
+    } },
+
+  { id:'denton', client:'Denton Hardware', img:'spot-denton.jpg', trend:'cause',
+    visual:'A neighborhood still cleared to the foundations, years after the storm.',
+    note:'No product, no price. Just the block, the rebuild fund, and a line asking people to give.',
+    why:'A hardware store selling nothing in its own ad. The relationship is being built on values alone.',
+    notIt:{
+      channel:'A hardware store talking to its own neighborhood is not a fight over who controls the sale.',
+      accountability:'No product, no price, no response to track. There is nothing here that could be measured back to a sale.',
+      mobile:'Nothing here is built for a phone or aimed by where someone is standing.',
+      parity:'The spot never compares the store to a competitor and never mentions price.',
+      convenience:'No step is removed for anybody. The ad is not selling ease, or anything at all.'
+    } },
+
+  { id:'corwin', client:'Corwin Foods', img:'spot-corwin.jpg', trend:'channel',
+    visual:'A shelf plan on a conference table, marked up in grease pencil.',
+    note:'Our client makes the sauce. The chain\u2019s scanner data decides which shelf it lands on. This presentation is aimed at the chain\u2019s buyer, not the shopper.',
+    why:'The manufacturer no longer controls placement. The retailer owns the data and the shelf, so the pitch goes to them.',
+    notIt:{
+      parity:'The sauce may be one of many, but the note is not about buyers seeing them all as the same. It is about who decides where it sits.',
+      accountability:'Scanner data is in play, but the chain is the one using it. The client is not proving anything with it.',
+      mobile:'A shelf presentation to a buyer is not a phone campaign.',
+      convenience:'Nothing about a shopper\u2019s effort changes. This is about where the jar sits.',
+      cause:'No cause and no values appeal. This is a shelf negotiation.'
+    } }
+];
+
+/* ---- the research reel bank: 6 sequences, 4 drawn per playthrough ---- */
+const SEQUENCES = [
+  { id:'ballgame', answer:'investigative',
+    label:'Saturday afternoon',
+    steps:[
+      { dev:'tv', cap:'The ballgame is on', link:false },
+      { dev:'phone', cap:'Looks up the pitcher\u2019s numbers', link:true },
+      { dev:'tablet', cap:'Opens the team\u2019s season page', link:true }
+    ],
+    why:'One topic, three devices, all in service of learning more about it. That is investigative spider-webbing.' },
+
+  { id:'cooking', answer:'grazing',
+    label:'Tuesday evening',
+    steps:[
+      { dev:'tv', cap:'A cooking show plays', link:false },
+      { dev:'phone', cap:'Scrolls a friend\u2019s vacation photos', link:false }
+    ],
+    why:'Two screens at once on completely unrelated things. Nothing connects them, so it is content grazing.' },
+
+  { id:'hotel', answer:'quantum',
+    label:'Sunday night',
+    steps:[
+      { dev:'phone', cap:'Starts a hotel search', link:false },
+      { dev:'laptop', cap:'Compares dates and prices', link:true },
+      { dev:'tablet', cap:'Finishes the booking', link:true }
+    ],
+    why:'One task carried device to device until it was done. That is a quantum journey.' },
+
+  { id:'beach', answer:'social',
+    label:'Saturday, out of town',
+    steps:[
+      { dev:'phone', cap:'Posts a photo from the beach', link:false },
+      { dev:'phone', cap:'Texts family to go look at it', link:true },
+      { dev:'tablet', cap:'They open it at home', link:true }
+    ],
+    why:'The content is being passed to other people across devices. That is social spider-webbing.' },
+
+  { id:'desk', answer:'grazing',
+    label:'Thursday, working late',
+    steps:[
+      { dev:'laptop', cap:'A work document is open', link:false },
+      { dev:'tv', cap:'A game plays in the background', link:false }
+    ],
+    why:'Two unrelated things running at the same time. The game is not helping the document get finished.' },
+
+  { id:'taxes', answer:'quantum',
+    label:'A Sunday in April',
+    steps:[
+      { dev:'laptop', cap:'Starts the tax return', link:false },
+      { dev:'phone', cap:'Photographs a receipt into it', link:true },
+      { dev:'laptop', cap:'Files it', link:true }
+    ],
+    why:'One job, finished by moving between devices as each one became the easier tool. Quantum journey.' }
+];
+
+const REEL_ROUNDS = 5;
+const SS_ROUNDS = 4;
+const TOTAL_ROUNDS = REEL_ROUNDS + SS_ROUNDS;
+
+/* ---------- element handles ---------- */
+const el = id => document.getElementById(id);
+const authLine = el('authLine'), startBtn = el('startBtn'), briefing = el('briefing');
+const callSheet = el('callSheet'), patternBrief = el('patternBrief');
+const reelAct = el('reelAct'), screenAct = el('screenAct'), endScreen = el('endScreen');
+const filmstrip = el('filmstrip'), stripFrames = el('stripFrames'), stripLabel = el('stripLabel');
+const reelScreen = el('reelScreen'), reelLeader = el('reelLeader'), leaderNum = el('leaderNum');
+const spotFrame = el('spotFrame'), spotFallback = el('spotFallback'), reelBurn = el('reelBurn');
+const reelNote = el('reelNote'), reelOptions = el('reelOptions'), reelVerdict = el('reelVerdict');
+const reelHintToggle = el('reelHintToggle'), reelHintBox = el('reelHintBox'), reelNext = el('reelNext');
+const ssOptions = el('ssOptions'), ssVerdict = el('ssVerdict'), ssNext = el('ssNext');
+const ssHintToggle = el('ssHintToggle'), ssHintBox = el('ssHintBox');
+const replayBtn = el('replayBtn'), seqStatus = el('seqStatus'), linkLayer = el('linkLayer');
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- state ---------- */
+let spotBag = [], seqBag = [];
+let reelQueue = [], ssQueue = [];
+let roundIndex = 0;
+let active = null, activeKind = null;
+let tried = new Set(), roundClean = true, roundDone = false;
+let results = [];
+let seqTimers = [];
+
+/* ---------- small helpers ---------- */
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function drawFrom(source, bagRef, n){
+  const out = [];
+  while(out.length < n){
+    if(bagRef.bag.length === 0) bagRef.bag = shuffle(source.map(x=>x.id));
+    const id = bagRef.bag.shift();
+    if(out.some(x=>x.id===id)) continue;
+    out.push(source.find(x=>x.id===id));
+  }
+  return out;
+}
+const spotBagRef = { bag: spotBag }, seqBagRef = { bag: seqBag };
+
+let audioCtx = null;
+function beep(freqs, dur, type){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    freqs.forEach((f,i)=>{
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.type = type || 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.05, audioCtx.currentTime + i*dur);
+      g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (i+1)*dur);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(audioCtx.currentTime + i*dur); o.stop(audioCtx.currentTime + (i+1)*dur);
+    });
+  }catch(e){}
+}
+const sfxTick    = () => beep([300], 0.05, 'square');
+const sfxCorrect = () => beep([660,880,1100], 0.1, 'triangle');
+const sfxWrong   = () => beep([220,160], 0.18, 'sawtooth');
+const sfxLook    = () => beep([440], 0.08, 'sine');
+
+function setDana(expr){
+  ['danaMiniA','danaMiniB','danaMiniC','danaMiniD'].forEach(id=>{
+    const img = el(id); if(!img) return;
+    img.src = `../assets/characters/dana-${expr}.png`;
+    const w = img.parentElement; if(!w) return;
+    w.classList.add('pop'); setTimeout(()=>w.classList.remove('pop'), 180);
+  });
+}
+
+/* ---------- filmstrip ---------- */
+function buildStrip(){
+  stripFrames.innerHTML = '';
+  for(let i=0;i<TOTAL_ROUNDS;i++){
+    const f = document.createElement('div');
+    f.className = 'frm'; f.id = `frm-${i}`; f.textContent = i+1;
+    stripFrames.appendChild(f);
+  }
+  stripLabel.textContent = `Screened 0 of ${TOTAL_ROUNDS}`;
+  filmstrip.style.display = 'block';
+}
+function markStrip(i, clean){
+  const f = el(`frm-${i}`); if(f) f.classList.add(clean ? 'clean' : 'messy');
+  stripLabel.textContent = `Screened ${results.length} of ${TOTAL_ROUNDS}`;
+}
+
+/* ---------- generic match phase builder ---------- */
+function buildMatch(gridId, howtoId, feedbackEl, dict, ids, onDone, headLeft, headRight, rightWord){
+  const grid = el(gridId), fb = el(feedbackEl), howto = el(howtoId);
+  grid.innerHTML = '';
+  let matched = 0, selectedDef = null, selectedEl = null;
+
+  // the instruction bar tracks where the student actually is, so step 2 lights up
+  // only once something on the left is picked
+  function setStep(n){
+    if(!howto) return;
+    howto.querySelectorAll('.step').forEach(s=>{
+      const i = Number(s.getAttribute('data-step'));
+      s.classList.toggle('now', i === n);
+      s.classList.toggle('done', n === 2 && i === 1);
+    });
+  }
+  setStep(1);
+
+  const hl = document.createElement('div');
+  hl.className = 'match-head'; hl.textContent = headLeft;
+  const hr = document.createElement('div');
+  hr.className = 'match-head'; hr.textContent = headRight;
+  grid.appendChild(hl); grid.appendChild(hr);
+
+  const defOrder = shuffle(ids), nameOrder = shuffle(ids);
+
+  const makeDef = id => {
+    const d = document.createElement('div');
+    d.className = 'fact-card'; d.setAttribute('data-id', id);
+    d.setAttribute('tabindex','0'); d.setAttribute('role','button');
+    d.textContent = dict[id].def;
+    const pick = ()=>{
+      if(d.classList.contains('matched')) return;
+      grid.querySelectorAll('.fact-card').forEach(x=>x.classList.remove('selected'));
+      d.classList.add('selected'); selectedDef = id; selectedEl = d; sfxLook();
+      setStep(2);
+      fb.textContent = `Now click the ${rightWord} on the right that goes with it.`;
+    };
+    d.addEventListener('click', pick);
+    d.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } });
+    return d;
+  };
+
+  const makeName = id => {
+    const n = document.createElement('div');
+    n.className = 'stage-btn'; n.setAttribute('data-id', id);
+    n.setAttribute('tabindex','0'); n.setAttribute('role','button');
+    n.innerHTML = dict[id].name;
+    const pick = ()=>{
+      if(n.classList.contains('matched')) return;
+      if(!selectedDef){
+        setStep(1);
+        fb.textContent = 'Start on the left. Click one of the notes first.';
+        return;
+      }
+      if(selectedDef === id){
+        n.classList.add('matched'); selectedEl.classList.add('matched'); selectedEl.classList.remove('selected');
+        matched++; sfxCorrect(); setDana('good');
+        selectedDef = null; selectedEl = null;
+        setStep(1);
+        fb.textContent = matched === ids.length
+          ? `All ${ids.length} matched. Rolling the first reel.`
+          : `${matched} of ${ids.length} matched. Click another note on the left.`;
+        if(matched === ids.length) setTimeout(onDone, 900);
+      } else {
+        n.classList.add('shake'); setTimeout(()=>n.classList.remove('shake'), 400);
+        sfxWrong(); setDana('bad');
+        fb.textContent = `Not a match. Read the note again, then click a different ${rightWord}.`;
+      }
+    };
+    n.addEventListener('click', pick);
+    n.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } });
+    return n;
+  };
+
+  // one note and one trend per grid row, so the two sides always end level
+  for(let i=0;i<ids.length;i++){
+    grid.appendChild(makeDef(defOrder[i]));
+    grid.appendChild(makeName(nameOrder[i]));
+  }
+}
+
+/* ---------- countdown leader ---------- */
+function runLeader(done){
+  if(reduceMotion){ reelLeader.classList.remove('on'); done(); return; }
+  let n = 3;
+  leaderNum.textContent = n;
+  reelLeader.classList.add('on');
+  sfxTick();
+  const skip = ()=>{ clearInterval(iv); reelLeader.classList.remove('on'); cleanup(); done(); };
+  const cleanup = ()=>{
+    reelLeader.removeEventListener('click', skip);
+    reelLeader.removeEventListener('keydown', keyskip);
+  };
+  const keyskip = e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); skip(); } };
+  reelLeader.addEventListener('click', skip);
+  reelLeader.addEventListener('keydown', keyskip);
+  const iv = setInterval(()=>{
+    n--;
+    if(n <= 0){ clearInterval(iv); reelLeader.classList.remove('on'); cleanup(); done(); return; }
+    leaderNum.textContent = n; sfxTick();
+  }, 520);
+}
+
+/* ---------- ACT 2: the reel ---------- */
+function beginReel(){
+  callSheet.classList.remove('on');
+  reelAct.classList.add('on');
+  buildStrip();
+  reelQueue = drawFrom(SPOTS, spotBagRef, REEL_ROUNDS);
+  roundIndex = 0;
+  loadSpot();
+}
+
+function loadSpot(){
+  active = reelQueue[roundIndex]; activeKind = 'spot';
+  tried = new Set(); roundClean = true; roundDone = false;
+
+  el('reelHud').textContent = `Act 2 \u00b7 Reel ${roundIndex+1} of ${REEL_ROUNDS}`;
+  el('reelStrip').textContent = 'Watch the ad, read the client note under it, then click the trend it uses.';
+
+  spotFallback.innerHTML =
+    `<span class="slug">Spot &middot; 0:30</span>
+     <div class="client">${active.client}</div>
+     <div class="rule"></div>
+     <div class="visual">${active.visual}</div>`;
+
+  spotFrame.innerHTML = '';
+  const img = document.createElement('img');
+  img.alt = `Spot frame for ${active.client.replace(/&amp;/g,'and')}`;
+  img.onerror = function(){ spotFrame.style.display = 'none'; };
+  img.src = `../assets/spots/${active.img}`;
+  spotFrame.style.display = 'flex';
+  spotFrame.appendChild(img);
+
+  reelNote.innerHTML = `<span class="who">Client note</span>${active.note}`;
+  reelVerdict.classList.remove('full');
+  reelVerdict.textContent = 'Click one of the six trends above. If you get it wrong you can try again.';
+  reelHintToggle.style.display = 'none';
+  reelHintBox.classList.remove('on'); reelHintBox.innerHTML = '';
+  reelNext.style.display = 'none';
+
+  buildOptions(reelOptions, TRENDS, TREND_IDS, onSpotPick);
+  setDana('neutral');
+  runLeader(()=>{});
+}
+
+function buildOptions(container, dict, ids, handler){
+  container.innerHTML = '';
+  shuffle(ids).forEach(id=>{
+    const b = document.createElement('button');
+    b.className = 'opt'; b.setAttribute('data-id', id); b.type = 'button';
+    b.innerHTML = dict[id].name;
+    b.addEventListener('click', ()=>handler(id, b));
+    container.appendChild(b);
+  });
+}
+
+function onSpotPick(id, btn){
+  if(roundDone || tried.has(id)) return;
+  if(id === active.trend){
+    roundDone = true;
+    btn.classList.add('right');
+    reelOptions.querySelectorAll('.opt').forEach(b=>b.classList.add('locked'));
+    sfxCorrect(); setDana('good');
+    reelHintToggle.style.display = 'none';
+    reelHintBox.classList.remove('on');
+    recordResult(`${active.client} spot`, TRENDS[id].plain, active.why);
+    showDebrief();
+    reelNext.textContent = roundIndex === REEL_ROUNDS - 1 ? 'Change the Reel' : 'Next Reel';
+    reelNext.style.display = 'inline-block';
+  } else {
+    tried.add(id); roundClean = false;
+    btn.classList.add('tried','shake');
+    setTimeout(()=>btn.classList.remove('shake'), 400);
+    sfxWrong(); setDana('bad');
+    if(!reduceMotion){ reelBurn.classList.remove('go'); void reelBurn.offsetWidth; reelBurn.classList.add('go'); }
+    reelVerdict.classList.remove('full');
+    reelVerdict.innerHTML = `<span class="who bad">Not ${TRENDS[id].plain}</span>${TRENDS[id].def} That is not what this note is describing. Try a different one.`;
+    reelHintToggle.style.display = 'inline-block';
+    reelHintBox.innerHTML = TRENDS[active.trend].hint;
+  }
+}
+
+// one box: the right answer and its reason up top, then every other choice and why it failed
+function showDebrief(){
+  const others = TREND_IDS
+    .filter(t => t !== active.trend)
+    .map(t => `<div class="dbf-item"><span class="k">${TRENDS[t].plain}</span><span class="v">${active.notIt[t]}</span></div>`)
+    .join('');
+  reelVerdict.classList.add('full');
+  reelVerdict.innerHTML =
+    `<div class="dbf">
+       <span class="dbf-tag">It was this</span>
+       <div class="dbf-name">${TRENDS[active.trend].plain}</div>
+       <div class="dbf-why">${active.why}</div>
+       <div class="dbf-rule"><span>And why it was none of the others</span></div>
+       <div class="dbf-list">${others}</div>
+     </div>`;
+}
+
+reelNext.addEventListener('click', ()=>{
+  reelVerdict.classList.remove('full');
+  roundIndex++;
+  if(roundIndex >= REEL_ROUNDS){ beginPatternBrief(); return; }
+  loadSpot();
+});
+
+/* ---------- ACT 3: pattern brief ---------- */
+let patternsLearned = false;
+
+function beginPatternBrief(){
+  reelAct.classList.remove('on');
+  // the four patterns only need learning once per session, so a replay goes
+  // straight to the rooms instead of re-matching what they already know
+  if(patternsLearned){ beginSecondScreen(); return; }
+  patternBrief.classList.add('on');
+  setDana('neutral');
+  buildMatch('patGrid','pbHowto','pbFeedback', PATTERNS, PATTERN_IDS, onPatternsLearned, 'What the viewer is doing', 'The pattern', 'name');
+}
+
+function onPatternsLearned(){
+  patternsLearned = true;
+  beginSecondScreen();
+}
+
+/* ---------- ACT 4: second screen ---------- */
+function beginSecondScreen(){
+  patternBrief.classList.remove('on');
+  screenAct.classList.add('on');
+  ssQueue = drawFrom(SEQUENCES, seqBagRef, SS_ROUNDS);
+  roundIndex = 0;
+  loadSequence();
+}
+
+function clearRoom(){
+  seqTimers.forEach(t=>clearTimeout(t)); seqTimers = [];
+  linkLayer.innerHTML = '';
+  ['tv','laptop','tablet','phone'].forEach(d=>{
+    el(`dev-${d}`).classList.remove('lit');
+    const c = el(`cap-${d}`); c.textContent = ''; c.classList.remove('show');
+  });
+}
+
+const DEV_POINT = { tv:[310,90], laptop:[82,220], tablet:[310,226], phone:[531,224] };
+
+function playSequence(seq){
+  clearRoom();
+  replayBtn.disabled = true;
+  seqStatus.textContent = seq.label;
+
+  if(reduceMotion){
+    seq.steps.forEach(s=>{
+      el(`dev-${s.dev}`).classList.add('lit');
+      const c = el(`cap-${s.dev}`);
+      c.textContent = c.textContent ? c.textContent : s.cap;
+      c.classList.add('show');
+    });
+    replayBtn.disabled = false;
+    return;
+  }
+
+  let t = 260;
+  seq.steps.forEach((s, i)=>{
+    seqTimers.push(setTimeout(()=>{
+      el(`dev-${s.dev}`).classList.add('lit');
+      const c = el(`cap-${s.dev}`);
+      c.textContent = s.cap; c.classList.add('show');
+      sfxLook();
+      if(s.link && i > 0){
+        const from = DEV_POINT[seq.steps[i-1].dev], to = DEV_POINT[s.dev];
+        if(from[0] !== to[0] || from[1] !== to[1]){
+          const mx = (from[0]+to[0])/2, my = Math.min(from[1],to[1]) - 46;
+          const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+          p.setAttribute('class','link draw');
+          p.setAttribute('d', `M${from[0]} ${from[1]} Q${mx} ${my} ${to[0]} ${to[1]}`);
+          linkLayer.appendChild(p);
+        }
+      }
+    }, t));
+    t += 1150;
+  });
+  seqTimers.push(setTimeout(()=>{ replayBtn.disabled = false; }, t));
+}
+
+function loadSequence(){
+  active = ssQueue[roundIndex]; activeKind = 'seq';
+  tried = new Set(); roundClean = true; roundDone = false;
+
+  el('ssHud').textContent = `Act 4 \u00b7 Room ${roundIndex+1} of ${SS_ROUNDS}`;
+  el('ssStrip').textContent = 'Watch which screens light up, and the order they light up in. Then click the pattern that matches.';
+
+  ssVerdict.textContent = 'Watch the room, then click one of the four patterns above. Use Run It Again if you missed it.';
+  ssHintToggle.style.display = 'none';
+  ssHintBox.classList.remove('on'); ssHintBox.innerHTML = '';
+  ssNext.style.display = 'none';
+
+  buildOptions(ssOptions, PATTERNS, PATTERN_IDS, onSeqPick);
+  setDana('neutral');
+  playSequence(active);
+}
+
+replayBtn.addEventListener('click', ()=>{ if(active && activeKind==='seq') playSequence(active); });
+
+function onSeqPick(id, btn){
+  if(roundDone || tried.has(id)) return;
+  if(id === active.answer){
+    roundDone = true;
+    btn.classList.add('right');
+    ssOptions.querySelectorAll('.opt').forEach(b=>b.classList.add('locked'));
+    sfxCorrect(); setDana('good');
+    ssVerdict.innerHTML = `<span class="who good">${PATTERNS[id].name}</span>${active.why}`;
+    ssHintToggle.style.display = 'none';
+    recordResult(active.label, PATTERNS[id].name, active.why);
+    ssNext.textContent = roundIndex === SS_ROUNDS - 1 ? 'Bring Up the Lights' : 'Next Reel';
+    ssNext.style.display = 'inline-block';
+  } else {
+    tried.add(id); roundClean = false;
+    btn.classList.add('tried','shake');
+    setTimeout(()=>btn.classList.remove('shake'), 400);
+    sfxWrong(); setDana('bad');
+    ssVerdict.innerHTML = `<span class="who bad">Not ${PATTERNS[id].name}</span>${PATTERNS[id].def} Run it again and watch which screens are doing related things.`;
+    ssHintToggle.style.display = 'inline-block';
+    ssHintBox.innerHTML = PATTERNS[active.answer].hint;
+  }
+}
+
+ssNext.addEventListener('click', ()=>{
+  roundIndex++;
+  if(roundIndex >= SS_ROUNDS){ finish(); return; }
+  loadSequence();
+});
+
+/* ---------- results ---------- */
+function recordResult(label, answer, why){
+  results.push({ label, answer, why, clean: roundClean });
+  markStrip(results.length - 1, roundClean);
+}
+
+/* ---------- hints ---------- */
+reelHintToggle.addEventListener('click', ()=>{
+  reelHintBox.classList.toggle('on');
+  reelHintToggle.textContent = reelHintBox.classList.contains('on') ? 'Hide the hint' : 'Show me a hint';
+});
+ssHintToggle.addEventListener('click', ()=>{
+  ssHintBox.classList.toggle('on');
+  ssHintToggle.textContent = ssHintBox.classList.contains('on') ? 'Hide the hint' : 'Show me a hint';
+});
+
+/* ---------- finish ---------- */
+function finish(){
+  screenAct.classList.remove('on');
+  endScreen.classList.add('on');
+
+  const clean = results.filter(r=>r.clean).length;
+  el('scoreLine').textContent = `${clean} of ${TOTAL_ROUNDS} called on the first take.`;
+
+  el('reelOut').innerHTML = results.map(r=>
+    `<div class="row ${r.clean ? '' : 'messy'}">
+       <span class="hd">${r.label} &middot; ${r.answer}</span>${r.why}
+     </div>`).join('');
+
+  let quip;
+  if(clean === TOTAL_ROUNDS) quip = 'Dana: "Nine for nine. You can sit in on the client screening Thursday."';
+  else if(clean >= 7) quip = 'Dana: "Strong read. The ones you missed are the ones everybody misses, so look at them twice."';
+  else if(clean >= 4) quip = 'Dana: "Half of this job is naming what you just watched. Run the reel again and it gets faster."';
+  else quip = 'Dana: "Read the call sheet before you watch next time. The names do most of the work."';
+  el('endQuip').textContent = quip;
+  el('danaImg').src = `../assets/characters/dana-${clean >= 6 ? 'good' : 'neutral'}.png`;
+
+  saveResult({ success:true, clean, total:TOTAL_ROUNDS, rounds:results.map(r=>({ label:r.label, answer:r.answer, clean:r.clean })) });
+}
+
+/* ---------- start / restart ---------- */
+function startGame(){
+  results = []; roundIndex = 0;
+  patternsLearned = false;
+  clearRoom();
+  briefing.style.display = 'none';
+  endScreen.classList.remove('on');
+  reelAct.classList.remove('on');
+  screenAct.classList.remove('on');
+  patternBrief.classList.remove('on');
+  filmstrip.style.display = 'none';
+  callSheet.classList.add('on');
+  setDana('neutral');
+  buildMatch('trendGrid','csHowto','csFeedback', TRENDS, TREND_IDS, beginReel, 'Notes from the call sheet', 'The trend', 'trend');
+}
+
+function playAgain(){
+  results = [];
+  clearRoom();
+  endScreen.classList.remove('on');
+  buildStrip();
+  beginReel();
+}
+
+el('againBtn').addEventListener('click', playAgain);
+
+/* ---------- supabase ---------- */
+let saveResult = async () => {};
+try {
+  const { getSession, saveRoundResult } = await import('../shared/supabase-client.js');
+  saveResult = async (result) => {
+    try { await saveRoundResult(1, 'trend_screening', 'screening_room', result); }
+    catch(err){ console.error('Save failed:', err.message); }
+  };
+  const session = await getSession();
+  startBtn.disabled = false;
+  if(!session){
+    authLine.textContent = 'Not signed in, progress will not be saved. Return to index.html to log in.';
+    authLine.classList.add('bad');
+  } else {
+    const codename = session.user.user_metadata?.codename || 'Agent';
+    authLine.textContent = `Welcome back, ${codename}.`;
+  }
+} catch (err) {
+  startBtn.disabled = false;
+  authLine.textContent = 'Playing offline, progress will not be saved.';
+  authLine.classList.add('bad');
+}
+
+startBtn.addEventListener('click', startGame);
+</script>
+</body>
+</html>

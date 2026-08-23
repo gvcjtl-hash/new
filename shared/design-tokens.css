@@ -1,0 +1,217 @@
+/* /shared/design-tokens.css
+   Sterling & Vale — the fixed bones (Section 9's "governing rule").
+   Loaded by EVERY page, every era, every week. This file defines what
+   never changes: the leather-desk-mat feel, the type system, spacing,
+   radius, shadow. Only the accent COLOR VALUES live in each era's own
+   /eras/era-*.css file — this file references them by CSS variable name
+   so era files can override just the palette without touching layout.
+
+   Load order in every page's <head>:
+     1. Google Fonts link (Yeseva One, Barlow Condensed, Special Elite, Barlow)
+     2. <link rel="stylesheet" href="/shared/design-tokens.css">
+     3. <link rel="stylesheet" href="/eras/era-1960s.css">  (swap per era)
+*/
+
+/* ============================================================
+   TYPE SYSTEM — fixed across every era (Section 9's governing rule).
+   ============================================================ */
+:root {
+  --font-display: 'Yeseva One', Georgia, serif;      /* headlines */
+  --font-label: 'Barlow Condensed', sans-serif;       /* uppercase labels, buttons, tags */
+  --font-typewriter: 'Special Elite', monospace;      /* case-file/memo accents */
+  --font-body: 'Barlow', Georgia, serif;              /* everything else */
+
+  /* ============================================================
+     LAYOUT BONES — fixed across every era.
+     ============================================================ */
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  --shadow-card: 0 3px 14px rgba(0, 0, 0, 0.3);
+  --shadow-btn: 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-text: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  --content-max-width: 640px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 28px;
+  --space-xl: 40px;
+
+  /* ============================================================
+     SEMANTIC COLOR SLOTS — every era's era-*.css sets these five
+     variables to that era's actual palette. Nothing else in this
+     file (or in engine.js, or any page) should hardcode a color;
+     everything reads through these names so swapping era-*.css is
+     the only thing that has to change to reskin the whole site.
+     Defaults below are the 1960s values, used as a fallback only if
+     an era file forgets to set one.
+     ============================================================ */
+  --accent-primary: #B84E28;    /* era's "rust" equivalent — strong accents, stamps, alerts */
+  --accent-secondary: #D79A2C;  /* era's "mustard" equivalent — headlines, highlights */
+  --accent-action: #2F6B67;     /* era's "teal" equivalent — buttons, primary actions */
+  --accent-border: #5C4230;     /* era's "walnut" equivalent — borders, structure */
+  --accent-success: #4C8C5B;    /* correct/positive feedback — stays green-family every era */
+
+  /* Fixed regardless of era — the physical room itself */
+  --bg-page: #1C1712;
+  --bg-card: #2B2620;
+  --bg-input: #1D1A15;
+  --text-primary: #F4EFE3;
+  --text-muted: #C9BFA8;
+}
+
+/* ============================================================
+   BASE ELEMENTS
+   ============================================================ */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-page);
+  /* Fine grain overlay — fixed texture, per Section 9's governing rule.
+     Era files may layer ONE additional texture on top via .era-texture,
+     but this base grain never goes away. */
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  padding: var(--space-lg) var(--space-sm);
+}
+
+.sv-wrap {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: var(--font-display);
+  color: var(--accent-secondary);
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+  text-shadow: var(--shadow-text);
+}
+
+h2 {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-secondary);
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+.sv-subhead {
+  font-family: var(--font-typewriter);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   CARD — the standard content container. Every briefing box,
+   Playbook entry, and game wrapper uses this base.
+   ============================================================ */
+.sv-card {
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 3px),
+    var(--bg-card);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+/* Rubber-stamp style badge — used for "CASE FILE"-type corner labels.
+   Fixed motif per Section 9; each era may rename the stamp text but
+   keeps this exact visual treatment. */
+.sv-stamp {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  font-family: var(--font-typewriter);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--accent-primary);
+  border: 1.5px solid var(--accent-primary);
+  padding: 3px 8px;
+  border-radius: 2px;
+  transform: rotate(4deg);
+  opacity: 0.75;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.sv-btn {
+  padding: 13px 24px;
+  background: var(--accent-action);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-family: var(--font-label);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+}
+.sv-btn:hover { filter: brightness(1.1); }
+.sv-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.sv-btn.secondary { background: transparent; border: 1px solid var(--accent-border); box-shadow: none; }
+
+/* ============================================================
+   STATUS / FEEDBACK BOXES — auth status, save confirmations, etc.
+   ============================================================ */
+.sv-status {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  padding: 10px 14px;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+}
+.sv-status.ok { border-color: var(--accent-success); color: #9FCBA8; }
+.sv-status.err { border-color: var(--accent-primary); color: #E4A08C; }
+
+/* ============================================================
+   LINKS
+   ============================================================ */
+a.sv-link {
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-secondary);
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+.sv-hidden { display: none; }
+
+/* ============================================================
+   CHARACTER PORTRAIT SLOT — fixed size/shape every era, per
+   Section 9's "character portrait slots stay untouched" note.
+   Swap the <img src> per era's mentor; this CSS never changes.
+   ============================================================ */
+.sv-portrait {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-secondary);
+  object-fit: cover;
+  box-shadow: var(--shadow-btn);
+}

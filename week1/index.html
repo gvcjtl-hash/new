@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1 · 1960s · Dana’s Floor — Sterling &amp; Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Barlow+Condensed:wght@500;600;700&family=Special+Elite&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#B84E28;--red-dark:#8A3A1D;--red-bright:#D9713F;
+  --gold:#D79A2C;--gold-dark:#A87816;--teal:#2F6B67;--teal-dark:#1D4F4F;
+  --ink:#2B211A;--ink-2:#362B21;--gray:#E4D9BE;--gray-soft:#F3E9D2;--gray-line:#D3C4A0;
+  --muted:#6B5D4A;--white:#FBF6EA;--paper:#F3E9D2;--good:#2F6B67;--good-bg:#E1EDEA;
+  --wood-light:#8a6b45;--wood-dark:#5C4230;
+  --ease:cubic-bezier(.22,1,.36,1);--top:56px;--bot:66px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',Georgia,serif;color:var(--ink);background:var(--paper);line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:'Yeseva One',Georgia,serif;font-weight:400}
+.mark,.lo-tag,.door-kind,.eyebrow{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.04em}
+.navbtn,.open-tag,.to-label,.cx,.grade-due,.foot-note{font-family:'Special Elite',Courier,monospace}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.skip-link{position:absolute;left:-999px;top:0;z-index:500;background:var(--ink);color:#fff;padding:10px 16px;font-weight:bold;text-decoration:none}
+.skip-link:focus{left:0}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.topbar,.botbar{flex:0 0 auto;display:flex;align-items:center;padding:0 18px;background:repeating-linear-gradient(179deg,rgba(30,18,8,.16) 0px,rgba(30,18,8,.16) 1px,transparent 2px,transparent 5px),repeating-linear-gradient(179deg,rgba(255,222,180,.05) 0px,transparent 1px,transparent 10px,rgba(255,222,180,.06) 11px,transparent 24px),linear-gradient(100deg,var(--wood-light),var(--wood-dark) 60%,var(--wood-light));z-index:20;position:relative}
+.topbar{height:var(--top);gap:14px;border-bottom:3px solid var(--gold-dark);box-shadow:0 3px 10px rgba(43,26,13,.3)}
+.botbar{height:var(--bot);justify-content:space-between;gap:12px;border-top:3px solid var(--gold-dark);box-shadow:0 -3px 10px rgba(43,26,13,.3)}
+.topbar::before,.topbar::after,.botbar::before,.botbar::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:radial-gradient(circle at 32% 30%,#f2d488,var(--gold-dark) 70%,#7a5a12)}
+.topbar::before,.botbar::before{left:8px}
+.topbar::after,.botbar::after{right:8px}
+.topbar .mark{font-weight:400;letter-spacing:1px;color:var(--gold);font-size:.86rem;white-space:nowrap}
+.topbar .cx{margin-left:auto;font-size:.8rem;color:rgba(251,246,234,.75);white-space:nowrap}
+
+.header-card{position:relative;display:flex;align-items:baseline;gap:9px;background:var(--paper);border:1px solid rgba(43,33,26,.35);border-radius:2px;padding:5px 14px 4px 12px;box-shadow:0 3px 7px rgba(0,0,0,.35);transform:rotate(-.4deg);margin:0 auto}
+.header-card::before{content:"";position:absolute;top:-5px;left:16px;width:24px;height:7px;border-radius:2px;background:linear-gradient(180deg,#f2d488,var(--gold-dark) 75%,#7a5a12)}
+.header-card .to-label{font-size:.62rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.header-card .mark{letter-spacing:.5px;color:var(--red-dark);font-size:.82rem;white-space:nowrap}
+.header-card .cx{font-size:.7rem;color:var(--muted);white-space:nowrap}
+
+.grain-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
+.deck{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
+.stage{flex:1 1 auto;position:relative;box-shadow:inset 0 0 0 10px rgba(92,66,48,.10),inset 0 0 46px rgba(43,33,26,.14);background:radial-gradient(1400px 900px at 50% 45%,transparent 55%,rgba(43,33,26,.07) 100%),linear-gradient(158deg,#e6d2a8,#d9c19a 55%,#c9ad7c)}
+.stage-inner{max-width:1080px;margin:0 auto;padding:44px 22px 56px;position:relative}
+
+.hub-banner{width:100%;height:288px;overflow:hidden;border-bottom:3px solid var(--gold-dark);box-shadow:0 4px 10px rgba(43,26,13,.3)}
+.hub-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 35%}
+
+.intro-row{display:flex;align-items:center;gap:20px;margin-bottom:28px;max-width:920px;margin-left:auto;margin-right:auto}
+.intro-pair{display:flex;align-items:flex-end;gap:10px;flex:0 0 auto}
+.dana-frame{width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid var(--gold-dark);box-shadow:3px 3px 0 var(--ink);background:var(--gray-soft)}
+.dana-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.bottle-still{width:42px;height:72px;object-fit:contain;object-position:bottom;filter:drop-shadow(2px 2px 0 rgba(43,33,26,.45))}
+.intro-quip{position:relative;flex:1 1 auto;min-width:0;background:var(--white);border:2px solid var(--ink);border-radius:3px;padding:12px 20px 11px;box-shadow:4px 4px 0 var(--ink)}
+.intro-quip::before{content:"";position:absolute;left:-13px;top:50%;transform:translateY(-50%);border-style:solid;border-width:9px 13px 9px 0;border-color:transparent var(--ink) transparent transparent}
+.intro-quip::after{content:"";position:absolute;left:-9px;top:50%;transform:translateY(-50%);border-style:solid;border-width:7px 10px 7px 0;border-color:transparent var(--white) transparent transparent}
+.intro-quip p{font-size:.92rem;line-height:1.48;color:var(--ink-2);margin:0}
+.intro-quip b{color:var(--red-dark)}
+
+.floor-head{text-align:center;margin-bottom:28px}
+.floor-head .eyebrow{color:var(--red-dark);font-size:.8rem;text-transform:uppercase}
+.floor-head h1{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--ink);margin-top:4px}
+.floor-head p{color:var(--muted);margin-top:8px;font-size:.95rem;max-width:58ch;margin-left:auto;margin-right:auto}
+
+.file{position:relative;background:var(--white);border:2px solid var(--ink);border-radius:4px;box-shadow:6px 6px 0 var(--ink);display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .15s var(--ease),box-shadow .15s var(--ease)}
+.file:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+.file:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.file-tab{position:absolute;top:-14px;left:20px;background:var(--red);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.68rem;padding:5px 12px;border-radius:2px 2px 0 0;border:2px solid var(--ink);border-bottom:none}
+.file-body{padding:30px 22px 18px;flex:1;display:flex;flex-direction:column;gap:10px}
+.file-art{display:block;width:100%;max-width:220px;margin:0 auto 4px;border-radius:4px;overflow:hidden;border:1px solid var(--gray-line);background:var(--gray-soft)}
+.file-art.bottle{background:#111;display:flex;align-items:center;justify-content:center;min-height:160px}
+.file-art img{display:block;width:100%;height:auto}
+.file-art.bottle img{width:auto;height:150px;margin:8px auto}
+.file h3{font-size:1.35rem;color:var(--ink)}
+.file p{font-size:.9rem;color:var(--muted);flex:1}
+.lo-tag{display:inline-block;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--gray-line);padding-top:8px;margin-top:2px}
+.file-foot{border-top:2px dashed var(--gray-line);padding:14px 22px;display:flex;align-items:center;justify-content:space-between}
+.open-tag{font-size:.8rem;color:var(--red-dark);letter-spacing:.02em}
+.file:hover .open-tag{color:var(--red)}
+.door-kind{font-size:.72rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.arrow{transition:transform .15s var(--ease)}
+.file:hover .arrow{transform:translateX(4px)}
+
+.file.grade{max-width:920px;margin:0 auto 34px}
+.file.grade .file-tab{background:var(--gold-dark);color:var(--ink)}
+.file.grade .file-body{padding:28px 24px 16px}
+.file.grade h3{font-size:1.5rem}
+.file.grade p{font-size:.95rem;color:var(--ink-2)}
+.grade-due{font-size:.78rem;letter-spacing:.04em;color:var(--gold-dark)}
+
+.hub-optional{position:relative;max-width:920px;margin:0 auto 22px;background:var(--white);border:2px solid var(--ink);border-left:8px solid var(--red-dark);border-radius:4px;padding:22px 22px 20px 20px;box-shadow:6px 6px 0 var(--ink)}
+.hub-optional::before{content:"Not for a grade";position:absolute;top:-13px;left:18px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--red-dark);padding:5px 12px;border:2px solid var(--ink);border-radius:2px 2px 0 0}
+.hub-optional-label{margin:0 0 8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.04em;text-transform:uppercase;color:var(--red-dark)}
+.hub-optional-body{margin:0;font-size:1rem;line-height:1.55;color:var(--ink)}
+.hub-optional-canvas{display:block;margin-top:10px;padding:10px 12px;background:var(--good-bg);border:1px solid var(--teal);border-radius:3px;font-family:'Special Elite',Courier,monospace;font-size:.88rem;line-height:1.45;color:var(--teal-dark)}
+.hub-optional-canvas a{color:var(--teal-dark);font-weight:700;text-underline-offset:3px}
+
+.files{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:26px;margin-bottom:8px}
+.files .file:nth-child(2) .file-tab{background:var(--gold-dark);color:var(--ink)}
+.files .file:nth-child(3) .file-tab{background:var(--teal)}
+.files .file:nth-child(4) .file-tab{background:var(--teal-dark)}
+
+.orders{max-width:920px;margin:36px auto 40px;background:rgba(251,246,234,.86);border-left:6px solid var(--gold-dark);border-radius:2px;padding:16px 20px}
+.orders h3{font-size:1.02rem;margin-bottom:6px}
+.orders-intro{margin:0 0 10px;font-size:.88rem;color:var(--muted)}
+.orders ol{margin:0;padding-left:20px;font-size:.92rem;color:var(--ink-2)}
+.orders li{margin-bottom:3px}
+
+.brief{position:relative;background:var(--white);border:2px solid var(--ink);border-radius:4px;box-shadow:6px 6px 0 var(--ink);padding:30px 24px 24px;margin:0 auto;max-width:920px}
+.brief::before{content:"THE BRIEF";position:absolute;top:-14px;left:24px;background:var(--teal);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;padding:5px 12px;border:2px solid var(--ink);border-bottom:none}
+.brief-head{border-bottom:2px dashed var(--gray-line);padding-bottom:14px;margin-bottom:20px}
+.brief-head h2{font-size:1.25rem}
+.brief-head p{font-size:.92rem;color:var(--muted);margin-top:4px}
+.lo-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px 30px}
+.lo-item{display:flex;gap:12px;align-items:flex-start;font-size:.93rem;color:var(--ink-2)}
+.lo-ring{flex:0 0 auto;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.86rem;color:var(--white);background:radial-gradient(circle,var(--red) 0 46%,var(--white) 46% 58%,var(--red) 58% 100%);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.lo-item:nth-child(even) .lo-ring{background:radial-gradient(circle,var(--teal) 0 46%,var(--white) 46% 58%,var(--teal) 58% 100%)}
+
+.navbtn{font-size:.85rem;letter-spacing:.5px;border-radius:3px;padding:11px 20px;border:2px solid var(--ink);background:var(--gray);color:var(--ink);display:inline-flex;align-items:center;gap:8px;box-shadow:4px 4px 0 var(--ink);text-decoration:none}
+.navbtn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.botbar .foot-note{font-size:.75rem;color:rgba(251,246,234,.6)}
+
+@media (max-width:900px){
+  .hub-banner{height:230px}
+}
+@media (max-width:640px){
+  .hub-banner{height:180px}
+  .intro-row{flex-direction:column;text-align:center}
+  .intro-pair{justify-content:center}
+  .intro-quip{width:100%;text-align:left}
+  .intro-quip::before,.intro-quip::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .file,.arrow{transition:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="grain-overlay" aria-hidden="true"></div>
+<div class="deck">
+
+  <header class="topbar">
+    <span class="mark">STERLING &amp; VALE</span>
+    <div class="header-card" role="presentation">
+      <span class="to-label">TO:</span>
+      <span class="mark">Dana’s Floor</span>
+      <span class="cx">1960s · Fizz-Pop</span>
+    </div>
+    <span class="cx">MKT 150 · CH. 1</span>
+  </header>
+
+  <main class="stage" id="main">
+    <div class="hub-banner">
+      <img src="../assets/backgrounds/madison_ave_office_desk_empty.png" alt="A Madison Avenue office desk, 1960s — Sterling &amp; Vale" width="1600" height="900" loading="eager" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='../assets/illustrations/cover-hero.jpg';}else{this.parentElement.style.display='none';}">
+    </div>
+    <div class="stage-inner">
+
+      <div class="intro-row">
+        <div class="intro-pair">
+          <div class="dana-frame">
+            <img src="../assets/characters/dana-neutral.png" alt="Dana, your mentor at Sterling &amp; Vale" onerror="this.parentElement.style.display='none'">
+          </div>
+          <img class="bottle-still" src="../assets/illustrations/week1-5-fizzpop-bottle.png" alt="Fizz-Pop bottle" width="42" height="72" onerror="this.style.display='none'">
+        </div>
+        <div class="intro-quip">
+          <p><b>Dana:</b> Fizz-Pop is on the board. One cola, one message — TV, radio, print, the bottle on the shelf. Open Replay if you want the walk. The gold card is the only thing that grades you. The four doors under it are practice.</p>
+        </div>
+      </div>
+
+      <div class="floor-head">
+        <div class="eyebrow">1960s · Dana · Fizz-Pop</div>
+        <h1>Dana’s Floor</h1>
+        <p>One cola on the board this week. The lecture, the ledger, the desks — same account. Only Introduce Yourself hits Canvas.</p>
+      </div>
+
+      <a class="file grade" href="introduce-yourself.html">
+        <span class="file-tab">For a grade</span>
+        <div class="file-body">
+          <h3>Introduce Yourself</h3>
+          <p>The Module 01 brief. Not a practice game. Post it in Canvas.</p>
+          <span class="lo-tag">Module 01 · Canvas</span>
+        </div>
+        <div class="file-foot">
+          <span class="grade-due">Due Sunday 11:59 PM CST</span>
+          <span class="open-tag">OPEN FILE <span class="arrow">›</span></span>
+        </div>
+      </a>
+
+      <div class="hub-optional" role="note">
+        <p class="hub-optional-label">Practice doors</p>
+        <p class="hub-optional-body"><strong>Replay, Playbook, Sim, and Study</strong> are practice. They are <strong>not required</strong> and <strong>do not affect your grade</strong>. Jump around. Skip them. Canvas is what counts.
+          <span class="hub-optional-canvas">Only items in Canvas are for a grade. <a href="https://iowacconline.instructure.com/courses/132513" target="_blank" rel="noopener noreferrer">Open your course in Canvas<span class="visually-hidden"> (opens in new tab)</span> →</a></span>
+        </p>
+      </div>
+
+      <div class="files">
+
+        <a class="file" href="replay.html">
+          <span class="file-tab">Open File</span>
+          <div class="file-body">
+            <h3>Replay</h3>
+            <figure class="file-art">
+              <img src="../assets/illustrations/replay.jpg" alt="Replay — walk Fizz-Pop from sender to overseas" width="440" height="520" loading="lazy">
+            </figure>
+            <p>Walk Fizz-Pop from sender to overseas. The lecture.</p>
+            <span class="lo-tag">Covers 1.1 through 1.5</span>
+          </div>
+          <div class="file-foot">
+            <span class="door-kind">Practice</span>
+            <span class="open-tag">OPEN FILE <span class="arrow">›</span></span>
+          </div>
+        </a>
+
+        <a class="file" href="playbook.html">
+          <span class="file-tab">Open File</span>
+          <div class="file-body">
+            <h3>Playbook</h3>
+            <figure class="file-art">
+              <img src="../assets/illustrations/playbook.jpg" alt="Playbook — glossary, flashcards, Match-Up, Beat the Clutter" width="440" height="520" loading="lazy">
+            </figure>
+            <p>Stamp the words. Optional. Not a second lecture.</p>
+            <span class="lo-tag">Terms by objective 1.1–1.5</span>
+          </div>
+          <div class="file-foot">
+            <span class="door-kind">Practice</span>
+            <span class="open-tag">OPEN FILE <span class="arrow">›</span></span>
+          </div>
+        </a>
+
+        <a class="file" href="sim.html">
+          <span class="file-tab">Open File</span>
+          <div class="file-body">
+            <h3>Sim</h3>
+            <figure class="file-art bottle">
+              <img src="../assets/illustrations/week1-5-fizzpop-bottle.png" alt="Fizz-Pop bottle — run the account" width="220" height="320" loading="lazy">
+            </figure>
+            <p>Run the Fizz-Pop account. Each call stays on the ledger.</p>
+            <span class="lo-tag">Applies 1.1–1.5</span>
+          </div>
+          <div class="file-foot">
+            <span class="door-kind">Practice</span>
+            <span class="open-tag">OPEN FILE <span class="arrow">›</span></span>
+          </div>
+        </a>
+
+        <a class="file" href="study.html">
+          <span class="file-tab">Open File</span>
+          <div class="file-body">
+            <h3>Study</h3>
+            <figure class="file-art">
+              <img src="../assets/illustrations/study.jpg" alt="Study — four practice desks" width="440" height="520" loading="lazy">
+            </figure>
+            <p>Four desks. Any order. None of them grade you.</p>
+            <span class="lo-tag">Clippings Desk · Post-Mortem · Media Plan · Screening Room</span>
+          </div>
+          <div class="file-foot">
+            <span class="door-kind">Practice</span>
+            <span class="open-tag">OPEN FILE <span class="arrow">›</span></span>
+          </div>
+        </a>
+
+      </div>
+
+      <section class="orders" aria-labelledby="orders-title">
+        <h3 id="orders-title">If you want an order</h3>
+        <p class="orders-intro">You do not have to follow this. The doors work in any sequence.</p>
+        <ol>
+          <li><b>Replay</b> — the walk through Fizz-Pop.</li>
+          <li><b>Playbook</b> — glossary, flashcards, Match-Up, Beat the Clutter.</li>
+          <li><b>Sim</b> — run the Fizz-Pop account on the ledger.</li>
+          <li><b>Study</b> — Clippings Desk, Post-Mortem, Media Plan, Screening Room.</li>
+        </ol>
+      </section>
+
+      <section class="brief" aria-labelledby="brief-title">
+        <div class="brief-head">
+          <h2 id="brief-title">Chapter goals (reference)</h2>
+          <p>Five objectives from the chapter. A checklist while you practice — not a to-do list, and not the first thing on this floor.</p>
+        </div>
+        <ul class="lo-list">
+          <li class="lo-item"><span class="lo-ring" aria-hidden="true">1.1</span><span><b>1.1</b> How communication takes place — explain the path from sender to receiver, including encoding, noise, and feedback.</span></li>
+          <li class="lo-item"><span class="lo-ring" aria-hidden="true">1.2</span><span><b>1.2</b> What is an integrated marketing communications program? — describe IMC, the promotions mix, and how it lives inside the marketing plan.</span></li>
+          <li class="lo-item"><span class="lo-ring" aria-hidden="true">1.3</span><span><b>1.3</b> Trends affecting marketing communications — recognize forces reshaping the field, from accountability and channel power to how people pay attention.</span></li>
+          <li class="lo-item"><span class="lo-ring" aria-hidden="true">1.4</span><span><b>1.4</b> Components of an integrated marketing communications program — identify advertising, digital and alternative, selling, and integration layers.</span></li>
+          <li class="lo-item"><span class="lo-ring" aria-hidden="true">1.5</span><span><b>1.5</b> What is meant by GIMC? — explain globally integrated marketing communications, standardization, adaptation, and acting locally.</span></li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="botbar">
+    <a class="navbtn" href="../index.html">← All Chapters</a>
+    <span class="foot-note">Sterling &amp; Vale · 1960s · Dana · Fizz-Pop</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Clippings Desk — Sterling & Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Barlow+Condensed:wght@500;600;700&family=Special+Elite&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#B84E28;--red-dark:#8A3A1D;--red-bright:#D9713F;
+  --gold:#D79A2C;--gold-dark:#A87816;--teal:#2F6B67;--teal-dark:#1D4F4F;
+  --ink:#2B211A;--ink-2:#362B21;--gray:#E4D9BE;--gray-soft:#F3E9D2;--gray-line:#D3C4A0;
+  --muted:#6B5D4A;--white:#FBF6EA;--paper:#F3E9D2;--good:#2F6B67;--good-bg:#E1EDEA;--bad:#A32B2B;--bad-bg:#F4E3DE;
+  --wood-light:#8a6b45;--wood-dark:#5C4230;
+  --paper-card:linear-gradient(160deg,#FDF9EE 0%,#F6EED9 45%,#EDDFBE 100%);
+  --ease:cubic-bezier(.22,1,.36,1);--top:56px;--bot:66px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',Georgia,serif;color:var(--ink);background:#1a1410;line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:'Yeseva One',Georgia,serif;font-weight:400}
+.eyebrow,.mark{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.04em}
+.navbtn{font-family:'Special Elite',Courier,monospace}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.skip-link{position:absolute;left:-999px;top:0;z-index:500;background:var(--ink);color:#fff;padding:10px 16px;font-weight:bold;text-decoration:none}
+.skip-link:focus{left:0}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.hidden{display:none!important}
+
+.topbar,.botbar{flex:0 0 auto;display:flex;align-items:center;padding:0 18px;background:repeating-linear-gradient(179deg,rgba(30,18,8,.16) 0px,rgba(30,18,8,.16) 1px,transparent 2px,transparent 5px),repeating-linear-gradient(179deg,rgba(255,222,180,.05) 0px,transparent 1px,transparent 10px,rgba(255,222,180,.06) 11px,transparent 24px),linear-gradient(100deg,var(--wood-light),var(--wood-dark) 60%,var(--wood-light));z-index:20;position:relative}
+.topbar{height:var(--top);gap:14px;border-bottom:3px solid var(--gold-dark);box-shadow:0 3px 10px rgba(43,26,13,.3)}
+.botbar{height:var(--bot);justify-content:space-between;gap:12px;border-top:3px solid var(--gold-dark);box-shadow:0 -3px 10px rgba(43,26,13,.3)}
+.topbar::before,.topbar::after,.botbar::before,.botbar::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:radial-gradient(circle at 32% 30%,#f2d488,var(--gold-dark) 70%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5),inset 0 0 1px rgba(255,255,255,.4)}
+.topbar::before,.botbar::before{left:8px}
+.topbar::after,.botbar::after{right:8px}
+.topbar .mark{font-weight:400;letter-spacing:1px;color:var(--gold);font-size:.86rem;white-space:nowrap}
+.topbar .auth{margin-left:auto;font-family:'Special Elite',Courier,monospace;font-size:.72rem;color:rgba(251,246,234,.75);white-space:nowrap}
+.topbar .auth.bad{color:#f0b3a4}
+
+.header-card{position:relative;display:flex;align-items:baseline;gap:9px;background:
+    radial-gradient(circle at 80% 70%,transparent 38%,rgba(90,60,20,.10) 40%,rgba(90,60,20,.13) 42%,transparent 44%),
+    var(--paper);
+  border:1px solid rgba(43,33,26,.35);border-radius:2px;padding:5px 14px 4px 12px;
+  box-shadow:0 3px 7px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.5);
+  transform:rotate(-.4deg);margin:0 auto}
+.header-card::before{content:"";position:absolute;top:-5px;left:16px;width:24px;height:7px;border-radius:2px;
+  background:linear-gradient(180deg,#f2d488,var(--gold-dark) 75%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5)}
+.header-card .to-label{font-family:'Special Elite',Courier,monospace;font-size:.62rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.header-card .mk{font-family:'Special Elite',Courier,monospace;font-weight:400;letter-spacing:.5px;color:var(--red-dark);font-size:.82rem;white-space:nowrap}
+.header-card .cx{font-family:'Special Elite',Courier,monospace;font-size:.7rem;color:var(--muted);white-space:nowrap}
+
+.grain-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
+.deck{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
+.stage{flex:1 1 auto;position:relative;overflow:auto;box-shadow:inset 0 0 0 10px rgba(0,0,0,.28),inset 0 0 80px rgba(0,0,0,.55);background-color:#2a2218;background-image:
+    radial-gradient(900px 500px at 80% 20%,rgba(184,78,40,.12),transparent 55%),
+    linear-gradient(180deg,rgba(30,20,12,.55),rgba(30,20,12,.25) 40%,rgba(30,20,12,.7)),
+    url('../assets/backgrounds/clippings-newsroom.png'),
+    repeating-linear-gradient(91deg,rgba(92,66,48,.12) 0px,rgba(92,66,48,.12) 1px,transparent 2px,transparent 8px),
+    linear-gradient(158deg,#5c4a36,#3d3024 55%,#2a2118);background-size:auto,auto,cover,auto,auto;background-position:center,center,center 40%,center,center;background-repeat:no-repeat}
+.stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(20,14,10,.62) 0%,rgba(20,14,10,.28) 35%,rgba(20,14,10,.62) 100%)}
+.dust{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.32;
+  background-image:radial-gradient(2px 2px at 18% 38%,rgba(255,240,205,.7),transparent 60%),radial-gradient(1.5px 1.5px at 72% 58%,rgba(255,240,205,.5),transparent 60%);
+  animation:drift 14s linear infinite}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,-7px)}}
+.stage-inner{max-width:760px;margin:0 auto;padding:40px 20px 56px;position:relative;z-index:1}
+
+.panel{position:relative;background:var(--white);border:2px solid var(--ink);border-radius:4px;box-shadow:7px 7px 0 var(--ink);padding:34px 30px}
+.stamp-tag{position:absolute;top:22px;right:26px;border:3px solid var(--teal);color:var(--teal-dark);font-family:'Special Elite',Courier,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;transform:rotate(-8deg);opacity:.9}
+.panel .eyebrow{color:var(--red-dark);font-size:.78rem;text-transform:uppercase}
+.panel h1{font-size:clamp(1.7rem,4vw,2.3rem);margin:6px 0 16px}
+.panel p{color:var(--ink-2);font-size:.95rem;margin-bottom:12px}
+.rules{list-style:none;margin:18px 0 24px;display:grid;gap:10px}
+.rules li{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--muted)}
+.rules li b{color:var(--ink)}
+.rules li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--gray-soft);border:2px solid var(--ink);display:grid;place-items:center;font-family:'Special Elite',Courier,monospace;font-size:.7rem}
+.startbtn{font-family:'Special Elite',Courier,monospace;font-size:.95rem;letter-spacing:.5px;border-radius:3px;padding:14px 26px;border:2px solid var(--ink);background:var(--red);color:var(--white);box-shadow:5px 5px 0 var(--ink);transition:transform .12s,box-shadow .12s;width:100%}
+.startbtn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+.startbtn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+.startbtn:disabled{opacity:.5;cursor:not-allowed}
+
+.game{display:none}
+.game.on{display:block}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;font-family:'Special Elite',Courier,monospace;font-size:.8rem;color:var(--gray);flex-wrap:wrap}
+.dana-mini{flex:0 0 auto;width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid var(--gold-dark);box-shadow:2px 2px 0 var(--ink);transition:transform .15s var(--ease)}
+.dana-mini img{width:100%;height:100%;object-fit:cover;display:block}
+.dana-mini.pop{transform:scale(1.15)}
+.hud .streak{color:var(--gold)}
+.hud .streak.hot{color:#f2d488;font-weight:700}
+
+.clip-stack{position:relative;margin-bottom:4px}
+.clip-stack::before,.clip-stack::after{content:"";position:absolute;inset:10px 8px -6px;background:linear-gradient(160deg,#E8DFC4,#D9C9A4);border:2px solid rgba(43,33,26,.55);box-shadow:4px 4px 0 rgba(43,33,26,.35);z-index:0;pointer-events:none}
+.clip-stack::before{transform:rotate(2.2deg);opacity:.7}
+.clip-stack::after{transform:rotate(-1.6deg) translateY(4px);opacity:.45;inset:16px 14px -10px}
+.clip-card{position:relative;z-index:1;background:
+    radial-gradient(circle at 92% 8%,rgba(184,78,40,.08),transparent 22%),
+    repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(43,33,26,.09) 27px),
+    linear-gradient(90deg,transparent 42px,rgba(184,78,40,.22) 42px,rgba(184,78,40,.22) 43px,transparent 43px),
+    linear-gradient(160deg,#FDF9EE 0%,#F3E9D0 55%,#E8DDB8 100%);
+  border:2px solid var(--ink);border-radius:1px;box-shadow:7px 7px 0 var(--ink),0 0 0 1px rgba(251,246,234,.35) inset;
+  padding:46px 26px 26px 52px;text-align:left;min-height:160px;display:flex;flex-direction:column;justify-content:center;
+  transition:transform .22s var(--ease),opacity .22s var(--ease);transform:rotate(-0.8deg);
+  clip-path:polygon(0 3%,1% 0,96% 1%,100% 4%,99% 96%,97% 100%,2% 98%,0 94%);
+}
+.clip-card.deal{animation:clipDeal .32s var(--ease)}
+.clip-card .masthead{position:absolute;top:10px;left:14px;right:48px;display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:6px;border-bottom:2px double var(--ink)}
+.clip-card .masthead .paper{font-family:'Yeseva One',Georgia,serif;font-size:.78rem;color:var(--ink);letter-spacing:.02em}
+.clip-card .masthead .desk{font-family:'Special Elite',Courier,monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.clip-card .pin{position:absolute;top:-7px;right:20px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e8825a,var(--red-dark));box-shadow:0 2px 3px rgba(0,0,0,.35),inset 0 -2px 0 rgba(0,0,0,.2);transform:rotate(8deg);z-index:2}
+.clip-card .txt{font-size:1.12rem;color:var(--ink);line-height:1.5;font-family:Georgia,'Times New Roman',serif;margin-top:8px}
+.clip-card .col-rule{position:absolute;left:42px;top:40px;bottom:18px;width:1px;background:rgba(184,78,40,.35);pointer-events:none}
+.clip-card.shake{animation:shake .4s}
+@keyframes clipDeal{from{transform:translateY(26px) rotate(-3deg) scale(.96);opacity:0}to{transform:rotate(-0.8deg) scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0) rotate(-0.8deg)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(5px)}}
+
+.stampgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
+.stamp{position:relative;padding:18px 14px;border-radius:6px;border:3px solid var(--ink);font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1rem;box-shadow:4px 4px 0 var(--ink);transition:transform .1s,box-shadow .1s,opacity .15s;transform:rotate(var(--r,0deg))}
+.stamp:hover:not([disabled]){transform:translate(-2px,-2px) rotate(var(--r,0deg));box-shadow:5px 5px 0 var(--ink)}
+.stamp:active:not([disabled]){transform:translate(3px,3px) rotate(var(--r,0deg));box-shadow:0 0 0 var(--ink)}
+.stamp:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:2px 2px 0 var(--ink)}
+.stamp.advertising{background:var(--red);color:var(--white);--r:-2deg}
+.stamp.sales_promo{background:var(--gold);color:var(--ink);--r:1.5deg}
+.stamp.personal_selling{background:var(--wood-dark);color:var(--white);--r:-1.5deg}
+.stamp.pr{background:var(--teal);color:var(--white);--r:2deg}
+.stamp.picked-wrong{opacity:1;outline:3px solid var(--bad);outline-offset:2px}
+.stamp.reveal-correct{opacity:1;outline:3px solid var(--good);outline-offset:2px;box-shadow:0 0 0 3px rgba(47,107,103,.35),4px 4px 0 var(--ink)}
+
+.feedback{display:none;margin-top:18px;background:var(--paper-card);border:2px solid var(--ink);border-left:6px solid var(--teal);box-shadow:4px 4px 0 var(--ink);padding:16px 18px;color:var(--ink)}
+.feedback.show{display:block}
+.feedback.wrong{border-left-color:var(--bad)}
+.feedback .fb-label{font-family:'Special Elite',Courier,monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.feedback.good .fb-label{color:var(--teal-dark)}
+.feedback.wrong .fb-label{color:var(--bad)}
+.feedback .fb-body{font-size:.95rem;line-height:1.5;color:var(--ink-2)}
+.feedback .fb-body b{color:var(--ink)}
+.next-btn{margin-top:14px;font-family:'Special Elite',Courier,monospace;font-size:.9rem;letter-spacing:.5px;padding:12px 22px;border:2px solid var(--ink);background:var(--gold);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.next-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+
+.trays{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:22px}
+.tray{position:relative;text-align:center;padding:10px 6px 8px;font-family:'Special Elite',Courier,monospace;font-size:.68rem;color:var(--gray);background:rgba(251,246,234,.08);border:1.5px dashed rgba(215,154,44,.35);border-radius:2px;transition:background .2s,border-color .2s,transform .2s}
+.tray .pile{display:flex;justify-content:center;gap:2px;height:14px;margin-bottom:4px}
+.tray .pile i{display:block;width:10px;height:12px;background:linear-gradient(180deg,#FCF8EC,#E8C56A);border:1px solid var(--ink);transform:rotate(-6deg);opacity:0;transition:opacity .15s}
+.tray .pile i:nth-child(2){transform:rotate(4deg)}
+.tray .pile i:nth-child(3){transform:rotate(-2deg)}
+.tray.has-1 .pile i:nth-child(1),
+.tray.has-2 .pile i:nth-child(1),.tray.has-2 .pile i:nth-child(2),
+.tray.has-3 .pile i:nth-child(1),.tray.has-3 .pile i:nth-child(2),.tray.has-3 .pile i:nth-child(3),
+.tray.has-more .pile i{opacity:1}
+.tray .count{display:block;font-size:1.3rem;color:var(--gray);font-family:'Yeseva One',Georgia,serif;transition:transform .18s var(--ease)}
+.tray.bump{background:rgba(215,154,44,.18);border-color:var(--gold);transform:translateY(-3px)}
+.tray.bump .count{transform:scale(1.35);color:var(--gold)}
+
+/* ---------- end / summary (paper panel for readability) ---------- */
+.end{display:none}
+.end.on{display:block}
+.end-sheet{background:var(--paper-card);border:2px solid var(--ink);box-shadow:7px 7px 0 var(--ink);padding:28px 24px 24px;color:var(--ink);text-align:left}
+.end-head{display:flex;gap:16px;align-items:center;margin-bottom:18px;padding-bottom:16px;border-bottom:2px dashed var(--gray-line)}
+.end .dana-frame{flex:0 0 auto;width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid var(--gold-dark);box-shadow:3px 3px 0 var(--ink)}
+.end .dana-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.end .rank{font-size:1.7rem;color:var(--red-dark);margin:0 0 4px;line-height:1.15}
+.end .score{font-family:'Special Elite',Courier,monospace;color:var(--ink);font-size:.95rem;margin:0 0 8px}
+.end .quip{margin:0;color:var(--ink-2);font-size:.95rem;line-height:1.5;font-style:normal}
+.end .quip b{color:var(--red-dark);font-style:normal}
+
+.review-title{font-family:'Special Elite',Courier,monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 0 10px}
+.review-list{display:grid;gap:10px;margin-bottom:20px}
+.review-row{border:2px solid var(--ink);background:var(--white);padding:12px 14px;box-shadow:2px 2px 0 var(--ink)}
+.review-row.ok{border-left:6px solid var(--good)}
+.review-row.miss{border-left:6px solid var(--bad)}
+.review-row .rr-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:6px;flex-wrap:wrap}
+.review-row .rr-mark{font-family:'Special Elite',Courier,monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}
+.review-row.ok .rr-mark{color:var(--teal-dark)}
+.review-row.miss .rr-mark{color:var(--bad)}
+.review-row .rr-clip{font-size:.92rem;color:var(--ink);line-height:1.4;margin-bottom:6px}
+.review-row .rr-why{font-size:.86rem;color:var(--ink-2);line-height:1.45}
+.review-row .rr-why b{color:var(--ink)}
+
+.end .actions{display:flex;gap:14px;justify-content:flex-start;flex-wrap:wrap}
+
+.navbtn{font-family:'Special Elite',Courier,monospace;font-size:.85rem;letter-spacing:.5px;border-radius:3px;padding:11px 20px;border:2px solid var(--ink);background:var(--gray);color:var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.navbtn.primary{background:var(--red);color:var(--white)}
+.navbtn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.navbtn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+.botbar .foot-note{font-family:'Special Elite',Courier,monospace;font-size:.72rem;color:rgba(251,246,234,.6)}
+
+@media (max-width:480px){
+  .stampgrid{grid-template-columns:1fr 1fr}
+  .trays{grid-template-columns:repeat(2,1fr)}
+  .end-head{flex-direction:column;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .clip-card,.stamp,.dust{transition:none;animation:none}
+  .clip-card.shake,.clip-card.deal{animation:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="grain-overlay" aria-hidden="true"></div>
+<div class="deck">
+
+  <header class="topbar">
+    <span class="mark">STERLING &amp; VALE</span>
+    <div class="header-card" role="presentation">
+      <span class="to-label">TO:</span>
+      <span class="mk">The Clippings Desk</span>
+      <span class="cx">Ch.1 &middot; Sort / Categorize</span>
+    </div>
+    <span class="auth" id="authLine">Connecting&hellip;</span>
+  </header>
+
+  <main class="stage" id="main">
+    <div class="dust" aria-hidden="true"></div>
+    <div class="stage-inner">
+
+      <section class="panel" id="briefing">
+        <span class="stamp-tag">Desk Sort</span>
+        <div class="eyebrow">Chapter 1 &middot; Practice</div>
+        <h1>The Clippings Desk</h1>
+        <p>Every account rep at Sterling &amp; Vale drops their week's clippings on this desk before Monday's meeting. Read each one, stamp the promotions mix it belongs to, then read why before you pull the next clipping.</p>
+        <ul class="rules">
+          <li><span class="n">1</span><span>A clipping lands on the desk. <b>Read it carefully</b> — there is no clock.</span></li>
+          <li><span class="n">2</span><span>Stamp one tray: <b>Advertising, Sales Promotion, Personal Selling,</b> or <b>PR.</b></span></li>
+          <li><span class="n">3</span><span>You get feedback on why that stamp is right or wrong, then tap <b>Next clipping</b> when you are ready.</span></li>
+        </ul>
+        <button class="startbtn" id="startBtn" disabled>Open the Desk</button>
+      </section>
+
+      <section class="game" id="game">
+        <div class="hud">
+          <span class="dana-mini"><img id="danaMini" src="../assets/characters/dana-neutral.png" alt="" onerror="this.parentElement.style.display='none'"></span>
+          <span id="hudProgress">Item 1 / 8</span>
+          <span class="streak" id="hudStreak">Streak: 0</span>
+          <span id="hudScore">Score: 0</span>
+        </div>
+        <div class="clip-stack">
+          <div class="clip-card" id="clipCard">
+            <span class="pin" aria-hidden="true"></span>
+            <div class="masthead">
+              <span class="paper">The City Desk</span>
+              <span class="desk">Clipping</span>
+            </div>
+            <span class="col-rule" aria-hidden="true"></span>
+            <span class="txt" id="clipTxt"></span>
+          </div>
+        </div>
+        <div class="stampgrid">
+          <button class="stamp advertising" data-cat="advertising">Advertising</button>
+          <button class="stamp sales_promo" data-cat="sales_promo">Sales&nbsp;Promo</button>
+          <button class="stamp personal_selling" data-cat="personal_selling">Personal&nbsp;Selling</button>
+          <button class="stamp pr" data-cat="pr">PR</button>
+        </div>
+        <div class="feedback" id="feedback" aria-live="polite">
+          <div class="fb-label" id="fbLabel"></div>
+          <div class="fb-body" id="fbBody"></div>
+          <button class="next-btn" type="button" id="nextBtn">Next clipping</button>
+        </div>
+        <div class="trays">
+          <div class="tray" id="trayWrapAdvertising">
+            <div class="pile" aria-hidden="true"><i></i><i></i><i></i></div>
+            ADVERTISING<span class="count" id="trayAdvertising">0</span>
+          </div>
+          <div class="tray" id="trayWrapSales_promo">
+            <div class="pile" aria-hidden="true"><i></i><i></i><i></i></div>
+            SALES&nbsp;PROMO<span class="count" id="traySales_promo">0</span>
+          </div>
+          <div class="tray" id="trayWrapPersonal_selling">
+            <div class="pile" aria-hidden="true"><i></i><i></i><i></i></div>
+            PERSONAL&nbsp;SELLING<span class="count" id="trayPersonal_selling">0</span>
+          </div>
+          <div class="tray" id="trayWrapPr">
+            <div class="pile" aria-hidden="true"><i></i><i></i><i></i></div>
+            PR<span class="count" id="trayPr">0</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="end" id="endScreen">
+        <div class="end-sheet">
+          <div class="end-head">
+            <div class="dana-frame"><img src="../assets/characters/dana-neutral.png" alt="Dana" id="danaImg" onerror="this.parentElement.style.display='none'"></div>
+            <div>
+              <h2 class="rank" id="endRank">Junior AE</h2>
+              <div class="score" id="endScore">Score: 0 / 80</div>
+              <p class="quip" id="endQuip"></p>
+            </div>
+          </div>
+          <div class="review-title">Clipping review</div>
+          <div class="review-list" id="reviewList"></div>
+          <div class="actions">
+            <button class="navbtn primary" id="againBtn">&#8635; Re-rack the Desk</button>
+            <a class="navbtn" href="../week1/study.html">&larr; Back to Practice Floor</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="botbar">
+    <a class="navbtn" href="../week1/study.html">&larr; Practice Floor</a>
+    <span class="foot-note">Sterling &amp; Vale &middot; MKT 150 &middot; Chapter 1 &mdash; practice materials, not graded</span>
+  </footer>
+
+</div>
+
+<script type="module">
+const authLine = document.getElementById('authLine');
+const startBtn = document.getElementById('startBtn');
+
+const CAT_LABEL = { advertising:'Advertising', sales_promo:'Sales Promotion', personal_selling:'Personal Selling', pr:'PR' };
+const CAT_SCAFFOLD = {
+  advertising: 'Advertising is a paid, nonpersonal message placed in media the brand does not control in person — TV, radio, print, outdoor, display.',
+  sales_promo: 'Sales promotion is a short-term incentive meant to spur an immediate buy or try — coupons, rebates, contests, samples, flash deals.',
+  personal_selling: 'Personal selling is one-to-one persuasion: a live pitch, demo, or consult where a person closes or advances the sale.',
+  pr: 'PR is unpaid or earned publicity that builds reputation through a third party — press, sponsorships, tours, crisis statements — not a paid ad slot.'
+};
+
+const ITEMS = [
+  { id:'tv_spot', label:'A 30-second TV spot airs during the evening news.', cat:'advertising', why:'A paid spot in a media buy is classic advertising — the brand purchases the time and controls the message.' },
+  { id:'magazine_ad', label:'A full-page ad runs in a trade magazine.', cat:'advertising', why:'Paid space in a magazine is advertising. The brand buys the page; it is not a news story or a personal pitch.' },
+  { id:'billboard', label:'A highway billboard advertises the client\u2019s new sedan.', cat:'advertising', why:'Outdoor boards are paid media placements. That puts this in advertising, not PR or a one-to-one sale.' },
+  { id:'radio_spot', label:'A 15-second radio spot runs during the morning commute.', cat:'advertising', why:'Purchased airtime with a controlled message is advertising.' },
+  { id:'banner_ad', label:'A banner ad appears on a sports news website.', cat:'advertising', why:'A paid digital display unit is advertising — same idea as a print ad, just online.' },
+  { id:'coupon', label:'A buy-one-get-one coupon prints in the Sunday circular.', cat:'sales_promo', why:'A coupon is a short-term incentive to buy now. That is sales promotion, not the ad creative itself.' },
+  { id:'flash_sale', label:'A limited-time 20%-off flash sale email goes out.', cat:'sales_promo', why:'A timed discount is meant to trigger an immediate purchase — sales promotion.' },
+  { id:'rebate', label:'The client offers a mail-in rebate on a new blender.', cat:'sales_promo', why:'A rebate is a temporary money-back incentive after purchase — textbook sales promotion.' },
+  { id:'contest', label:'A \u201cwin a free vacation\u201d sweepstakes launches in-store.', cat:'sales_promo', why:'Contests and sweepstakes spur action with a prize. They sit in sales promotion, not paid media advertising.' },
+  { id:'free_sample', label:'Grocery shoppers get a free sample of a new snack at the endcap.', cat:'sales_promo', why:'Sampling is a try-before-you-buy incentive — sales promotion aimed at trial.' },
+  { id:'door_to_door', label:'A door-to-door agent pitches a home security system.', cat:'personal_selling', why:'A live, face-to-face pitch is personal selling — one person persuading another in real time.' },
+  { id:'trade_show', label:'A rep runs a live product demo at a trade show booth.', cat:'personal_selling', why:'A booth demo is person-to-person persuasion. The interaction, not a paid ad, is doing the work.' },
+  { id:'car_lot', label:'A car salesperson walks a customer around the lot.', cat:'personal_selling', why:'Guiding a buyer on the lot is classic personal selling.' },
+  { id:'b2b_call', label:'An account rep cold-calls a regional buyer to pitch a bulk order.', cat:'personal_selling', why:'A direct sales call to close or advance an order is personal selling, even when it is on the phone.' },
+  { id:'cosmetics_counter', label:'A department-store beauty consultant demos a new skincare line one-on-one.', cat:'personal_selling', why:'A one-on-one consult and demo is personal selling at the counter.' },
+  { id:'press_release', label:'A press release announces a new product line.', cat:'pr', why:'A press release seeks unpaid news coverage. That is PR — earned publicity, not a paid ad.' },
+  { id:'charity_run', label:'The company sponsors a charity 5K with branded banners.', cat:'pr', why:'Sponsorship and community association build goodwill and reputation — PR, not a media buy for a product pitch alone.' },
+  { id:'plant_tour', label:'The company hosts a local news crew for a factory tour.', cat:'pr', why:'Hosting journalists for coverage is media relations — PR aimed at third-party storytelling.' },
+  { id:'sponsorship', label:'The client sponsors a scholarship program at a state university.', cat:'pr', why:'Institutional sponsorship builds reputation and goodwill. That lives in PR.' },
+  { id:'crisis_statement', label:'A spokesperson issues a public statement addressing a product recall.', cat:'pr', why:'A public statement to manage reputation in a crisis is PR, not advertising or a sales pitch.' },
+];
+
+const ROUND_SIZE = 8;
+const POINTS_CORRECT = 10;
+
+let order = [];
+let idx = 0;
+let score = 0;
+let streak = 0;
+let bestStreak = 0;
+let correctCount = 0;
+let locked = false;
+let history = [];
+
+const clipCard = document.getElementById('clipCard');
+const clipTxt = document.getElementById('clipTxt');
+const feedback = document.getElementById('feedback');
+const fbLabel = document.getElementById('fbLabel');
+const fbBody = document.getElementById('fbBody');
+const nextBtn = document.getElementById('nextBtn');
+const hudProgress = document.getElementById('hudProgress');
+const hudStreak = document.getElementById('hudStreak');
+const hudScore = document.getElementById('hudScore');
+const briefing = document.getElementById('briefing');
+const game = document.getElementById('game');
+const endScreen = document.getElementById('endScreen');
+const danaMini = document.getElementById('danaMini');
+const reviewList = document.getElementById('reviewList');
+
+function setDana(expr){
+  danaMini.src = `../assets/characters/dana-${expr}.png`;
+  danaMini.parentElement.classList.remove('pop');
+  void danaMini.parentElement.offsetWidth;
+  danaMini.parentElement.classList.add('pop');
+}
+
+let audioCtx = null;
+function beep(freqs, dur, type){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const now = audioCtx.currentTime;
+    freqs.forEach((f, i)=>{
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.setValueAtTime(f, now + i*dur);
+      gain.gain.setValueAtTime(0.001, now + i*dur);
+      gain.gain.exponentialRampToValueAtTime(0.18, now + i*dur + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i*dur + dur*0.9);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now + i*dur);
+      osc.stop(now + i*dur + dur);
+    });
+  } catch(e){ /* ignore */ }
+}
+function sfxCorrect(){ beep([660,880], 0.11, 'triangle'); }
+function sfxWrong(){ beep([220,160], 0.16, 'sawtooth'); }
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function setTrayCount(cat, n){
+  const id = 'tray'+cat.charAt(0).toUpperCase()+cat.slice(1);
+  const trayEl = document.getElementById(id);
+  const wrap = document.getElementById('trayWrap'+cat.charAt(0).toUpperCase()+cat.slice(1));
+  trayEl.textContent = String(n);
+  if(!wrap) return;
+  wrap.classList.remove('has-1','has-2','has-3','has-more');
+  if(n >= 4) wrap.classList.add('has-more');
+  else if(n === 3) wrap.classList.add('has-3');
+  else if(n === 2) wrap.classList.add('has-2');
+  else if(n === 1) wrap.classList.add('has-1');
+}
+
+function startRound(){
+  order = shuffle(ITEMS).slice(0, ROUND_SIZE);
+  idx = 0; score = 0; streak = 0; bestStreak = 0; correctCount = 0; history = [];
+  ['advertising','sales_promo','personal_selling','pr'].forEach(c=> setTrayCount(c, 0));
+  briefing.style.display = 'none';
+  game.classList.add('on');
+  endScreen.classList.remove('on');
+  updateHud();
+  showItem();
+}
+
+function updateHud(){
+  hudProgress.textContent = `Item ${Math.min(idx+1, order.length)} / ${order.length}`;
+  hudStreak.textContent = `Streak: ${streak}`;
+  hudStreak.classList.toggle('hot', streak >= 3);
+  hudScore.textContent = `Score: ${score}`;
+}
+
+function showItem(){
+  if(idx >= order.length){ return finish(); }
+  locked = false;
+  const item = order[idx];
+  clipTxt.textContent = item.label;
+  clipCard.classList.remove('shake','deal');
+  void clipCard.offsetWidth;
+  clipCard.classList.add('deal');
+  feedback.classList.remove('show','good','wrong');
+  document.querySelectorAll('.stamp').forEach(b=>{
+    b.disabled = false;
+    b.classList.remove('picked-wrong','reveal-correct');
+  });
+  setDana('neutral');
+  updateHud();
+}
+
+function showFeedback(ok, pickedCat, item){
+  feedback.classList.add('show', ok ? 'good' : 'wrong');
+  fbLabel.textContent = ok ? 'Correct — ' + CAT_LABEL[item.cat] : 'Not that tray — ' + CAT_LABEL[item.cat];
+  if(ok){
+    fbBody.innerHTML = '<b>Why:</b> ' + item.why + ' ' + CAT_SCAFFOLD[item.cat];
+  } else {
+    fbBody.innerHTML = '<b>You stamped:</b> ' + CAT_LABEL[pickedCat] + '.<br><b>Why ' + CAT_LABEL[item.cat] + ':</b> ' + item.why + '<br><b>Remember:</b> ' + CAT_SCAFFOLD[item.cat];
+  }
+  nextBtn.textContent = idx >= order.length - 1 ? 'See desk summary' : 'Next clipping';
+  nextBtn.focus();
+}
+
+document.querySelectorAll('.stamp').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    if(locked) return;
+    locked = true;
+    const cat = btn.getAttribute('data-cat');
+    const item = order[idx];
+    const ok = cat === item.cat;
+
+    document.querySelectorAll('.stamp').forEach(b=> b.disabled = true);
+    const correctBtn = document.querySelector('.stamp[data-cat="'+item.cat+'"]');
+    if(ok){
+      streak++; bestStreak = Math.max(bestStreak, streak); correctCount++;
+      score += POINTS_CORRECT;
+      const next = (parseInt(document.getElementById('tray'+cat.charAt(0).toUpperCase()+cat.slice(1)).textContent,10)||0) + 1;
+      setTrayCount(cat, next);
+      const trayWrap = document.getElementById('trayWrap'+cat.charAt(0).toUpperCase()+cat.slice(1));
+      if(trayWrap){ trayWrap.classList.remove('bump'); void trayWrap.offsetWidth; trayWrap.classList.add('bump'); }
+      correctBtn.classList.add('reveal-correct');
+      setDana('good');
+      sfxCorrect();
+    } else {
+      streak = 0;
+      btn.classList.add('picked-wrong');
+      correctBtn.classList.add('reveal-correct');
+      clipCard.classList.add('shake');
+      setDana('bad');
+      sfxWrong();
+    }
+
+    history.push({
+      label: item.label,
+      cat: item.cat,
+      picked: cat,
+      ok,
+      why: item.why,
+      scaffold: CAT_SCAFFOLD[item.cat]
+    });
+
+    updateHud();
+    showFeedback(ok, cat, item);
+  });
+});
+
+nextBtn.addEventListener('click', ()=>{
+  idx++;
+  showItem();
+});
+
+function finish(){
+  game.classList.remove('on');
+  endScreen.classList.add('on');
+  const max = order.length * POINTS_CORRECT;
+  const pct = correctCount / order.length;
+  let rank, quip, expr;
+  if(pct === 1){
+    rank = 'CMO Material';
+    quip = '<b>Dana:</b> Every clipping, right tray, no hesitation. The floor noticed.';
+    expr = 'good';
+  } else if(pct >= 0.875){
+    rank = 'Brand Strategist';
+    quip = '<b>Dana:</b> Clean desk, sharp calls. That is how Monday mornings should go.';
+    expr = 'good';
+  } else if(pct >= 0.625){
+    rank = 'Account Executive';
+    quip = '<b>Dana:</b> Solid run. A couple of those will trip you up again — review the mix below.';
+    expr = 'neutral';
+  } else {
+    rank = 'Junior AE';
+    quip = '<b>Dana:</b> Rough morning on the desk. Read the misses below, then run it again before the meeting.';
+    expr = 'bad';
+  }
+
+  document.getElementById('endRank').textContent = rank;
+  document.getElementById('endScore').textContent = `Score: ${score} / ${max}  ·  ${correctCount} of ${order.length} correct  ·  Best streak: ${bestStreak}`;
+  document.getElementById('endQuip').innerHTML = quip;
+  document.getElementById('danaImg').src = `../assets/characters/dana-${expr}.png`;
+
+  reviewList.innerHTML = '';
+  history.forEach((h, i)=>{
+    const row = document.createElement('div');
+    row.className = 'review-row ' + (h.ok ? 'ok' : 'miss');
+    row.innerHTML =
+      '<div class="rr-top">' +
+        '<span class="rr-mark">' + (h.ok ? 'Correct' : 'Missed') + ' · Clipping ' + (i+1) + '</span>' +
+        '<span class="rr-mark">' + CAT_LABEL[h.cat] + '</span>' +
+      '</div>' +
+      '<div class="rr-clip">' + h.label + '</div>' +
+      '<div class="rr-why">' +
+        (h.ok
+          ? '<b>Why it belongs in ' + CAT_LABEL[h.cat] + ':</b> ' + h.why
+          : '<b>You stamped ' + CAT_LABEL[h.picked] + '.</b> Correct tray: <b>' + CAT_LABEL[h.cat] + '</b>. ' + h.why + ' ' + h.scaffold) +
+      '</div>';
+    reviewList.appendChild(row);
+  });
+
+  saveResult({
+    success: pct === 1,
+    score: Math.round((score / max) * 100),
+    correctCount,
+    total: order.length,
+    bestStreak
+  });
+}
+
+document.getElementById('againBtn').addEventListener('click', startRound);
+
+let saveResult = async () => {};
+
+try {
+  const { getSession, saveRoundResult } = await import('../shared/supabase-client.js');
+  saveResult = async (result) => {
+    try { await saveRoundResult(1, 'sort_categorize', 'clippings_desk', result); }
+    catch(err){ console.error('Save failed:', err.message); }
+  };
+  const session = await getSession();
+  startBtn.disabled = false;
+  if(!session){
+    authLine.textContent = 'Not signed in — progress won\u2019t be saved. Return to index.html to log in.';
+    authLine.classList.add('bad');
+  } else {
+    const codename = session.user.user_metadata?.codename || 'Agent';
+    authLine.textContent = `Welcome back, ${codename}.`;
+  }
+} catch (err) {
+  startBtn.disabled = false;
+  authLine.textContent = 'Playing offline — progress won\u2019t be saved.';
+  authLine.classList.add('bad');
+}
+
+document.getElementById('startBtn').addEventListener('click', startRound);
+</script>
+</body>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Post-Mortem — Sterling & Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Barlow+Condensed:wght@500;600;700&family=Special+Elite&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#B84E28;--red-dark:#8A3A1D;--red-bright:#D9713F;
+  --gold:#D79A2C;--gold-dark:#A87816;--teal:#2F6B67;--teal-dark:#1D4F4F;
+  --ink:#2B211A;--ink-2:#362B21;--gray:#E4D9BE;--gray-soft:#F3E9D2;--gray-line:#D3C4A0;
+  --muted:#6B5D4A;--white:#FBF6EA;--paper:#F3E9D2;--good:#2F6B67;--good-bg:#E1EDEA;--bad:#A32B2B;--bad-bg:#F4E3DE;
+  --wood-light:#8a6b45;--wood-dark:#5C4230;
+  --paper-card:linear-gradient(160deg,#FDF9EE 0%,#F6EED9 45%,#EDDFBE 100%);
+  --ease:cubic-bezier(.22,1,.36,1);--top:56px;--bot:66px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',Georgia,serif;color:var(--ink);background:var(--paper);line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:'Yeseva One',Georgia,serif;font-weight:400}
+.eyebrow,.mark{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.04em}
+.navbtn{font-family:'Special Elite',Courier,monospace}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.skip-link{position:absolute;left:-999px;top:0;z-index:500;background:var(--ink);color:#fff;padding:10px 16px;font-weight:bold;text-decoration:none}
+.skip-link:focus{left:0}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+.topbar,.botbar{flex:0 0 auto;display:flex;align-items:center;padding:0 18px;background:repeating-linear-gradient(179deg,rgba(30,18,8,.16) 0px,rgba(30,18,8,.16) 1px,transparent 2px,transparent 5px),repeating-linear-gradient(179deg,rgba(255,222,180,.05) 0px,transparent 1px,transparent 10px,rgba(255,222,180,.06) 11px,transparent 24px),linear-gradient(100deg,var(--wood-light),var(--wood-dark) 60%,var(--wood-light));z-index:20;position:relative}
+.topbar{height:var(--top);gap:14px;border-bottom:3px solid var(--gold-dark);box-shadow:0 3px 10px rgba(43,26,13,.3)}
+.botbar{height:var(--bot);justify-content:space-between;gap:12px;border-top:3px solid var(--gold-dark);box-shadow:0 -3px 10px rgba(43,26,13,.3)}
+.topbar::before,.topbar::after,.botbar::before,.botbar::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:radial-gradient(circle at 32% 30%,#f2d488,var(--gold-dark) 70%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5),inset 0 0 1px rgba(255,255,255,.4)}
+.topbar::before,.botbar::before{left:8px}
+.topbar::after,.botbar::after{right:8px}
+.topbar .mark{font-weight:400;letter-spacing:1px;color:var(--gold);font-size:.86rem;white-space:nowrap}
+.topbar .auth{margin-left:auto;font-family:'Special Elite',Courier,monospace;font-size:.72rem;color:rgba(251,246,234,.75);white-space:nowrap}
+.topbar .auth.bad{color:#f0b3a4}
+
+.header-card{position:relative;display:flex;align-items:baseline;gap:9px;background:radial-gradient(circle at 80% 70%,transparent 38%,rgba(90,60,20,.10) 40%,rgba(90,60,20,.13) 42%,transparent 44%),var(--paper);border:1px solid rgba(43,33,26,.35);border-radius:2px;padding:5px 14px 4px 12px;box-shadow:0 3px 7px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.5);transform:rotate(-.4deg);margin:0 auto}
+.header-card::before{content:"";position:absolute;top:-5px;left:16px;width:24px;height:7px;border-radius:2px;background:linear-gradient(180deg,#f2d488,var(--gold-dark) 75%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5)}
+.header-card .to-label{font-family:'Special Elite',Courier,monospace;font-size:.62rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.header-card .mk{font-family:'Special Elite',Courier,monospace;font-weight:400;letter-spacing:.5px;color:var(--red-dark);font-size:.82rem;white-space:nowrap}
+.header-card .cx{font-family:'Special Elite',Courier,monospace;font-size:.7rem;color:var(--muted);white-space:nowrap}
+
+.grain-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
+.deck{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
+.stage{flex:1 1 auto;position:relative;overflow:hidden;box-shadow:inset 0 0 0 10px rgba(0,0,0,.28),inset 0 0 80px rgba(0,0,0,.55);background-color:#152C21;background-image:url('../assets/backgrounds/postmortem-desk.png');background-size:cover;background-position:center 38%;background-repeat:no-repeat}
+.stage::before{content:"";position:absolute;inset:0;z-index:0;background:
+    radial-gradient(640px 460px at 13% 10%,rgba(255,214,145,.20),transparent 62%),
+    linear-gradient(180deg,rgba(10,18,14,.74) 0%,rgba(10,18,14,.42) 20%,rgba(10,18,14,.30) 52%,rgba(10,18,14,.50) 80%,rgba(10,18,14,.80) 100%)}
+.stage-inner{max-width:820px;margin:0 auto;padding:40px 20px 56px;position:relative;z-index:1}
+
+.panel{position:relative;background:var(--paper-card);border:2px solid var(--ink);border-radius:4px;box-shadow:0 1px 1px rgba(43,33,26,.18),0 6px 14px rgba(43,33,26,.28),0 14px 28px rgba(43,33,26,.16),7px 7px 0 var(--ink);padding:34px 30px}
+.case-tag{position:absolute;top:22px;right:26px;border:3px solid var(--red-dark);color:var(--red-dark);font-family:'Special Elite',Courier,monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;transform:rotate(-6deg);opacity:.85}
+.panel .eyebrow{color:var(--red-dark);font-size:.78rem;text-transform:uppercase}
+.panel h1{font-size:clamp(1.6rem,4vw,2.2rem);margin:6px 0 14px}
+.panel p{color:var(--ink-2);font-size:.94rem;margin-bottom:14px}
+.panel .task-line{font-family:'Special Elite',Courier,monospace;font-size:.85rem;color:var(--red-dark);margin-bottom:20px}
+.startbtn{font-family:'Special Elite',Courier,monospace;font-size:.95rem;letter-spacing:.5px;border-radius:3px;padding:14px 26px;border:2px solid var(--ink);background:var(--red);color:var(--white);box-shadow:5px 5px 0 var(--ink);transition:transform .12s,box-shadow .12s;width:100%}
+.startbtn:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+.startbtn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+.startbtn:disabled{opacity:.5;cursor:not-allowed}
+
+.match{display:none}
+.match.on{display:block}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.match-col{display:flex;flex-direction:column;gap:10px}
+.fact-card,.stage-btn{border:2px solid var(--ink);border-radius:6px;padding:12px 14px;background:var(--paper-card);cursor:pointer;font-size:.86rem;color:var(--ink-2);box-shadow:2px 2px 0 var(--ink);transition:transform .12s,box-shadow .12s,opacity .15s}
+.fact-card:hover:not(.matched),.stage-btn:hover:not(.matched){transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.stage-btn{text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.fact-card.selected{outline:3px solid var(--gold-dark);outline-offset:2px}
+.fact-card.matched,.stage-btn.matched{opacity:.35;background:var(--good-bg);border-color:var(--good);cursor:default;pointer-events:none}
+.fact-card.shake,.stage-btn.shake{animation:shake .4s}
+.match-feedback{font-family:'Special Elite',Courier,monospace;font-size:.82rem;color:var(--gray);text-align:center;min-height:1.4em}
+@media (max-width:560px){ .match-grid{grid-template-columns:1fr} }
+
+.game{display:none}
+.game.on{display:block}
+.hud{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.dana-mini{flex:0 0 auto;width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid var(--gold-dark);box-shadow:2px 2px 0 var(--ink);transition:transform .15s var(--ease)}
+.dana-mini img{width:100%;height:100%;object-fit:cover;display:block}
+.dana-mini.pop{transform:scale(1.15)}
+.hud-case{font-family:'Special Elite',Courier,monospace;font-size:.8rem;color:var(--gray)}
+
+.task-strip{font-family:'Special Elite',Courier,monospace;font-size:.78rem;color:var(--gold);text-align:center;margin-bottom:16px;padding-bottom:14px;border-bottom:2px dashed rgba(215,154,44,.35)}
+
+.case-brief{background:var(--gray-soft);border:1px solid var(--gray-line);border-radius:4px;padding:14px 18px;font-size:.86rem;color:var(--ink-2);margin-bottom:22px}
+
+.section-label{font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;color:var(--gray);margin-bottom:8px}
+.leads{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:22px}
+
+.lead{position:relative;text-align:center;border:2px solid var(--ink);border-radius:6px;padding:14px 10px;background:var(--paper-card);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,opacity .15s;box-shadow:0 1px 1px rgba(43,33,26,.15),0 4px 8px rgba(43,33,26,.22),0 8px 16px rgba(43,33,26,.12),3px 3px 0 var(--ink);transform:rotate(var(--r,0deg))}
+.lead:hover:not(.locked){transform:translateY(-6px) rotate(var(--r,0deg));box-shadow:0 4px 4px rgba(43,33,26,.2),0 10px 20px rgba(43,33,26,.3),0 18px 34px rgba(43,33,26,.18),5px 6px 0 var(--ink)}
+.lead .lbl{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.86rem}
+.lead.selected{outline:3px solid var(--gold-dark);outline-offset:2px}
+.lead.tried{opacity:.4;filter:grayscale(50%)}
+.lead.tried .lbl{text-decoration:line-through}
+.lead.broken{background:var(--good-bg);border-color:var(--good)}
+.lead.broken .lbl{color:var(--teal-dark)}
+.lead.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0) rotate(var(--r,0deg))}20%{transform:translateX(-8px) rotate(var(--r,0deg))}40%{transform:translateX(7px) rotate(var(--r,0deg))}60%{transform:translateX(-5px) rotate(var(--r,0deg))}80%{transform:translateX(4px) rotate(var(--r,0deg))}}
+
+.clue-box{background:var(--white);border:2px dashed var(--gray-line);border-radius:4px;padding:16px 18px;font-size:.95rem;color:var(--ink-2);min-height:52px;margin-bottom:14px;transition:border-color .15s,box-shadow .15s}
+.clue-box.flash{border-color:var(--gold-dark);border-style:solid;box-shadow:0 0 0 3px rgba(215,154,44,.3);animation:clueflash .5s ease}
+@keyframes clueflash{0%{background:#FBEFCC}100%{background:var(--white)}}
+.clue-box .who{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.06em;color:var(--red-dark);display:block;margin-bottom:5px}
+.clue-box .verdict-line.good{color:var(--good)}
+.clue-box .verdict-line.bad{color:var(--bad)}
+
+.hint-toggle{background:none;border:none;font-family:'Special Elite',Courier,monospace;font-size:.78rem;color:var(--teal);text-decoration:underline;cursor:pointer;margin-bottom:20px;display:inline-block}
+.hint-box{display:none;background:var(--gray-soft);border-left:3px solid var(--teal);padding:10px 14px;font-size:.85rem;color:var(--muted);margin:-8px 0 20px;border-radius:0 3px 3px 0}
+.hint-box.on{display:block}
+.hint-box .q{font-style:italic;color:var(--red-dark);margin-bottom:6px}
+
+.lockbar{display:flex;align-items:center;justify-content:center;gap:14px}
+.lockbtn{font-family:'Special Elite',Courier,monospace;font-size:1.05rem;letter-spacing:2px;text-transform:uppercase;border-radius:3px;padding:13px 26px;border:4px double var(--bad);background:transparent;color:var(--bad);box-shadow:none;transition:transform .12s,opacity .12s;transform:rotate(-4deg);opacity:.9;text-shadow:0 0 1px rgba(163,43,43,.35)}
+.lockbtn:hover:not(:disabled){transform:rotate(-2deg) scale(1.05);opacity:1}
+.lockbtn:active:not(:disabled){transform:rotate(-4deg) scale(.95)}
+.lockbtn:disabled{opacity:.3;border-color:var(--muted);color:var(--muted);cursor:not-allowed;transform:rotate(-4deg)}
+
+.end{display:none;text-align:center}
+.end.on{display:block}
+.end .dana-frame{width:84px;height:84px;border-radius:50%;overflow:hidden;border:3px solid var(--gold-dark);margin:0 auto 16px;box-shadow:3px 3px 0 var(--ink)}
+.end .dana-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.end .verdict{font-size:1.8rem;margin-bottom:10px;color:var(--gold)}
+.hud,.task-strip,.section-label,.end .verdict,.end .score-line,.end .quip{text-shadow:0 1px 4px rgba(0,0,0,.55)}
+.end .explain{max-width:52ch;margin:0 auto 18px;color:var(--gray-soft);font-size:.98rem;background:rgba(20,16,10,.42);border:1px solid rgba(255,255,255,.10);border-radius:8px;padding:16px 20px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.end .quip{max-width:52ch;margin:0 auto 26px;color:var(--gray-soft);font-size:.95rem;font-style:italic}
+.end .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+.navbtn{font-family:'Special Elite',Courier,monospace;font-size:.85rem;letter-spacing:.5px;border-radius:3px;padding:11px 20px;border:2px solid var(--ink);background:var(--gray);color:var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.navbtn.primary{background:var(--red);color:var(--white)}
+.navbtn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.navbtn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+.botbar .foot-note{font-family:'Special Elite',Courier,monospace;font-size:.72rem;color:rgba(251,246,234,.6)}
+
+@media (prefers-reduced-motion:reduce){
+  .lead{transition:none}
+  .lead.shake{animation:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="grain-overlay" aria-hidden="true"></div>
+<div class="deck">
+
+  <header class="topbar">
+    <span class="mark">STERLING &amp; VALE</span>
+    <div class="header-card" role="presentation">
+      <span class="to-label">TO:</span>
+      <span class="mk">The Post-Mortem</span>
+      <span class="cx">Ch.1 &middot; Diagnostic Trace</span>
+    </div>
+    <span class="auth" id="authLine">Connecting&hellip;</span>
+  </header>
+
+  <main class="stage" id="main">
+    <div class="stage-inner">
+
+      <section class="panel" id="briefing">
+        <span class="case-tag">Case File</span>
+        <div class="eyebrow">Chapter 1 &middot; Practice</div>
+        <h1>The Post-Mortem</h1>
+        <p id="briefText"></p>
+        <div class="task-line">First, match each fact to its stage. Then find where the process actually broke.</div>
+        <button class="startbtn" id="startBtn" disabled>Open the Case</button>
+      </section>
+
+      <section class="match" id="matchPhase">
+        <div class="hud">
+          <span class="dana-mini"><img id="danaMiniMatch" src="../assets/characters/dana-neutral.png" alt="" onerror="this.parentElement.style.display='none'"></span>
+          <span class="hud-case" id="hudCaseMatch"></span>
+        </div>
+        <div class="task-strip">Step 1 of 2 &middot; Match each fact on the left to the stage it describes on the right.</div>
+        <div class="case-brief" id="caseBriefMatch"></div>
+        <div class="match-grid">
+          <div class="match-col" id="factCol"></div>
+          <div class="match-col" id="stageCol"></div>
+        </div>
+        <div class="match-feedback" id="matchFeedback">Tap a fact, then tap the stage you think it belongs to.</div>
+      </section>
+
+      <section class="game" id="game">
+        <div class="hud">
+          <span class="dana-mini"><img id="danaMini" src="../assets/characters/dana-neutral.png" alt="" onerror="this.parentElement.style.display='none'"></span>
+          <span class="hud-case" id="hudCase"></span>
+        </div>
+
+        <div class="task-strip">Step 2 of 2 &middot; Now find the ONE piece of the process where this broke down.</div>
+
+        <div class="case-brief" id="caseBrief"></div>
+
+        <div class="section-label">The process (you just matched these)</div>
+        <div class="leads" id="spine"></div>
+
+        <div class="section-label">Other theories</div>
+        <div class="leads" id="decoyRow"></div>
+
+        <div class="clue-box" id="clueBox">Tap any piece above to see what happened there.</div>
+        <button class="hint-toggle" id="hintToggle" style="display:none">Need a hint?</button>
+        <div class="hint-box" id="hintBox"></div>
+
+        <div class="lockbar">
+          <button class="lockbtn" id="lockBtn" disabled>Lock In This Answer</button>
+        </div>
+      </section>
+
+      <section class="end" id="endScreen">
+        <div class="dana-frame"><img src="../assets/characters/dana-neutral.png" alt="Dana" id="danaImg" onerror="this.parentElement.style.display='none'"></div>
+        <h2 class="verdict">Case Closed</h2>
+        <div class="explain" id="endExplain"></div>
+        <p class="quip" id="endQuip"></p>
+        <div class="actions">
+          <button class="navbtn primary" id="againBtn">&#8635; Open a New Case</button>
+          <a class="navbtn" href="../week1/study.html">&larr; Back to Practice Floor</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="botbar">
+    <a class="navbtn" href="../week1/study.html">&larr; Practice Floor</a>
+    <span class="foot-note">Sterling &amp; Vale &middot; MKT 150 &middot; Chapter 1 &mdash; practice materials, not graded</span>
+  </footer>
+
+</div>
+
+<script type="module">
+const authLine = document.getElementById('authLine');
+const startBtn = document.getElementById('startBtn');
+const SPINE_ORDER = ['encoding','message','channel','noise','decoding'];
+const SPINE_LABEL = { encoding:'Encoding', message:'Message', channel:'Channel', noise:'Noise', decoding:'Decoding' };
+const DECOY_LABEL = { bad_channel:'Wrong Channel Entirely', bad_creative:'Weak Creative', bad_timing:'Bad Timing' };
+
+const PROMPTS = {
+  encoding:{ ask:'Who actually has the background knowledge to understand this the way it was written?', example:'Like a tax firm\u2019s ad full of accounting jargon \u2014 other accountants get it instantly, a first-time filer just feels lost.' },
+  message:{ ask:'Strip away the delivery \u2014 what is this literally asking the audience to do or believe?', example:'A great-looking flyer that buries the actual call-to-action in fine print is still a weak message, no matter how nice it looks.' },
+  channel:{ ask:'Who is actually exposed to this channel \u2014 and is that the same group the campaign is trying to reach?', example:'Handing out flyers inside a gym mostly reaches people who already work out, not people who\u2019ve never set foot in one.' },
+  noise:{ ask:'Is there something about the audience\u2019s situation that could distort how this lands, even if the message itself wasn\u2019t wrong?', example:'A joke that\u2019s harmless among friends can read as mocking to someone who just walked into the room.' },
+  decoding:{ ask:'Did the people who saw this actually understand it as intended \u2014 and does that prove anything about the RIGHT audience?', example:'A crowd laughing at an inside joke proves it worked for them \u2014 not that it\u2019d work for someone outside the circle.' },
+  bad_channel:{ ask:'Did this channel actually reach the intended audience, or did it just reach SOMEONE?', example:'A billboard on a busy highway gets seen by thousands \u2014 if none of them are in the target market, reach alone didn\u2019t work.' },
+  bad_creative:{ ask:'Was the production quality itself actually the problem, or was the craft just fine?', example:'A beautifully shot commercial can still completely miss its audience \u2014 good craft doesn\u2019t guarantee the right message reached the right people.' },
+  bad_timing:{ ask:'Was there an actual calendar conflict working against this, or does the timing look normal for this category?', example:'Running a swimsuit ad in summer isn\u2019t bad timing \u2014 it\u2019s expected. Bad timing means something concrete competed for attention.' }
+};
+
+const CASES = [
+  {
+    id:'meridian', title:'Meridian Fitness',
+    brief:'Meridian Fitness, a 12-gym chain, ran a six-week social campaign aimed at first-time gym-goers who\u2019d made a resolution and never followed through. Engagement was the best the chain had ever posted. New sign-ups from the target segment barely moved.',
+    breakId:'encoding',
+    nodes:{
+      encoding:'The creative leaned on insider gym-culture jokes \u2014 callbacks only people already fluent in gym-bro humor could actually decode.',
+      message:'The message itself was well produced: fast cuts, a confident tone, clear brand presence throughout.',
+      channel:'It ran on the chain\u2019s existing Instagram and TikTok followers \u2014 real reach, just mostly people who already belong to the gym.',
+      noise:'For someone new and self-conscious, jokes about \u201cusing the machine wrong\u201d don\u2019t read as reassuring \u2014 but that\u2019s a symptom of who the jokes were built for.',
+      decoding:'Existing members decoded every reference instantly and loved it \u2014 the audience that got the joke just wasn\u2019t the audience being targeted.'
+    },
+    decoy:{
+      bad_channel:'Instagram and TikTok are exactly where this age group researches a new gym. The platforms weren\u2019t the problem.',
+      bad_creative:'Production quality was some of the chain\u2019s best work \u2014 sharp editing, confident tone. Craft wasn\u2019t the issue.',
+      bad_timing:'A New Year\u2019s fitness push is textbook timing for this category \u2014 the calendar wasn\u2019t working against them.'
+    }
+  },
+  {
+    id:'coastal', title:'Coastal Regional Bank',
+    brief:'Coastal Regional Bank ran a polished TV spot on national morning news, aimed at young professionals looking for something \u201cmore personal\u201d than a big bank. It aired in the right slots, reached the right demographic, and tested well in focus groups. Brand awareness spiked. Account openings barely moved.',
+    breakId:'message',
+    nodes:{
+      encoding:'The tone and visuals were exactly right for the audience \u2014 warm, modern, nothing about the creative style was off-putting.',
+      message:'The entire call-to-action was \u201cstop by your neighborhood branch to open an account\u201d \u2014 for an audience that wanted to do everything from their phone.',
+      channel:'National morning news during commute hours reliably reaches working professionals \u2014 the placement was sound.',
+      noise:'Competing bank ads didn\u2019t meaningfully clutter this slot \u2014 no unusual interference in the environment.',
+      decoding:'Focus groups understood the spot exactly as intended \u2014 the message landed clearly, they just didn\u2019t want what it was asking them to do.'
+    },
+    decoy:{
+      bad_channel:'Morning news is a proven reach point for this exact demographic \u2014 the channel choice wasn\u2019t the mistake.',
+      bad_creative:'The spot was well shot and tested well \u2014 craft wasn\u2019t the gap.',
+      bad_timing:'There was no seasonal or competitive event working against this launch window.'
+    }
+  },
+  {
+    id:'vantage', title:'Vantage Outdoor Gear',
+    brief:'Vantage Outdoor Gear opened a two-week pop-up and sent a press release announcing an exclusive new hiking boot line. Local news picked it up, outdoor blogs shared it, and foot-traffic searches spiked. In-store sales over the two weeks came in far below plan.',
+    breakId:'noise',
+    nodes:{
+      encoding:'The press release was written clearly, in the right outdoor-enthusiast tone for this audience \u2014 nothing was lost in translation.',
+      message:'The core message \u2014 new, limited boot line, local pop-up \u2014 was simple and came through in every article.',
+      channel:'Local news and outdoor blogs are exactly where this audience gets discovery information \u2014 the placement worked as intended.',
+      noise:'A regional supply shortage hit two weeks before launch \u2014 the exact sizes people came in asking for were largely out of stock.',
+      decoding:'Customers who saw the coverage understood precisely what was being offered and showed up ready to buy.'
+    },
+    decoy:{
+      bad_channel:'Local news and outdoor blogs drove real foot traffic \u2014 the channel worked; something else stopped the sale once people arrived.',
+      bad_creative:'The press materials were clean and on-brand \u2014 creative quality isn\u2019t what tanked the number.',
+      bad_timing:'A two-week pop-up window isn\u2019t unusually short for this format \u2014 timing wasn\u2019t the structural issue.'
+    }
+  },
+  {
+    id:'bramwell', title:'Bramwell Watch Co.',
+    brief:'Bramwell Watch Co., a heritage luxury brand, launched \u201cAffordable Elegance\u201d \u2014 a lower-priced watch line aimed at younger first-time luxury buyers. The ads were clear, ran in the right lifestyle publications and channels, and reached plenty of new prospects. Awareness among the target group was high. Pre-orders from that same first-time-buyer audience came in far below plan.',
+    breakId:'decoding',
+    nodes:{
+      encoding:'The ad copy and visuals were polished and easy to follow \u2014 nothing about the execution was confusing.',
+      message:'The message was straightforward: a real Bramwell watch, now at a lower entry price \u2014 a clear value proposition on paper.',
+      channel:'It ran in exactly the lifestyle and finance publications this first-time buyer audience already reads.',
+      noise:'There was no unusual competing promotion or distraction in the market during the launch window.',
+      decoding:'First-time buyers didn\u2019t hear \u201caccessible luxury\u201d the way the brand intended \u2014 to them, \u201caffordable\u201d read as \u201ccheapened,\u201d the opposite of why someone buys a luxury watch in the first place.'
+    },
+    decoy:{
+      bad_channel:'The publications reached exactly the right first-time-buyer demographic \u2014 placement wasn\u2019t the miss.',
+      bad_creative:'The ads themselves were well produced and on-brand \u2014 craft wasn\u2019t the gap.',
+      bad_timing:'There was no competing launch or seasonal conflict working against this window.'
+    }
+  },
+  {
+    id:'ridgeline', title:'Ridgeline CPA Group',
+    brief:'Ridgeline CPA Group ran a campaign promoting a new simplified filing service to small business owners filing taxes on their own for the first time. It ran in the right small-business newsletters and forums, with one clear call-to-action. Newsletter click-through was strong. Sign-ups from actual first-time filers stayed flat.',
+    breakId:'encoding',
+    nodes:{
+      encoding:'The ad was written in accounting terminology \u2014 phrases like \u201cSchedule C optimization\u201d and \u201cquarterly estimated liability\u201d \u2014 that only someone who already understood tax filing would recognize.',
+      message:'The core offer \u2014 one flat fee, one appointment, done \u2014 was a genuinely simple pitch once you understood it.',
+      channel:'Small-business newsletters and forums are exactly where new business owners look for this kind of help.',
+      noise:'Tax season brings a lot of competing offers, but that pressure hits every filing service equally \u2014 not a distinguishing factor here.',
+      decoding:'Other accountants and bookkeepers who saw the ad understood every term and thought it looked sharp \u2014 they just weren\u2019t the ones filing for the first time.'
+    },
+    decoy:{
+      bad_channel:'Newsletters and forums for small business owners are the right discovery channel for this audience \u2014 placement wasn\u2019t the miss.',
+      bad_creative:'The design and layout were clean and professional \u2014 production quality wasn\u2019t the issue.',
+      bad_timing:'Running a tax-filing offer during tax season is exactly the right timing \u2014 the calendar helped, not hurt.'
+    }
+  },
+  {
+    id:'emberline', title:'Emberline Coffee Roasters',
+    brief:'Emberline Coffee Roasters ran a campaign for a new subscription box aimed at people who\u2019d never tried a coffee subscription before. The video ad was beautifully shot, ran on the right podcasts and channels for this audience, and awareness numbers were excellent. Subscription sign-ups came in well below target.',
+    breakId:'message',
+    nodes:{
+      encoding:'The tone and visuals were warm and approachable \u2014 nothing about the style would\u2019ve confused a first-time subscriber.',
+      message:'The ad spent most of its runtime on Emberline\u2019s origin story and bean-sourcing philosophy, and never clearly stated the price, delivery frequency, or how to actually sign up.',
+      channel:'It ran on exactly the podcasts this audience already listens to \u2014 the placement reached the right ears.',
+      noise:'No competing subscription promotion was running in the same window to distract from this one.',
+      decoding:'Listeners who heard the full ad enjoyed the story and understood the brand\u2019s values clearly \u2014 they just didn\u2019t come away knowing what to do next.'
+    },
+    decoy:{
+      bad_channel:'The podcast placements were a strong match for this audience \u2014 channel wasn\u2019t the gap.',
+      bad_creative:'The ad was well produced and pleasant to listen to \u2014 production quality wasn\u2019t the problem.',
+      bad_timing:'There was nothing about the launch window working against them \u2014 timing wasn\u2019t a factor.'
+    }
+  },
+  {
+    id:'thistlevine', title:'Thistle & Vine Florist',
+    brief:'Thistle & Vine Florist ran a gorgeous Valentine\u2019s Day campaign on Instagram, showcasing arrangement after arrangement. Engagement and saves were the best the shop had ever seen. Actual online orders came in well below last year\u2019s numbers.',
+    breakId:'message',
+    nodes:{
+      encoding:'The photography and captions were warm and easy to love \u2014 nothing about the style or tone confused anyone.',
+      message:'The posts never clearly stated the order-by deadline for guaranteed Valentine\u2019s Day delivery \u2014 easy to assume there was still plenty of time.',
+      channel:'Instagram is exactly where this shop\u2019s local customers already follow along for inspiration.',
+      noise:'No competing local event or promotion was pulling attention away that week.',
+      decoding:'Followers understood exactly how beautiful the arrangements were \u2014 they just didn\u2019t realize they needed to act that day to get one.'
+    },
+    decoy:{
+      bad_channel:'Instagram reached the shop\u2019s actual local customer base \u2014 the platform wasn\u2019t the miss.',
+      bad_creative:'The photography was some of the shop\u2019s best work \u2014 craft wasn\u2019t the issue.',
+      bad_timing:'Posting Valentine\u2019s content in early February is exactly the right timing for this category.'
+    }
+  },
+  {
+    id:'ferrousoak', title:'Ferrous & Oak Furniture',
+    brief:'Ferrous & Oak Furniture launched a campaign for their new dining table line, aimed at young professionals furnishing a first home. It ran in the right home-and-lifestyle publications and looked stunning. Awareness among the target group was strong. Sales from that first-time-furniture-buyer audience stayed flat.',
+    breakId:'encoding',
+    nodes:{
+      encoding:'The copy leaned on woodworking terminology \u2014 \u201ckiln-dried mortise-and-tenon joinery\u201d \u2014 that only someone who already knew furniture craftsmanship would appreciate.',
+      message:'The core promise \u2014 a dining table built to last a lifetime \u2014 was a genuinely strong pitch once you understood it.',
+      channel:'Home-and-lifestyle publications are exactly where first-time furniture buyers look for ideas.',
+      noise:'No competing furniture sale or promotion was running in the same window.',
+      decoding:'Other woodworkers and design enthusiasts who saw the ad understood every term and were impressed \u2014 they just weren\u2019t the first-time buyers being targeted.'
+    },
+    decoy:{
+      bad_channel:'Home-and-lifestyle publications are a strong match for this audience \u2014 placement wasn\u2019t the miss.',
+      bad_creative:'The photography and layout were polished and on-brand \u2014 production quality wasn\u2019t the gap.',
+      bad_timing:'There was no seasonal conflict working against this launch window.'
+    }
+  },
+  {
+    id:'brightside', title:'Brightside Insurance',
+    brief:'Brightside Insurance ran a direct-to-consumer campaign for renters insurance aimed at young first-time renters, emphasizing \u201ccoverage that flexes with your life.\u201d It ran on the right streaming and social channels, and message testing showed people understood the phrase exactly as written. Sign-ups from that audience came in far below plan.',
+    breakId:'decoding',
+    nodes:{
+      encoding:'The tone and visuals were casual and approachable \u2014 nothing about the style felt confusing or off-putting.',
+      message:'The message was clear on paper: coverage that adjusts as your life changes, no long-term lock-in.',
+      channel:'Streaming and social are exactly where this first-time-renter audience spends their time.',
+      noise:'No competing insurance promotion cluttered the same window.',
+      decoding:'To this audience, \u201cflexible\u201d didn\u2019t read as convenient \u2014 it read as complicated and negotiable, which made the whole process sound like more hassle than it actually was.'
+    },
+    decoy:{
+      bad_channel:'Streaming and social are proven reach points for this exact demographic \u2014 channel wasn\u2019t the mistake.',
+      bad_creative:'The spots were well produced and tested clearly \u2014 craft wasn\u2019t the gap.',
+      bad_timing:'There was no seasonal or competitive event working against this launch window.'
+    }
+  },
+  {
+    id:'marlowefinch', title:'Marlowe & Finch Law Group',
+    brief:'Marlowe & Finch Law Group, a personal injury firm, ran a local TV spot the same week a major regional storm knocked out power across the area. Every local news broadcast that week was dominated by storm coverage and emergency updates. Call volume to the firm barely moved.',
+    breakId:'noise',
+    nodes:{
+      encoding:'The spot\u2019s message was written plainly \u2014 easy for anyone to understand what the firm offered.',
+      message:'The core offer \u2014 free consultation, no fee unless you win \u2014 was simple and clear.',
+      channel:'Local TV news is exactly where this firm\u2019s audience usually sees these ads.',
+      noise:'Wall-to-wall storm and power-outage coverage dominated every local broadcast that week, leaving almost no attention left over for anything else airing alongside it.',
+      decoding:'The handful of viewers who did catch the spot understood the offer immediately \u2014 there just weren\u2019t many of them paying attention that week.'
+    },
+    decoy:{
+      bad_channel:'Local TV news is a proven reach point for this audience \u2014 the channel itself wasn\u2019t the problem.',
+      bad_creative:'The spot was clean and clear \u2014 production quality wasn\u2019t the issue.',
+      bad_timing:'A random severe storm isn\u2019t a recurring seasonal conflict the firm could plan around \u2014 this wasn\u2019t a timing mistake, it was an unpredictable disruption to the environment the ad ran in.'
+    }
+  },
+  {
+    id:'goldenacre', title:'Golden Acre Farms',
+    brief:'Golden Acre Farms launched their organic produce subscription box the same week national news broke about an unrelated food-safety recall at a different company. Local coverage of Golden Acre\u2019s launch was warm, and the offer itself tested well. New subscriptions came in well below projections.',
+    breakId:'noise',
+    nodes:{
+      encoding:'The launch materials were written clearly, with a warm, approachable tone \u2014 nothing was lost in translation.',
+      message:'The offer \u2014 a weekly box of local organic produce, cancel anytime \u2014 was simple and easy to understand.',
+      channel:'Local news and community boards are exactly where this audience discovers food subscriptions like this.',
+      noise:'An unrelated food-safety recall dominated the news that same week, and even though it had nothing to do with Golden Acre, it left people newly wary of food subscription services in general.',
+      decoding:'People who saw the coverage understood the offer exactly as intended \u2014 the hesitation came from outside worry, not confusion about what was being offered.'
+    },
+    decoy:{
+      bad_channel:'Local news and community boards reached exactly the right audience \u2014 the channel worked as intended.',
+      bad_creative:'The launch materials were clean and warm \u2014 production quality wasn\u2019t the issue.',
+      bad_timing:'The launch date itself wasn\u2019t poorly chosen \u2014 an unrelated news event happening to land the same week is a different kind of problem than bad calendar planning.'
+    }
+  }
+];
+
+
+let activeCase = null;
+let selected = null;
+let tried = new Set();
+let wrongAttempts = 0;
+let locked = false;
+
+const briefing = document.getElementById('briefing');
+const game = document.getElementById('game');
+const endScreen = document.getElementById('endScreen');
+const danaMini = document.getElementById('danaMini');
+const spineEl = document.getElementById('spine');
+const decoyEl = document.getElementById('decoyRow');
+const clueBox = document.getElementById('clueBox');
+const hintToggle = document.getElementById('hintToggle');
+const hintBox = document.getElementById('hintBox');
+const lockBtn = document.getElementById('lockBtn');
+const hudCase = document.getElementById('hudCase');
+const matchPhase = document.getElementById('matchPhase');
+const factCol = document.getElementById('factCol');
+const stageCol = document.getElementById('stageCol');
+const matchFeedback = document.getElementById('matchFeedback');
+const danaMiniMatch = document.getElementById('danaMiniMatch');
+let matchedCount = 0;
+let selectedFact = null;
+
+function setDana(expr){
+  danaMini.src = `../assets/characters/dana-${expr}.png`;
+  danaMini.parentElement.classList.remove('pop');
+  void danaMini.parentElement.offsetWidth;
+  danaMini.parentElement.classList.add('pop');
+}
+
+let audioCtx = null;
+function beep(freqs, dur, type){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const now = audioCtx.currentTime;
+    freqs.forEach((f,i)=>{
+      const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.setValueAtTime(f, now + i*dur);
+      gain.gain.setValueAtTime(0.001, now + i*dur);
+      gain.gain.exponentialRampToValueAtTime(0.18, now + i*dur + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i*dur + dur*0.9);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now + i*dur); osc.stop(now + i*dur + dur);
+    });
+  } catch(e){}
+}
+const sfxLook = () => beep([440], 0.08, 'sine');
+const sfxCorrect = () => beep([660,880,1100], 0.1, 'triangle');
+const sfxWrong = () => beep([220,160], 0.18, 'sawtooth');
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+let caseBag = [];
+function pickCase(){
+  if(caseBag.length === 0){
+    caseBag = shuffle(CASES.map(c=>c.id));
+    // avoid the same case landing back-to-back across a bag refill
+    if(activeCase && caseBag[0] === activeCase.id && caseBag.length > 1){
+      [caseBag[0], caseBag[1]] = [caseBag[1], caseBag[0]];
+    }
+  }
+  const id = caseBag.shift();
+  return CASES.find(c => c.id === id);
+}
+
+const CARD_ROTATIONS = ['-1deg','1.2deg','-0.6deg','0.9deg'];
+function buildLeadEl(id, label, idx){
+  const el = document.createElement('div');
+  el.className = 'lead';
+  el.setAttribute('data-id', id);
+  el.setAttribute('tabindex','0');
+  el.setAttribute('role','button');
+  el.style.setProperty('--r', CARD_ROTATIONS[idx % CARD_ROTATIONS.length]);
+  el.innerHTML = `<span class="lbl">${label}</span>`;
+  el.addEventListener('click', ()=>onLeadClick(id));
+  el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); onLeadClick(id); } });
+  return el;
+}
+
+function clueTextFor(id){
+  if(activeCase.nodes[id]) return { who: SPINE_LABEL[id], text: activeCase.nodes[id] };
+  return { who: DECOY_LABEL[id], text: activeCase.decoy[id] };
+}
+
+function startRound(){
+  activeCase = pickCase();
+  selected = null;
+  tried = new Set();
+  wrongAttempts = 0;
+  locked = false;
+  matchedCount = 0;
+  selectedFact = null;
+
+  document.getElementById('briefText').textContent = activeCase.brief;
+  hudCase.textContent = activeCase.title;
+  document.getElementById('hudCaseMatch').textContent = activeCase.title;
+  document.getElementById('caseBrief').textContent = activeCase.brief;
+  document.getElementById('caseBriefMatch').textContent = activeCase.brief;
+
+  buildMatchPhase();
+
+  clueBox.innerHTML = 'Tap any piece above to see what happened there.';
+  hintToggle.style.display = 'none';
+  hintBox.classList.remove('on');
+  lockBtn.disabled = true;
+
+  briefing.style.display = 'none';
+  matchPhase.classList.add('on');
+  game.classList.remove('on');
+  endScreen.classList.remove('on');
+  setDana('neutral');
+}
+
+function nextCase(){
+  // Step 1 (fact-to-stage matching) only needs to happen once per session \u2014
+  // after that, jump a new case straight to Step 2.
+  activeCase = pickCase();
+  selected = null;
+  tried = new Set();
+  wrongAttempts = 0;
+  locked = false;
+
+  hudCase.textContent = activeCase.title;
+  document.getElementById('caseBrief').textContent = activeCase.brief;
+
+  clueBox.innerHTML = 'Tap any piece above to see what happened there.';
+  hintToggle.style.display = 'none';
+  hintBox.classList.remove('on');
+  lockBtn.disabled = true;
+
+  endScreen.classList.remove('on');
+  beginDiagnosePhase();
+}
+
+function buildMatchPhase(){
+  factCol.innerHTML = '';
+  stageCol.innerHTML = '';
+  matchFeedback.textContent = 'Tap a fact, then tap the stage you think it belongs to.';
+
+  shuffle(SPINE_ORDER).forEach(id=>{
+    const el = document.createElement('div');
+    el.className = 'fact-card';
+    el.setAttribute('data-fact', id);
+    el.setAttribute('tabindex','0');
+    el.setAttribute('role','button');
+    el.textContent = activeCase.nodes[id];
+    el.addEventListener('click', ()=>onFactClick(id, el));
+    factCol.appendChild(el);
+  });
+  shuffle(SPINE_ORDER).forEach(id=>{
+    const el = document.createElement('div');
+    el.className = 'stage-btn';
+    el.setAttribute('data-stage', id);
+    el.setAttribute('tabindex','0');
+    el.setAttribute('role','button');
+    el.textContent = SPINE_LABEL[id];
+    el.addEventListener('click', ()=>onStageClick(id, el));
+    stageCol.appendChild(el);
+  });
+}
+
+function onFactClick(id, el){
+  if(el.classList.contains('matched')) return;
+  document.querySelectorAll('.fact-card').forEach(f=>f.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedFact = id;
+}
+
+function onStageClick(id, el){
+  if(el.classList.contains('matched') || !selectedFact) return;
+  const factEl = document.querySelector(`.fact-card[data-fact="${selectedFact}"]`);
+  if(selectedFact === id){
+    factEl.classList.remove('selected');
+    factEl.classList.add('matched');
+    el.classList.add('matched');
+    matchedCount++;
+    sfxCorrect();
+    setDana('good');
+    danaMiniMatch.src = '../assets/characters/dana-good.png';
+    matchFeedback.textContent = `\u2713 ${SPINE_LABEL[id]} matched! (${matchedCount}/${SPINE_ORDER.length})`;
+    selectedFact = null;
+    if(matchedCount === SPINE_ORDER.length){
+      matchFeedback.textContent = 'All matched \u2014 nice. Now the real question\u2026';
+      setTimeout(beginDiagnosePhase, 900);
+    }
+  } else {
+    factEl.classList.add('shake');
+    el.classList.add('shake');
+    setTimeout(()=>{ factEl.classList.remove('shake'); el.classList.remove('shake'); }, 400);
+    sfxWrong();
+    setDana('bad');
+    danaMiniMatch.src = '../assets/characters/dana-bad.png';
+    matchFeedback.textContent = 'Not quite \u2014 try a different stage.';
+  }
+}
+
+function beginDiagnosePhase(){
+  matchPhase.classList.remove('on');
+  game.classList.add('on');
+  setDana('neutral');
+
+  spineEl.innerHTML = '';
+  SPINE_ORDER.forEach((id, i)=> spineEl.appendChild(buildLeadEl(id, SPINE_LABEL[id], i)));
+  decoyEl.innerHTML = '';
+  Object.keys(DECOY_LABEL).forEach((id, i) => decoyEl.appendChild(buildLeadEl(id, DECOY_LABEL[id], i)));
+}
+
+function onLeadClick(id){
+  if(locked) return;
+  const el = document.querySelector(`.lead[data-id="${id}"]`);
+  if(el.classList.contains('tried')) return;
+
+  document.querySelectorAll('.lead').forEach(l=>l.classList.remove('selected'));
+  el.classList.add('selected');
+  selected = id;
+  sfxLook();
+
+  const c = clueTextFor(id);
+  clueBox.classList.remove('flash');
+  void clueBox.offsetWidth;
+  clueBox.innerHTML = `<span class="who">${c.who}</span>${c.text}`;
+  clueBox.classList.add('flash');
+
+  const p = PROMPTS[id];
+  if(p){
+    hintToggle.style.display = 'inline-block';
+    hintBox.innerHTML = `<div class="q">${p.ask}</div><div>${p.example}</div>`;
+  } else {
+    hintToggle.style.display = 'none';
+  }
+  hintBox.classList.remove('on');
+
+  lockBtn.disabled = false;
+}
+
+hintToggle.addEventListener('click', ()=> hintBox.classList.toggle('on'));
+
+lockBtn.addEventListener('click', ()=>{
+  if(!selected || locked) return;
+  const attemptedId = selected;
+  const selEl = document.querySelector(`.lead[data-id="${attemptedId}"]`);
+  const correct = attemptedId === activeCase.breakId;
+
+  if(correct){
+    locked = true;
+    document.querySelectorAll('.lead').forEach(l=>l.style.pointerEvents='none');
+    selEl.classList.add('broken');
+    setDana('good'); sfxCorrect();
+    const c = clueTextFor(attemptedId);
+    clueBox.innerHTML = `<span class="who verdict-line good">Correct \u2014 ${c.who}</span>${c.text}`;
+    setTimeout(()=> finish(), 900);
+    return;
+  }
+
+  wrongAttempts++;
+  tried.add(attemptedId);
+  selEl.classList.add('shake','tried');
+  setTimeout(()=>selEl.classList.remove('shake'), 400);
+  setDana('bad'); sfxWrong();
+  const c = clueTextFor(attemptedId);
+  clueBox.innerHTML = `<span class="who verdict-line bad">Not quite \u2014 ${c.who}</span>${c.text}<div style="margin-top:8px">That\u2019s ruled out. Pick another piece.</div>`;
+  lockBtn.disabled = true;
+  selected = null;
+});
+
+document.getElementById('againBtn').addEventListener('click', nextCase);
+
+function finish(){
+  game.classList.remove('on');
+  endScreen.classList.add('on');
+  const breakInfo = clueTextFor(activeCase.breakId);
+
+  let quip;
+  if(wrongAttempts === 0) quip = 'Dana: \u201cStraight to it, first try. That\u2019s how you close a case fast.\u201d';
+  else if(wrongAttempts <= 2) quip = 'Dana: \u201cA couple of wrong turns, but you got there \u2014 that\u2019s how the reasoning gets sharper.\u201d';
+  else quip = 'Dana: \u201cYou got there in the end. Next time, use the hints before you guess.\u201d';
+
+  document.getElementById('endExplain').innerHTML = `<b>${breakInfo.who}</b> is where it broke: ${breakInfo.text}`;
+  document.getElementById('endQuip').textContent = quip;
+  document.getElementById('danaImg').src = `../assets/characters/dana-good.png`;
+
+  saveResult({ success: true, case: activeCase.id, breakId: activeCase.breakId, wrongAttempts });
+}
+
+let saveResult = async () => {};
+try {
+  const { getSession, saveRoundResult } = await import('../shared/supabase-client.js');
+  saveResult = async (result) => {
+    try { await saveRoundResult(1, 'diagnostic_trace', 'post_mortem', result); }
+    catch(err){ console.error('Save failed:', err.message); }
+  };
+  const session = await getSession();
+  startBtn.disabled = false;
+  if(!session){
+    authLine.textContent = 'Not signed in \u2014 progress won\u2019t be saved. Return to index.html to log in.';
+    authLine.classList.add('bad');
+  } else {
+    const codename = session.user.user_metadata?.codename || 'Agent';
+    authLine.textContent = `Welcome back, ${codename}.`;
+  }
+} catch (err) {
+  startBtn.disabled = false;
+  authLine.textContent = 'Playing offline \u2014 progress won\u2019t be saved.';
+  authLine.classList.add('bad');
+}
+
+startBtn.addEventListener('click', startRound);
+</script>
+</body>
+</html>

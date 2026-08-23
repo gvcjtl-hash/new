@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduce Yourself — Sterling &amp; Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Barlow+Condensed:wght@500;600;700&family=Special+Elite&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#B84E28;--red-dark:#8A3A1D;--red-bright:#D9713F;
+  --gold:#D79A2C;--gold-dark:#A87816;--teal:#2F6B67;--teal-dark:#1D4F4F;
+  --ink:#2B211A;--ink-2:#362B21;--gray:#E4D9BE;--gray-soft:#F3E9D2;--gray-line:#D3C4A0;
+  --muted:#6B5D4A;--white:#FBF6EA;--paper:#F3E9D2;--line:#D3C4A0;
+  --wood-light:#8a6b45;--wood-dark:#5C4230;
+  --paper-card:linear-gradient(160deg,#FDF9EE 0%,#F6EED9 45%,#EDDFBE 100%);
+  --ease:cubic-bezier(.22,1,.36,1);--top:56px;--bot:66px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',Georgia,serif;background:#1a1410;color:var(--ink);line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased}
+.mark{font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.04em}
+.navbtn{font-family:'Special Elite',Courier,monospace}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+.topbar,.botbar{flex:0 0 auto;display:flex;align-items:center;padding:0 18px;background:repeating-linear-gradient(179deg,rgba(30,18,8,.16) 0px,rgba(30,18,8,.16) 1px,transparent 2px,transparent 5px),linear-gradient(100deg,var(--wood-light),var(--wood-dark) 60%,var(--wood-light));z-index:20;position:relative}
+.topbar{height:var(--top);gap:14px;border-bottom:3px solid var(--gold-dark);box-shadow:0 3px 10px rgba(43,26,13,.3)}
+.botbar{height:var(--bot);justify-content:space-between;gap:12px;border-top:3px solid var(--gold-dark)}
+.topbar::before,.topbar::after,.botbar::before,.botbar::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:radial-gradient(circle at 32% 30%,#f2d488,var(--gold-dark) 70%,#7a5a12)}
+.topbar::before,.botbar::before{left:8px}
+.topbar::after,.botbar::after{right:8px}
+.topbar .mark{letter-spacing:1px;color:var(--gold);font-size:.86rem}
+.header-card{position:relative;display:flex;align-items:baseline;gap:9px;background:var(--paper);border:1px solid rgba(43,33,26,.35);border-radius:2px;padding:5px 14px 4px 12px;box-shadow:0 3px 7px rgba(0,0,0,.35);transform:rotate(-.4deg);margin:0 auto}
+.header-card::before{content:"";position:absolute;top:-5px;left:16px;width:24px;height:7px;border-radius:2px;background:linear-gradient(180deg,#f2d488,var(--gold-dark) 75%,#7a5a12)}
+.header-card .to-label{font-family:'Special Elite',Courier,monospace;font-size:.62rem;letter-spacing:1.5px;color:var(--muted)}
+.header-card .mk{font-family:'Special Elite',Courier,monospace;color:var(--red-dark);font-size:.82rem}
+.header-card .cx{font-family:'Special Elite',Courier,monospace;font-size:.7rem;color:var(--muted)}
+
+.grain-overlay{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px 180px}
+.deck{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
+.stage{flex:1 1 auto;position:relative;overflow:hidden;box-shadow:inset 0 0 0 10px rgba(0,0,0,.28),inset 0 0 80px rgba(0,0,0,.55);
+  background-color:#2a2218;
+  background-image:
+    linear-gradient(180deg,rgba(20,14,10,.55),rgba(20,14,10,.28) 40%,rgba(20,14,10,.72)),
+    url('../assets/backgrounds/madison_ave_office_desk_empty.png'),
+    linear-gradient(158deg,#5c4a36,#2a2118);
+  background-size:auto,cover,auto;background-position:center,center 35%,center;background-repeat:no-repeat}
+.stage::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(20,14,10,.55) 0%,rgba(20,14,10,.22) 35%,rgba(20,14,10,.65) 100%)}
+.dust{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.28;
+  background-image:radial-gradient(2px 2px at 22% 40%,rgba(255,240,205,.65),transparent 60%),radial-gradient(1.5px 1.5px at 68% 55%,rgba(255,240,205,.45),transparent 60%);
+  animation:drift 13s linear infinite}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,-6px)}}
+.stage-inner{max-width:760px;margin:0 auto;padding:36px 20px 48px;position:relative;z-index:1}
+
+.hero{background:linear-gradient(135deg,var(--red) 0%,var(--red-dark) 100%);color:var(--white);padding:36px 28px 30px;border:2px solid var(--ink);border-bottom:8px solid var(--gold-dark);box-shadow:6px 6px 0 var(--ink);margin-bottom:22px}
+.hero .eyebrow{font-family:'Special Elite',Courier,monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+.hero h1{font-family:'Yeseva One',Georgia,serif;font-weight:400;font-size:clamp(2rem,5vw,2.8rem);margin:10px 0 8px;line-height:1.1}
+.hero .sub{font-size:1.05rem;margin-bottom:6px}
+.hero .due{font-family:'Special Elite',Courier,monospace;font-size:.78rem;opacity:.85}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 26px}
+@media(max-width:560px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--paper-card);border:2px solid var(--ink);border-top:6px solid var(--red);padding:16px 12px;text-align:center;box-shadow:3px 3px 0 var(--ink)}
+.stat:nth-child(2){border-top-color:var(--gold-dark)}
+.stat:nth-child(3){border-top-color:var(--ink)}
+.stat b{display:block;font-family:'Yeseva One',Georgia,serif;font-size:1.6rem;color:var(--red-dark);line-height:1}
+.stat:nth-child(2) b{color:var(--gold-dark)}
+.stat:nth-child(3) b{color:var(--ink)}
+.stat span{display:block;margin-top:6px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.68rem;color:var(--muted)}
+h2{font-family:'Yeseva One',Georgia,serif;font-weight:400;font-size:1.35rem;color:var(--gold);margin:0 0 12px;padding-bottom:8px;border-bottom:1px dashed rgba(215,154,44,.4)}
+.card{background:var(--paper-card);border:2px solid var(--ink);border-left:6px solid var(--red);padding:18px 20px;margin-bottom:22px;box-shadow:4px 4px 0 var(--ink)}
+.card.gold{border-left-color:var(--gold-dark)}
+.card.ink{border-left-color:var(--ink)}
+.card p{margin:0 0 12px;color:var(--ink-2);font-size:.95rem}
+.card p:last-child{margin-bottom:0}
+.card ul{margin:0;padding-left:20px;color:var(--ink-2)}
+.card li{margin-bottom:10px}
+.card li:last-child{margin-bottom:0}
+.sample-label{font-family:'Special Elite',Courier,monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:8px}
+.sample{font-style:italic;color:var(--ink-2)}
+.points{background:var(--paper-card);border:2px solid var(--ink);padding:8px 18px;margin-bottom:22px;box-shadow:4px 4px 0 var(--ink)}
+.points .row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;font-size:.95rem;color:var(--ink-2)}
+.points .row + .row{border-top:1px solid var(--line)}
+.points .total{font-family:'Yeseva One',Georgia,serif;color:var(--red-dark);font-size:1.05rem}
+.contact{background:var(--paper-card);border:2px solid var(--ink);padding:18px;text-align:center;margin-bottom:8px;box-shadow:4px 4px 0 var(--ink)}
+.contact a{color:var(--red-dark)}
+.navbtn{font-size:.85rem;letter-spacing:.5px;border-radius:3px;padding:11px 20px;border:2px solid var(--ink);background:var(--gray);color:var(--ink);box-shadow:4px 4px 0 var(--ink);text-decoration:none;display:inline-flex;align-items:center}
+.navbtn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.botbar .foot-note{font-family:'Special Elite',Courier,monospace;font-size:.68rem;color:rgba(251,246,234,.6)}
+@media(prefers-reduced-motion:reduce){.dust{animation:none}}
+</style>
+</head>
+<body>
+<div class="grain-overlay" aria-hidden="true"></div>
+<div class="deck">
+  <header class="topbar">
+    <span class="mark">STERLING &amp; VALE</span>
+    <div class="header-card">
+      <span class="to-label">TO:</span>
+      <span class="mk">Introduce Yourself</span>
+      <span class="cx">MKT 150 &middot; Module 01</span>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="dust" aria-hidden="true"></div>
+    <div class="stage-inner">
+      <header class="hero">
+        <p class="eyebrow">MKT 150 · Module 01 · Assignment brief (not a practice game)</p>
+        <h1>Introduce Yourself</h1>
+        <p class="sub">Your First Brand is You</p>
+        <p class="due">Due Sunday at 11:59 PM CST · 10 Points Total</p>
+      </header>
+
+      <div class="stats">
+        <div class="stat"><b>10</b><span>Total points</span></div>
+        <div class="stat"><b>Sunday</b><span>Due day (11:59 PM)</span></div>
+        <div class="stat"><b>4 Parts</b><span>Post prompt</span></div>
+      </div>
+
+      <h2>Welcome to MKT 150</h2>
+      <div class="card">
+        <p>Welcome to Principles of Advertising. Before we start analyzing how global brands grab consumer attention, practice on the most important brand you will ever manage: yourself.</p>
+        <p>Every introduction you share is a small marketing message. You decide what to say, how to frame it, and who you want to reach. That is Integrated Marketing Communications on a personal scale. Notice which classmates' posts catch your eye.</p>
+      </div>
+
+      <h2>Main Post Prompt</h2>
+      <div class="card gold">
+        <p><b>Include all four of the following in your main introduction post:</b></p>
+        <ul>
+          <li><b>1. The Basics:</b> Preferred name, where you are logging in from, and your major or target career path.</li>
+          <li><b>2. Your Personal Brand in Three Words:</b> If you were a product on a store shelf, what three descriptor words would be on your label (for example: Loyal, Curious, Caffeinated)? You may also include a short personal tagline.</li>
+          <li><b>3. The Fun Fact:</b> One interest, hobby, or unique skill that makes you distinct.</li>
+          <li><b>4. The Marketing Hook (A or B):</b><br>
+            Option A: An advertisement you cannot forget (loved or hated) and why it stuck.<br>
+            Option B: A brand you are loyal to and what keeps you returning.</li>
+        </ul>
+      </div>
+
+      <h2>Example Post</h2>
+      <div class="card ink">
+        <p class="sample-label">Sample introduction</p>
+        <p class="sample">"Hello everyone! My name is Jordan, logging in from Des Moines. I am a Business Administration major working toward a career in social media marketing. My three personal brand words are Organized, Persistent, and Snack-Driven, with the tagline: 'Gets it done, but bring snacks.' A fun fact about me is that I can solve a Rubik's cube in under two minutes. An advertisement I will never forget is the classic Budweiser Clydesdale Super Bowl campaign. It used no dialogue, relied entirely on emotion, and stuck with me for years. That emotional connection is the marketing skill I am most excited to learn in this class."</p>
+      </div>
+
+      <h2>Connecting with Classmates</h2>
+      <div class="card gold">
+        <p>Peer replies are optional for this introductory post, but reading through classmates' posts is a good way to start building connections.</p>
+        <ul>
+          <li><b>Find common ground:</b> Same major, hometown, or hobbies.</li>
+          <li><b>Discuss marketing hooks:</b> React if someone named an ad or brand you recognize.</li>
+          <li><b>Ask questions:</b> Follow up on career goals or a fun fact.</li>
+        </ul>
+      </div>
+
+      <h2>Point Breakdown</h2>
+      <div class="points">
+        <div class="row">
+          <span>Main Introduction Post (Basics, 3 Brand Words, Fun Fact, Marketing Hook)</span>
+          <b>10 pts</b>
+        </div>
+        <div class="row total">
+          <span>Total possible score</span>
+          <span>10 pts</span>
+        </div>
+      </div>
+
+      <div class="contact">
+        <p>Stuck or falling behind? Email <a href="mailto:GVCJTL@gmail.com">GVCJTL@gmail.com</a> or call 515-778-7260. Reach out anytime, not just when something is overdue.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="botbar">
+    <a class="navbtn" href="index.html">&larr; Week 1</a>
+    <span class="foot-note">MKT 150 · Module 01 assignment brief · not a practice game</span>
+  </footer>
+</div>
+</body>
+</html>

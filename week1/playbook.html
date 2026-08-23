@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Chapter 1 term practice — glossary, flashcards, match-up, and Beat the Clutter. Optional enrichment; not graded.">
+<title>Chapter 1: Playbook — Sterling & Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Barlow+Condensed:wght@500;600;700&family=Special+Elite&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#B84E28;--red-dark:#8A3A1D;--red-bright:#D9713F;--red-glow:rgba(184,78,40,.28);
+  --gold:#D79A2C;--gold-dark:#A87816;--teal:#2F6B67;--teal-dark:#1D4F4F;
+  --ink:#2B211A;--ink-2:#362B21;--gray:#E4D9BE;--gray-soft:#F3E9D2;--gray-line:#D3C4A0;
+  --muted:#6B5D4A;--white:#FBF6EA;--paper:#F3E9D2;--good:#2F6B67;--good-bg:#E1EDEA;--bad:#A32B2B;--bad-bg:#F4E3DE;
+  --wood-light:#8a6b45;--wood-dark:#3d2712;--ease:cubic-bezier(.22,1,.36,1);
+  --panel:radial-gradient(130% 110% at 28% -12%,rgba(255,214,150,.13),transparent 58%),
+          radial-gradient(90% 80% at 100% 100%,rgba(0,0,0,.30),transparent 62%),
+          linear-gradient(163deg,#5E3C1E,#3F2812 58%,#2C1A0A);
+  --panel-shadow:inset 0 0 34px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,222,172,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',Georgia,serif;color:var(--ink);line-height:1.55;min-height:100vh;
+  background:
+    radial-gradient(1400px 900px at 50% 45%,transparent 55%,rgba(43,33,26,.07) 100%),
+    radial-gradient(900px 520px at 88% -8%,rgba(184,78,40,.06),transparent 60%),
+    repeating-linear-gradient(91deg,rgba(92,66,48,.09) 0px,rgba(92,66,48,.09) 1px,transparent 2px,transparent 8px),
+    repeating-linear-gradient(89deg,rgba(255,248,230,.5) 0px,rgba(255,248,230,.5) 1px,transparent 3px,transparent 11px),
+    linear-gradient(158deg,#e6d2a8,#d9c19a 55%,#c9ad7c);
+  background-attachment:fixed;
+}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px 180px}
+.topbar,.wrap{position:relative;z-index:1}
+h1,h2,h3,h4{font-family:'Yeseva One',Georgia,serif;font-weight:400}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px 60px}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.skip-link{position:absolute;left:-999px;top:0;z-index:500;background:var(--ink);color:#fff;padding:10px 16px;font-weight:bold;text-decoration:none}
+.skip-link:focus{left:0}
+
+/* topbar, matching replay.html */
+.topbar{height:60px;display:flex;align-items:center;gap:14px;padding:0 24px;border-bottom:3px solid var(--gold-dark);position:relative;
+  background:repeating-linear-gradient(179deg,rgba(30,18,8,.16) 0px,rgba(30,18,8,.16) 1px,transparent 2px,transparent 5px),linear-gradient(100deg,var(--wood-light),var(--wood-dark) 60%,var(--wood-light));
+  box-shadow:0 3px 10px rgba(43,26,13,.3);margin-bottom:28px}
+.topbar::before,.topbar::after{content:"";position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);background:radial-gradient(circle at 32% 30%,#f2d488,var(--gold-dark) 70%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5),inset 0 0 1px rgba(255,255,255,.4)}
+.topbar::before{left:8px}
+.topbar::after{right:8px}
+.header-card{position:relative;display:flex;align-items:baseline;gap:9px;background:
+    radial-gradient(circle at 80% 70%,transparent 38%,rgba(90,60,20,.10) 40%,rgba(90,60,20,.13) 42%,transparent 44%),var(--paper);
+  border:1px solid rgba(43,33,26,.35);padding:5px 14px 4px 12px;box-shadow:0 3px 7px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.5);transform:rotate(-.4deg)}
+.header-card::before{content:"";position:absolute;top:-5px;left:16px;width:24px;height:7px;border-radius:2px;background:linear-gradient(180deg,#f2d488,var(--gold-dark) 75%,#7a5a12);box-shadow:0 1px 2px rgba(0,0,0,.5)}
+.header-card .to-label{font-family:'Special Elite',Courier,monospace;font-size:.62rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.header-card .mark{font-family:'Special Elite',Courier,monospace;font-weight:400;letter-spacing:.5px;color:var(--red-dark);font-size:.82rem;white-space:nowrap}
+.topbar .topbar-nav{margin-left:auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.topbar .topbar-cx{
+  flex:0 0 auto;font-family:'Special Elite',Courier,monospace;font-size:.8rem;color:rgba(251,246,234,.75);white-space:nowrap;
+}
+.topbar .back-link{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;color:rgba(251,246,234,.92);text-decoration:none;font-weight:600}
+.topbar .back-link:hover{color:var(--gold)}
+.topbar .back-link-secondary{font-weight:500;color:rgba(251,246,234,.62);font-size:.8rem}
+.topbar .back-link-secondary:hover{color:rgba(251,246,234,.85)}
+
+/* hero memo sheet */
+.memo-sheet{position:relative;background:var(--gray-soft);padding:28px 30px 24px;margin-bottom:24px;box-shadow:0 8px 20px rgba(43,33,26,.25);
+  clip-path:polygon(0 1.5%,3% 0,9% .8%,15% 0,21% .8%,27% 0,33% .8%,39% 0,45% .8%,51% 0,57% .8%,63% 0,69% .8%,75% 0,81% .8%,87% 0,93% .8%,100% 0,100% 98.5%,97% 100%,91% 99.2%,85% 100%,79% 99.2%,73% 100%,67% 99.2%,61% 100%,55% 99.2%,49% 100%,43% 99.2%,37% 100%,31% 99.2%,25% 100%,19% 99.2%,13% 100%,7% 99.2%,0 100%)}
+.memo-sheet h1{font-size:2rem;color:var(--red-dark);margin-bottom:8px}
+.memo-sheet p{font-size:1rem;color:var(--ink-2)}
+.memo-sheet .count{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.76rem;color:var(--teal-dark);margin-top:10px;display:block}
+.muted{color:var(--muted)}
+.practice-path{margin:0 0 22px;padding:12px 16px;background:var(--white);border:1px dashed var(--gray-line);border-radius:4px;font-size:.88rem;line-height:1.55;color:var(--ink-2)}
+.practice-path-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.72rem;color:var(--muted);display:block;margin-bottom:6px}
+.practice-path button{font:inherit;font-weight:600;color:var(--red-dark);background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.practice-path button:hover{color:var(--ink)}
+
+.hub-optional{
+  position:relative;margin:0 0 22px;
+  background:var(--white);border:2px solid var(--ink);border-left:8px solid var(--red-dark);
+  border-radius:4px;padding:22px 22px 20px 20px;
+  box-shadow:6px 6px 0 var(--ink),0 0 0 1px rgba(184,78,40,.08);
+  text-align:left;
+}
+.hub-optional::before{
+  content:"Not for a grade";position:absolute;top:-13px;left:18px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--white);background:var(--red-dark);padding:5px 12px;border:2px solid var(--ink);border-radius:2px 2px 0 0;
+}
+.hub-optional-label{
+  margin:0 0 8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.04em;text-transform:uppercase;color:var(--red-dark);
+}
+.hub-optional-body{margin:0;font-size:1rem;line-height:1.55;color:var(--ink)}
+.hub-optional-body strong{font-weight:700;color:var(--ink)}
+.hub-optional-canvas{
+  display:block;margin-top:10px;padding:10px 12px;background:var(--good-bg);border:1px solid var(--teal);border-radius:3px;
+  font-family:'Special Elite',Courier,monospace;font-size:.88rem;line-height:1.45;color:var(--teal-dark);
+}
+.hub-optional-canvas a{color:var(--teal-dark);font-weight:700;text-underline-offset:3px}
+.hub-optional-canvas a:hover{color:var(--ink)}
+.replay-nudge{margin:0 0 24px;font-size:.92rem;line-height:1.5;color:var(--ink-2)}
+.replay-nudge a{color:var(--red-dark);font-weight:600;text-underline-offset:2px}
+.replay-nudge a:hover{color:var(--ink)}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* tactile tab buttons */
+.tool-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+@media(max-width:400px){
+  .tool-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .tool-tab{padding:10px 12px;font-size:.85rem;text-align:center}
+}
+.tool-tab{font-family:inherit;font-size:.92rem;font-weight:bold;cursor:pointer;border-radius:20px;padding:11px 20px;border:2px solid var(--ink);
+  background:linear-gradient(180deg,#fff,#e6ddc8);color:var(--ink);box-shadow:0 3px 0 rgba(43,33,26,.35),inset 0 1px 0 rgba(255,255,255,.7);
+  transition:transform .12s,box-shadow .12s,background .15s}
+.tool-tab:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(43,33,26,.35)}
+.tool-tab[data-tool="glossary"][aria-selected="true"]{background:linear-gradient(180deg,var(--red-bright),var(--red-dark));color:#fff;border-color:var(--red-dark);transform:translateY(2px);box-shadow:0 1px 0 rgba(43,33,26,.5),inset 0 1px 3px rgba(0,0,0,.35)}
+.tool-tab[data-tool="flash"][aria-selected="true"]{background:linear-gradient(180deg,#e8c67a,var(--gold-dark));color:#3a2a0a;border-color:var(--gold-dark);transform:translateY(2px);box-shadow:0 1px 0 rgba(43,33,26,.5),inset 0 1px 3px rgba(0,0,0,.25)}
+.tool-tab[data-tool="match"][aria-selected="true"]{background:linear-gradient(180deg,#4a9490,var(--teal-dark));color:#fff;border-color:var(--teal-dark);transform:translateY(2px);box-shadow:0 1px 0 rgba(43,33,26,.5),inset 0 1px 3px rgba(0,0,0,.35)}
+.tool-tab[data-tool="clutter"][aria-selected="true"]{background:linear-gradient(180deg,#5c4a3a,var(--ink));color:var(--gold);border-color:var(--ink);transform:translateY(2px);box-shadow:0 1px 0 rgba(43,33,26,.5),inset 0 1px 3px rgba(0,0,0,.35)}
+.tool-panel{display:none}
+.tool-panel.active{display:block}
+.tool-panel[hidden]{display:none!important}
+.tool-intro{margin:0 0 10px;font-size:.9rem;font-weight:700;color:var(--ink)}
+.obj-caption{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.86rem;color:var(--red-dark);margin:0 0 14px}
+
+/* objective selector */
+.obj-selector{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 10px;padding:14px;background:var(--panel);
+  border-radius:10px;box-shadow:var(--panel-shadow)}
+.obj-selector button{font-family:inherit;font-size:.88rem;font-weight:bold;cursor:pointer;background:var(--gray-soft);color:var(--ink);border:none;padding:10px 16px;box-shadow:0 4px 9px rgba(0,0,0,.3);transition:transform .18s,box-shadow .18s;
+  clip-path:polygon(0 6%,10% 0,25% 4%,40% 0,55% 4%,70% 0,85% 4%,100% 0,100% 94%,90% 100%,75% 96%,60% 100%,45% 96%,30% 100%,15% 96%,0 100%)}
+.obj-selector button:hover{transform:translateY(-3px);box-shadow:0 8px 16px rgba(0,0,0,.4)}
+.obj-selector button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--red-glow),0 8px 16px rgba(0,0,0,.4);background:var(--white)}
+
+/* glossary */
+.glossary-toolbar{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;margin-bottom:16px}
+.glossary-search{flex:1 1 200px;font:inherit;font-size:.95rem;padding:10px 12px;border:2px solid var(--gray-line);border-radius:6px;background:var(--white)}
+.glossary-search:focus{border-color:var(--teal)}
+.glossary-jump{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.glossary-jump-label{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.glossary-jump a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.82rem;color:var(--red-dark);text-decoration:none;padding:4px 10px;border:1px solid var(--gray-line);border-radius:999px;background:var(--white)}
+.glossary-jump a:hover{background:var(--gray-soft)}
+.glossary-print-btn{flex:0 0 auto;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;background:var(--white);color:var(--ink);border:2px solid var(--ink);border-radius:6px;padding:8px 14px}
+.glossary-print-btn:hover{background:var(--gray-soft)}
+.term-subgroup-heading{
+  grid-column:1/-1;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-dark);
+  margin:8px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--gray-line);
+}
+.term-subgroup-heading:first-child{margin-top:0}
+.obj-selector button.match-mixed-btn{background:linear-gradient(180deg,#e8c67a,var(--gold-dark));color:#3a2a0a}
+.obj-selector button.match-mixed-btn[aria-pressed="true"]{background:var(--white);color:var(--ink)}
+.print-only{display:none}
+.glossary-objective{margin-bottom:12px;border:1px solid var(--gray-line);border-radius:8px;background:var(--white);overflow:hidden}
+.glossary-objective summary{cursor:pointer;list-style:none;padding:12px 14px;background:var(--gray-soft);border-bottom:1px solid transparent}
+.glossary-objective summary::-webkit-details-marker{display:none}
+.glossary-objective summary::after{content:"";float:right;width:.55em;height:.55em;border-right:2px solid var(--red-dark);border-bottom:2px solid var(--red-dark);transform:rotate(45deg);margin-top:.35em;transition:transform .2s var(--ease)}
+.glossary-objective[open] summary{border-bottom-color:var(--gray-line)}
+.glossary-objective[open] summary::after{transform:rotate(-135deg);margin-top:.55em}
+.glossary-objective summary h2{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:.92rem;color:var(--red-dark);font-weight:700;display:inline}
+.glossary-objective .term-badge{font-weight:600;font-size:.75rem;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:8px}
+.glossary-objective.is-filter-hidden{display:none}
+.term-card.is-hidden{display:none}
+.term-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));padding:14px;margin:0;background:var(--panel);
+  border-radius:0 0 8px 8px;box-shadow:var(--panel-shadow)}
+.term-card{position:relative;background:var(--gray-soft);border-left:4px solid var(--teal);padding:13px 15px;box-shadow:0 4px 9px rgba(0,0,0,.3);
+  clip-path:polygon(0 4%,8% 0,20% 3%,35% 0%,50% 2%,65% 0%,80% 3%,92% 0%,100% 4%,100% 96%,88% 100%,72% 97%,56% 100%,40% 97%,24% 100%,8% 97%,0 100%)}
+.term-name{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-weight:700;color:var(--red-dark);font-size:.95rem;margin-bottom:6px}
+.term-def{font-size:.87rem;line-height:1.55}
+.term-ex{font-size:.8rem;line-height:1.5;color:var(--muted);margin-top:6px}
+.term-ex b{color:var(--ink)}
+
+/* flashcards — reusing the proven flip mechanic from replay.html */
+.dd-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.dd-card{font-family:inherit;text-align:left;background:none;border:none;padding:0;cursor:pointer;perspective:1100px;min-height:170px}
+.dd-inner{position:relative;width:100%;height:100%;min-height:150px;transition:transform .55s var(--ease);transform-style:preserve-3d}
+.dd-card.flipped .dd-inner{transform:rotateY(180deg)}
+.dd-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;padding:15px 16px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 4px 9px rgba(0,0,0,.3);
+  clip-path:polygon(0 4%,8% 0,20% 3%,35% 0%,50% 2%,65% 0%,80% 3%,92% 0%,100% 4%,100% 96%,88% 100%,72% 97%,56% 100%,40% 97%,24% 100%,8% 97%,0 100%)}
+.dd-front{background:var(--gray-soft)}
+.dd-front .tag{font-family:'Barlow Condensed',sans-serif;font-size:.66rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:800;color:var(--teal-dark);margin-bottom:8px}
+.dd-front .term{font-weight:bold;font-size:1.05rem;line-height:1.3;color:var(--ink);font-family:'Yeseva One',Georgia,serif}
+.dd-front .flip-hint{margin-top:auto;padding-top:8px;font-size:.72rem;color:var(--muted);font-weight:bold}
+.dd-back{background:radial-gradient(circle at 30% 15%,var(--red-bright),var(--red-dark));color:#fff;transform:rotateY(180deg);box-shadow:0 12px 26px var(--red-glow)}
+.dd-back .tag{font-family:'Barlow Condensed',sans-serif;font-size:.64rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:800;opacity:.9;margin-bottom:6px}
+.dd-back p{font-size:.83rem;line-height:1.42;margin:0}
+.dd-back .ex{font-size:.76rem;margin-top:8px;opacity:.9;font-style:italic}
+
+/* match-up — drag and drop, reusing the proven mechanic from replay.html's plan-builder */
+.match-msg{font-size:.9rem;font-weight:bold;color:var(--red-dark);margin-bottom:6px}
+.match-hint{font-size:.85rem;margin:0 0 10px;color:var(--muted);font-style:italic}
+.match-wrap{display:grid;gap:20px;grid-template-columns:1.15fr 1fr;align-items:start;padding:14px;background:var(--panel);
+  border-radius:10px;box-shadow:var(--panel-shadow)}
+@media(max-width:640px){.match-wrap{grid-template-columns:1fr}}
+.match-slots{display:grid;gap:14px}
+.match-slot{display:grid;gap:5px}
+.match-slotlabel{font-size:.86rem;font-weight:800;color:var(--white);font-family:'Yeseva One',Georgia,serif;display:flex;gap:8px;align-items:center}
+.match-slotlabel .sn{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#f2d488,var(--gold-dark) 70%,#7a5a12);color:#3a2a0a;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.5),inset 0 1px 1px rgba(255,255,255,.4)}
+.match-zone{min-height:54px;border:2px dashed rgba(243,233,210,.4);border-radius:10px;padding:9px 11px;font-size:.78rem;color:rgba(243,233,210,.6);display:flex;align-items:center;transition:all .18s;background:rgba(0,0,0,.15)}
+.match-zone.hover{border-color:var(--red-bright);background:rgba(217,113,63,.15);transform:scale(1.02)}
+.match-zone.shake{animation:shake .43s}
+.match-zone.filled{border-style:solid;border-color:var(--good);background:var(--good-bg);padding:0}
+.match-pool{display:flex;flex-direction:column;gap:10px}
+.match-tile{font-family:inherit;font-size:.83rem;font-weight:bold;cursor:grab;background:var(--white);border:2px solid var(--red);padding:11px 14px;transition:transform .18s,box-shadow .18s,opacity .18s;user-select:none;text-align:left;box-shadow:0 4px 9px rgba(0,0,0,.3);
+  clip-path:polygon(0 4%,8% 0,20% 3%,35% 0%,50% 2%,65% 0%,80% 3%,92% 0%,100% 4%,100% 96%,88% 100%,72% 97%,56% 100%,40% 97%,24% 100%,8% 97%,0 100%)}
+.match-tile:hover{transform:translateY(-2px);box-shadow:0 8px 18px var(--red-glow)}
+.match-tile.armed{box-shadow:0 0 0 3px var(--red-glow)}
+.match-tile.dragging{opacity:.35}
+.match-tile.locked{cursor:default;border:none;background:transparent;padding:9px 11px;box-shadow:none;width:100%;color:#12401f;animation:kfcIn .35s var(--ease);clip-path:none}
+.match-tile.locked::before{content:"\2713 ";color:var(--good);font-weight:800}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes kfcIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* beat the clutter */
+.clutter-stage{position:relative;padding:56px 24px;background:var(--panel);
+  border-radius:10px;box-shadow:var(--panel-shadow);overflow:hidden;min-height:280px}
+.clutter-scrap{position:absolute;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:.62rem;
+  background:#f3e9d2;color:#8a3a1d;border:1px solid rgba(43,33,26,.25);padding:5px 8px;box-shadow:0 3px 8px rgba(0,0,0,.35);pointer-events:none;
+  clip-path:polygon(2% 8%,96% 0%,100% 92%,4% 100%)}
+.clutter-card{position:relative;background:var(--gray-soft);padding:22px 24px;box-shadow:0 8px 20px rgba(0,0,0,.35);max-width:560px;margin:0 auto;
+  clip-path:polygon(0 3%,10% 0,25% 2%,40% 0,55% 2%,70% 0,85% 2%,100% 0,100% 97%,90% 100%,75% 98%,60% 100%,45% 98%,30% 100%,15% 98%,0 100%)}
+.clutter-card .term-prompt{font-family:'Yeseva One',Georgia,serif;font-size:1.3rem;color:var(--red-dark);margin-bottom:14px;text-align:center}
+.clutter-opts{display:flex;flex-direction:column;gap:9px}
+.clutter-opt{font-family:inherit;font-size:.88rem;text-align:left;cursor:pointer;background:var(--white);border:2px solid var(--gray-line);border-radius:9px;padding:11px 14px;transition:all .15s;width:100%}
+@media(max-width:480px){.clutter-opt{padding:12px 14px;font-size:.9rem}}
+.clutter-opt:hover{border-color:var(--red)}
+.clutter-opt.good{border-color:var(--good);background:var(--good-bg)}
+.clutter-opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.clutter-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--gold);font-size:.95rem}
+.clutter-done{text-align:center;color:var(--gold);font-family:'Yeseva One',Georgia,serif;font-size:1.4rem}
+
+/* shared tactile action button */
+.btn{font-family:'Special Elite',Courier,monospace;font-size:.88rem;letter-spacing:.4px;font-weight:400;cursor:pointer;background:linear-gradient(180deg,var(--red-bright),var(--red-dark));color:var(--white);border:2px solid var(--red-dark);border-radius:20px;padding:10px 20px;transition:transform .12s,box-shadow .12s,background .15s;box-shadow:0 3px 0 rgba(43,33,26,.5),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn:hover{background:linear-gradient(180deg,var(--red),var(--red-dark))}
+.btn:active{transform:translateY(3px);box-shadow:0 0 0 rgba(43,33,26,.5)}
+.btn.ghost{background:linear-gradient(180deg,#fff,#e6ddc8);color:var(--ink);border-color:var(--ink)}
+.center{text-align:center;margin-top:16px}
+@media (prefers-reduced-motion:reduce){
+  .dd-inner,.match-tile,.obj-selector button,.tool-tab{transition:none}
+  .match-zone.shake{animation:none}
+  .match-tile.locked{animation:none}
+  .glossary-objective summary::after{transition:none}
+}
+@media(max-width:640px){
+  .hub-optional{padding:20px 16px 18px}
+  .hub-optional-body{font-size:.95rem}
+}
+@media print{
+  body{background:#fff!important}
+  body::before{display:none!important}
+  .skip-link,.topbar,.memo-sheet,.hub-optional,.replay-nudge,.practice-path,.tool-tabs,
+  #panel-flash,#panel-match,#panel-clutter{display:none!important}
+  .wrap{max-width:none;padding:0 12px 24px}
+  #panel-glossary,#panel-glossary[hidden]{display:block!important}
+  .glossary-toolbar .glossary-search,.glossary-jump,.glossary-print-btn{display:none!important}
+  .print-only{display:block!important}
+  .print-sheet-header{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;color:#000;margin:0 0 4px;text-transform:uppercase;letter-spacing:.04em}
+  .print-sheet-note{font-size:.85rem;color:#333;margin:0 0 16px}
+  .glossary-objective{border:0;border-radius:0;margin-bottom:18px;page-break-inside:avoid}
+  .glossary-objective summary{display:none!important}
+  .glossary-objective .term-grid{display:grid!important;background:none!important;box-shadow:none!important;padding:0;grid-template-columns:1fr 1fr;gap:10px 16px}
+  details.glossary-objective .term-grid{display:grid!important}
+  .term-card{clip-path:none!important;box-shadow:none!important;border:1px solid #bbb;border-left:3px solid #333;background:#fff;break-inside:avoid;padding:10px 12px}
+  .term-card.is-hidden{display:none!important}
+  .term-name{color:#000;font-size:.85rem}
+  .term-def,.term-ex{font-size:.8rem;color:#222}
+  .term-subgroup-heading{grid-column:1/-1;border-bottom-color:#999;color:#000;margin-top:12px}
+  section[id^="obj-"]{page-break-before:auto}
+  section#obj-1-1{page-break-before:avoid}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <div class="header-card">
+    <span class="to-label">To:</span>
+    <span class="mark">MKT 150 · CH.1 Playbook</span>
+  </div>
+  <nav class="topbar-nav" aria-label="Playbook navigation">
+    <a class="back-link" href="index.html">&larr; Week 1</a>
+    <a class="back-link back-link-secondary" href="../index.html">All chapters</a>
+  </nav>
+  <span class="topbar-cx">MKT 150 &middot; CH. 1</span>
+</header>
+
+<div class="wrap" id="main">
+  <div class="memo-sheet">
+    <h1>Chapter 1 Playbook</h1>
+    <p>Every key term from Chapter 1, plus four ways to practice them: glossary, flashcards, Match-Up, and Beat the Clutter.</p>
+    <span class="count" id="termCount"></span>
+  </div>
+
+  <div class="hub-optional" role="note">
+    <p class="hub-optional-label">Optional enrichment</p>
+    <p class="hub-optional-body">This Playbook is <strong>not required</strong> and <strong>does not affect your grade</strong>.
+      <span class="hub-optional-canvas">Only items in Canvas are for a grade. <a href="https://iowacconline.instructure.com/courses/132513" target="_blank" rel="noopener noreferrer">Open your course in Canvas<span class="visually-hidden"> (opens in new tab)</span> &rarr;</a></span>
+    </p>
+  </div>
+
+  <p class="replay-nudge">Terms here match <a href="replay.html">Replay</a> objectives <strong>1.1&ndash;1.5</strong> &mdash; try the interactive lecture first if you&rsquo;re new to the chapter.</p>
+
+  <div class="practice-path">
+    <span class="practice-path-label">Suggested path (all optional)</span>
+    <button type="button" data-goto-tool="glossary">Glossary</button> (browse) &rarr;
+    <button type="button" data-goto-tool="flash">Flashcards</button> (one objective) &rarr;
+    <button type="button" data-goto-tool="match">Match-Up</button> &rarr;
+    <button type="button" data-goto-tool="clutter">Beat the Clutter</button>
+  </div>
+
+  <div class="tool-tabs" role="tablist" aria-label="Practice tools">
+    <button type="button" class="tool-tab" role="tab" id="tab-glossary" data-tool="glossary" aria-controls="panel-glossary" aria-selected="true" tabindex="0">Glossary</button>
+    <button type="button" class="tool-tab" role="tab" id="tab-flash" data-tool="flash" aria-controls="panel-flash" aria-selected="false" tabindex="-1">Flashcards</button>
+    <button type="button" class="tool-tab" role="tab" id="tab-match" data-tool="match" aria-controls="panel-match" aria-selected="false" tabindex="-1">Match-Up</button>
+    <button type="button" class="tool-tab" role="tab" id="tab-clutter" data-tool="clutter" aria-controls="panel-clutter" aria-selected="false" tabindex="-1">Beat the Clutter</button>
+  </div>
+
+  <div class="tool-panel active" id="panel-glossary" role="tabpanel" aria-labelledby="tab-glossary" tabindex="0"></div>
+
+  <div class="tool-panel" id="panel-flash" role="tabpanel" aria-labelledby="tab-flash" tabindex="0" hidden>
+    <p class="tool-intro">Pick an objective below. Tap a card to flip it and see the definition.</p>
+    <div class="obj-selector" id="flashObjSel"></div>
+    <p class="obj-caption" id="flashCaption"></p>
+    <div class="dd-grid" id="flashGrid"></div>
+  </div>
+
+  <div class="tool-panel" id="panel-match" role="tabpanel" aria-labelledby="tab-match" tabindex="0" hidden>
+    <p class="tool-intro">Drag each definition onto the term it matches &mdash; or tap a definition, then tap the slot.</p>
+    <div class="obj-selector" id="matchObjSel"></div>
+    <p class="obj-caption" id="matchCaption"></p>
+    <p class="match-hint" id="matchHint" hidden></p>
+    <div class="match-msg" id="matchMsg">0 / 6 matched</div>
+    <div class="match-wrap">
+      <div class="match-slots" id="matchSlots"></div>
+      <div class="match-pool" id="matchPool"></div>
+    </div>
+    <div class="center"><button class="btn ghost" id="matchReset" type="button">↻ New round</button></div>
+  </div>
+
+  <div class="tool-panel" id="panel-clutter" role="tabpanel" aria-labelledby="tab-clutter" tabindex="0" hidden>
+    <p class="tool-intro">Named for the <strong>Clutter</strong> term in objective 1.1 &mdash; the noise of too many messages fighting for attention. A term appears; pick its real definition before the on-screen &ldquo;scrap&rdquo; buries it. Three of the four options are decoys from other terms.</p>
+    <div class="clutter-hud"><span id="clutterScore">Score: 0</span><span id="clutterCount">1 / 10</span></div>
+    <div class="clutter-stage" id="clutterStage">
+      <div class="clutter-card" id="clutterCard"></div>
+    </div>
+    <div class="center"><button class="btn ghost" id="clutterReset" type="button">↻ Play again</button></div>
+  </div>
+</div>
+
+<script>
+var OBJECTIVES = [
+  {
+    id: '1.1', title: 'How communication takes place',
+    terms: [
+      { t: 'Communication', d: 'Transmitting, receiving, and processing information. It truly happens only when the receiver comprehends the message as the sender intended. Modern models frame this less as a one-way broadcast and more as a "dance": both sides transmit and receive verbal and nonverbal cues, and companies are expected to react to messages directed at them, not just send messages out.' },
+      { t: 'Sender', d: 'The person or organization delivering a message or idea — usually a company trying to sell a product or idea.', e: "Duolingo's social team preparing a new campaign." },
+      { t: 'Encoding', d: 'Turning an idea into verbal cues (words, sounds) and nonverbal cues (gestures, images, music).', e: "Choosing the slogan, visuals, and tone that carry the brand's meaning." },
+      { t: 'Transmission device', d: 'Anything that carries the message from sender to receiver — human or nonhuman.', e: 'A TV signal, billboard, or newspaper coupon; also a salesperson or word-of-mouth.' },
+      { t: 'Decoding', d: "Occurs when the message reaches one or more of the receiver's senses.", e: 'A shopper smelling a perfume sample attached to a magazine ad.' },
+      { t: 'Receiver', d: 'In the communication model, the specific audience a message is aimed at.' },
+      { t: 'Feedback', d: "The receiver's response back to the sender.", e: 'Purchases, inquiries, store visits, complaints, blog posts, and website hits.' },
+      { t: 'Noise', d: 'Anything that distorts, disrupts, or interferes with a message at any stage of the model.' },
+      { t: 'Clutter', d: 'The most common form of noise — the sheer volume of messages a consumer meets daily, causing most to be tuned out.' }
+    ]
+  },
+  {
+    id: '1.2', title: 'What is an integrated marketing communications program?',
+    terms: [
+      { t: 'Integrated Marketing Communications (IMC)', d: 'Coordination of every communication tool, avenue, and source into one seamless program built to maximize impact on customers and stakeholders.', e: "Coca-Cola's consistent red, script logo, and theme across cans, billboards, social, and sponsorships worldwide." },
+      { t: 'Marketing mix (Four Ps)', d: 'The four controllable elements marketers combine: Product, Price, Place, and Promotion.' },
+      { t: 'Promotions mix', d: 'Traditionally advertising, sales promotion, and personal selling; the IMC version expands this to also include database marketing, direct response, online marketing, social media, guerrilla marketing, alternative marketing, and public relations.' },
+      { t: 'Product', d: 'Goods, services, and the benefits they deliver.' },
+      { t: 'Price', d: 'Pricing systems and the value customers perceive.' },
+      { t: 'Place', d: 'Distribution — getting the product to where the customer can buy it.' },
+      { t: 'Promotion', d: 'How value is communicated to customers; the home of IMC within the marketing mix.' },
+      { t: 'Current situational analysis', d: "Examining the firm's present market situation — the first step of a marketing plan." },
+      { t: 'SWOT analysis', d: 'Study of internal strengths and weaknesses plus external opportunities and threats.' },
+      { t: 'Marketing objectives', d: 'Targets such as higher sales, greater market share, a new competitive position, or specific customer actions.' },
+      { t: 'Target market', d: 'In the marketing plan, the customer group a set of marketing objectives is assigned to.' },
+      { t: 'Marketing strategies', d: 'Positioning, differentiation, and branding decisions made across the marketing mix.' },
+      { t: 'Marketing tactics', d: 'The day-to-day activities that carry out and support the marketing strategies.' },
+      { t: 'Implementation', d: 'Putting the marketing plan into action.' },
+      { t: 'Evaluation of performance', d: 'Measuring results — the final step of the plan, and the one that feeds the next plan.' }
+    ]
+  },
+  {
+    id: '1.3', title: 'Trends affecting marketing communications',
+    terms: [
+      { g: 'Trends affecting IMC', t: 'Accountability', d: 'Pressure to show measurable results, driven by the C-suite treating marketing as an investment rather than an expense.', e: 'P&G, AT&T, Johnson & Johnson, Kraft/Heinz, and Toyota have all shifted dollars from traditional media into digital, social, and trackable programs to prove spend translates to sales.' },
+      { g: 'Trends affecting IMC', t: 'Mobile marketing', d: "Reaching consumers directly on their smartphones — through apps and texting — to build brand experiences.", e: "P&G's Star Wars CoverGirl used Snapchat geofilters around Ulta stores." },
+      { g: 'Trends affecting IMC', t: 'Media integration', d: 'Delivering the same message across screens, since consumers spend 10+ hours a day across devices.', e: 'A game on TV while stats load on a phone.' },
+      { g: 'Trends affecting IMC', t: 'Channel power', d: 'Influence along the producer \u2192 wholesaler \u2192 retailer \u2192 consumer chain; power has shifted away from manufacturers, toward retailers and increasingly toward consumers, not the other way around.', e: 'A shopper researching stereos online before visiting Best Buy looks like it favors the retailer, but it actually shows power shifting to the consumer, who now controls the information-gathering process.' },
+      { g: 'Trends affecting IMC', t: 'Global competition', d: 'Rivals arriving from far away, not just down the street; the response is often one consistent global brand.', e: "Doritos' \u201cFor the Bold\u201d unified its look across 37 countries." },
+      { g: 'Trends affecting IMC', t: 'Brand parity', d: 'When brands seem interchangeable, so shoppers choose on price, availability, or promotion — and loyalty declines.' },
+      { g: 'Trends affecting IMC', t: 'Customer engagement', d: 'Two-way communication and an emotional commitment to a brand.' },
+      { g: 'Trends affecting IMC', t: 'Contact point', d: 'Any place where a customer interacts with a firm.', e: 'An Instagram page, a sales clerk, and a repair line.' },
+      { g: 'Trends affecting IMC', t: 'Convenience marketing', d: 'Making buying simple and fast — cars, insurance, banking, and courses now happen from a phone.', e: 'Buying a car online through Carvana.' },
+      { g: 'Trends affecting IMC', t: 'Cause-related marketing', d: 'Tying products to a cause when the connection is logical; the trend grew during the pandemic.', e: "Walgreens' Red Nose Day; Grubhub's round-up for No Kid Hungry." },
+      { g: 'Multi-screen & journey behavior', t: 'Content grazing', d: 'Using two or more screens at once for unrelated content.', e: 'Watching TV and texting a friend at the same time.' },
+      { g: 'Multi-screen & journey behavior', t: 'Investigative spider-webbing', d: 'Pursuing specific content across multiple platforms.', e: 'Watching a game while looking up player stats on a phone.' },
+      { g: 'Multi-screen & journey behavior', t: 'Quantum journey', d: "Completing a single task step by step, moving from one device to the next until it's done.", e: 'Finding a restaurant on a PC, reading reviews on a phone, then opening a map app to order.' },
+      { g: 'Multi-screen & journey behavior', t: 'Social spider-webbing', d: 'Sharing content across multiple devices.', e: 'Posting photos from a laptop, then texting friends to go check them out.' }
+    ]
+  },
+  {
+    id: '1.4', title: 'Components of an integrated marketing communications program',
+    terms: [
+      { t: 'The foundation', d: "A review of company image, the buyers served, and the markets they're in — through brand management, buyer-behavior analysis, and IMC planning." },
+      { t: 'Advertising (component)', d: 'Campaign management, advertising design, and traditional media — TV, radio, magazines, newspapers, outdoor, and direct mail.' },
+      { t: 'Digital, mobile & alternative marketing', d: 'The IMC component grouping social media with alternative programs — buzz, guerrilla, product placement, lifestyle, and brand communities.' },
+      { t: 'Selling components', d: 'Database and direct-response programs, personal selling, public relations and sponsorships, plus sales promotions.' },
+      { t: 'Trade promotions', d: 'Incentives aimed at channel members — slotting fees, co-op ads — that push product through the channel.', e: "Offering a retailer extra margin or co-op ad dollars to stock Eight O'Clock Coffee during its relaunch." },
+      { t: 'Consumer promotions', d: 'Incentives aimed at end users — coupons, samples, and rebates.', e: "Eight O'Clock Coffee's Fashion Week sweepstakes, #SpottheRedBag, aimed directly at shoppers." },
+      { t: 'Integration (component)', d: 'Tying the program together through regulations and ethics, and evaluating the IMC effort overall.' },
+      { t: "Zehnder Communications' 5 reasons IMC works", d: 'An agency-side argument for why IMC matters: it unifies strategy and message across channels, streamlines timing, connects with multiple audiences, creates meaningful insights, and maximizes impact.' }
+    ]
+  },
+  {
+    id: '1.5', title: 'What is meant by GIMC?',
+    terms: [
+      { t: 'GIMC', d: 'Globally integrated marketing communications — IMC applied on an international scale, where national and cultural differences are wider.', e: 'A tire manufacturer with identical tires across markets can standardize the message; one that adapts tires to regional roads and climate likely needs to adapt the message too.' },
+      { t: 'Standardization', d: 'A uniform product and message across countries; the language may change but the basic message stays the same, generating economies of scale.', e: 'Running the same theme in all French-speaking countries.' },
+      { t: 'Adaptation', d: 'Products and messages designed for each country, while regions still share a central theme and learn from one another (synergy).', e: "Jaguar's \u201cHow alive are you?\u201d theme adapted across 11+ countries." },
+      { t: 'Market globally, act locally', d: 'The guiding GIMC philosophy: keep the campaign theme intact while adjusting it to each country and culture.' }
+    ]
+  }
+];
+
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)),t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function objLabel(obj){ return obj.id + ' \u2014 ' + obj.title; }
+function objAnchorId(obj){ return 'obj-' + obj.id.replace('.','-'); }
+function allChapterTerms(){
+  var list = [];
+  OBJECTIVES.forEach(function(o){ o.terms.forEach(function(t){ list.push(t); }); });
+  return list;
+}
+var MATCH_MIXED = { id: 'mixed', title: 'All objectives (mixed review)', terms: null };
+MATCH_MIXED.terms = allChapterTerms();
+
+/* ---------- term count ---------- */
+(function(){
+  var n = 0;
+  OBJECTIVES.forEach(function(o){ n += o.terms.length; });
+  document.getElementById('termCount').textContent = '~' + n + ' terms \u00b7 ' + OBJECTIVES.length + ' objectives';
+})();
+
+/* ---------- tab switching ---------- */
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tool-tab[role="tab"]'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.tool-panel[role="tabpanel"]'));
+
+  window.activatePlaybookTool = function(toolId, opts){
+    opts = opts || {};
+    tabs.forEach(function(tab){
+      var on = tab.getAttribute('data-tool') === toolId;
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(function(p){
+      var on = p.id === 'panel-' + toolId;
+      p.classList.toggle('active', on);
+      p.hidden = !on;
+    });
+    if(toolId === 'clutter' && window.__clutterRespawn){
+      setTimeout(window.__clutterRespawn, 0);
+    }
+    if(opts.focusTab){
+      var t = document.getElementById('tab-' + toolId);
+      if(t) t.focus();
+    }
+  };
+
+  tabs.forEach(function(tab, idx){
+    tab.addEventListener('click', function(){
+      window.activatePlaybookTool(tab.getAttribute('data-tool'));
+    });
+    tab.addEventListener('keydown', function(e){
+      var next = null;
+      if(e.key === 'ArrowRight' || e.key === 'ArrowDown') next = tabs[(idx + 1) % tabs.length];
+      else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = tabs[(idx - 1 + tabs.length) % tabs.length];
+      else if(e.key === 'Home') next = tabs[0];
+      else if(e.key === 'End') next = tabs[tabs.length - 1];
+      if(next){
+        e.preventDefault();
+        window.activatePlaybookTool(next.getAttribute('data-tool'), { focusTab: true });
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-goto-tool]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      window.activatePlaybookTool(btn.getAttribute('data-goto-tool'), { focusTab: true });
+    });
+  });
+
+  var params = new URLSearchParams(window.location.search);
+  var fromQuery = params.get('tool');
+  if(fromQuery && document.getElementById('panel-' + fromQuery)){
+    window.activatePlaybookTool(fromQuery);
+  }
+})();
+
+/* ---------- Glossary ---------- */
+(function(){
+  var root = document.getElementById('panel-glossary');
+  var toolbar = document.createElement('div');
+  toolbar.className = 'glossary-toolbar';
+  var search = document.createElement('input');
+  search.type = 'search';
+  search.className = 'glossary-search';
+  search.placeholder = 'Filter by term name\u2026';
+  search.setAttribute('aria-label', 'Filter glossary by term name');
+  toolbar.appendChild(search);
+  var jump = document.createElement('nav');
+  jump.className = 'glossary-jump';
+  jump.setAttribute('aria-label', 'Jump to objective');
+  var jumpLabel = document.createElement('span');
+  jumpLabel.className = 'glossary-jump-label';
+  jumpLabel.textContent = 'Jump';
+  jump.appendChild(jumpLabel);
+  OBJECTIVES.forEach(function(obj){
+    var a = document.createElement('a');
+    a.href = '#' + objAnchorId(obj);
+    a.textContent = obj.id;
+    a.title = objLabel(obj);
+    jump.appendChild(a);
+  });
+  toolbar.appendChild(jump);
+  var printBtn = document.createElement('button');
+  printBtn.type = 'button';
+  printBtn.className = 'glossary-print-btn';
+  printBtn.textContent = 'Print glossary';
+  printBtn.addEventListener('click', function(){
+    if(window.activatePlaybookTool) window.activatePlaybookTool('glossary');
+    window.print();
+  });
+  toolbar.appendChild(printBtn);
+  var printHead = document.createElement('div');
+  printHead.className = 'print-only';
+  printHead.innerHTML = '<p class="print-sheet-header">MKT 150 &middot; Chapter 1 &middot; Key terms</p><p class="print-sheet-note">Sterling &amp; Vale Playbook &mdash; optional study aid, not graded.</p>';
+  root.appendChild(printHead);
+  root.appendChild(toolbar);
+
+  OBJECTIVES.forEach(function(obj, i){
+    var section = document.createElement('section');
+    section.setAttribute('aria-labelledby', 'heading-' + obj.id.replace('.','-'));
+    var details = document.createElement('details');
+    details.className = 'glossary-objective';
+    details.open = i === 0;
+    var summary = document.createElement('summary');
+    var h2 = document.createElement('h2');
+    h2.id = 'heading-' + obj.id.replace('.','-');
+    h2.textContent = objLabel(obj);
+    var badge = document.createElement('span');
+    badge.className = 'term-badge';
+    badge.textContent = obj.terms.length + ' terms';
+    h2.appendChild(badge);
+    summary.appendChild(h2);
+    details.appendChild(summary);
+    section.id = objAnchorId(obj);
+    var grid = document.createElement('div');
+    grid.className = 'term-grid';
+    var lastSubgroup = null;
+    obj.terms.forEach(function(term){
+      if(term.g && term.g !== lastSubgroup){
+        lastSubgroup = term.g;
+        var sub = document.createElement('h3');
+        sub.className = 'term-subgroup-heading';
+        sub.textContent = term.g;
+        grid.appendChild(sub);
+      }
+      var card = document.createElement('div');
+      card.className = 'term-card';
+      card.setAttribute('data-term', term.t.toLowerCase());
+      card.innerHTML = '<div class="term-name">'+term.t+'</div><div class="term-def">'+term.d+'</div>' +
+        (term.e ? '<div class="term-ex"><b>Example:</b> '+term.e+'</div>' : '');
+      grid.appendChild(card);
+    });
+    details.appendChild(grid);
+    section.appendChild(details);
+    root.appendChild(section);
+  });
+
+  function applyGlossaryFilter(q){
+    q = (q || '').trim().toLowerCase();
+    root.querySelectorAll('.glossary-objective').forEach(function(details){
+      var any = false;
+      details.querySelectorAll('.term-card').forEach(function(card){
+        var name = card.getAttribute('data-term') || '';
+        var show = !q || name.indexOf(q) !== -1;
+        card.classList.toggle('is-hidden', !show);
+        if(show) any = true;
+      });
+      details.classList.toggle('is-filter-hidden', !any);
+      if(q && any) details.open = true;
+    });
+  }
+  search.addEventListener('input', function(){ applyGlossaryFilter(search.value); });
+
+  window.addEventListener('beforeprint', function(){
+    root.querySelectorAll('.glossary-objective').forEach(function(d){
+      d.setAttribute('data-was-open', d.open ? '1' : '0');
+      d.open = true;
+    });
+  });
+  window.addEventListener('afterprint', function(){
+    root.querySelectorAll('.glossary-objective').forEach(function(d){
+      d.open = d.getAttribute('data-was-open') === '1';
+      d.removeAttribute('data-was-open');
+    });
+  });
+})();
+
+/* ---------- Flashcards ---------- */
+(function(){
+  var sel = document.getElementById('flashObjSel'), grid = document.getElementById('flashGrid');
+  var caption = document.getElementById('flashCaption');
+  var flashCardsForResize = null, flashResizeBound = false;
+  function onFlashResize(){
+    if(flashCardsForResize) flashCardsForResize.forEach(fitCard);
+  }
+  OBJECTIVES.forEach(function(obj, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = obj.id; b.title = objLabel(obj);
+    b.setAttribute('aria-pressed', i===0 ? 'true':'false');
+    b.addEventListener('click', function(){
+      sel.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+      renderFlash(obj);
+    });
+    sel.appendChild(b);
+  });
+  function fitCard(card){
+    var inner = card.querySelector('.dd-inner');
+    var front = card.querySelector('.dd-front');
+    var back = card.querySelector('.dd-back');
+    front.style.position = 'static';
+    var frontH = front.scrollHeight;
+    front.style.position = '';
+    back.style.position = 'static';
+    var backH = back.scrollHeight;
+    back.style.position = '';
+    var h = Math.max(frontH, backH, 170);
+    inner.style.minHeight = h + 'px';
+    card.style.minHeight = h + 'px';
+  }
+  function renderFlash(obj){
+    caption.textContent = objLabel(obj) + ' (' + obj.terms.length + ' cards)';
+    grid.innerHTML = '';
+    obj.terms.forEach(function(term){
+      var card = document.createElement('button');
+      card.type = 'button'; card.className = 'dd-card';
+      card.innerHTML = '<div class="dd-inner">' +
+        '<div class="dd-face dd-front"><span class="tag">Term</span><span class="term">'+term.t+'</span><span class="flip-hint">Tap to reveal ↻</span></div>' +
+        '<div class="dd-face dd-back"><span class="tag">Definition</span><p>'+term.d+'</p>' + (term.e ? '<p class="ex">'+term.e+'</p>' : '') + '</div>' +
+        '</div>';
+      card.addEventListener('click', function(){ card.classList.toggle('flipped'); });
+      grid.appendChild(card);
+    });
+    flashCardsForResize = grid.querySelectorAll('.dd-card');
+    flashCardsForResize.forEach(fitCard);
+    if(!flashResizeBound){
+      window.addEventListener('resize', onFlashResize);
+      flashResizeBound = true;
+    }
+  }
+  renderFlash(OBJECTIVES[0]);
+})();
+
+/* ---------- Match-Up — drag and drop ---------- */
+(function(){
+  var sel = document.getElementById('matchObjSel'), slotsWrap = document.getElementById('matchSlots'), poolWrap = document.getElementById('matchPool');
+  var msgEl = document.getElementById('matchMsg'), hintEl = document.getElementById('matchHint'), resetBtn = document.getElementById('matchReset');
+  var caption = document.getElementById('matchCaption');
+  var current = OBJECTIVES[0], matched = 0, roundTotal = 6, armedTile = null, tileId = 0;
+
+  function setMatchObjective(obj, pressedBtn){
+    sel.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x===pressedBtn ? 'true':'false'); });
+    current = obj;
+    build();
+  }
+
+  OBJECTIVES.forEach(function(obj, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = obj.id; b.title = objLabel(obj);
+    b.setAttribute('aria-pressed', i===0 ? 'true':'false');
+    b.addEventListener('click', function(){ setMatchObjective(obj, b); });
+    sel.appendChild(b);
+  });
+  var mixedBtn = document.createElement('button');
+  mixedBtn.type = 'button';
+  mixedBtn.className = 'match-mixed-btn';
+  mixedBtn.textContent = 'Mixed';
+  mixedBtn.title = 'Random terms from all objectives 1.1\u20131.5 (6 matches)';
+  mixedBtn.setAttribute('aria-pressed', 'false');
+  mixedBtn.addEventListener('click', function(){ setMatchObjective(MATCH_MIXED, mixedBtn); });
+  sel.appendChild(mixedBtn);
+
+  function updateMsg(){
+    msgEl.textContent = matched+' / '+roundTotal+' matched';
+    if(matched === roundTotal) msgEl.textContent = '✓ All matched!';
+  }
+  function armTile(t){
+    if(armedTile === t){ t.classList.remove('armed'); armedTile = null; return; }
+    if(armedTile) armedTile.classList.remove('armed');
+    armedTile = t; t.classList.add('armed');
+  }
+  function tryPlace(tileEl, zoneEl){
+    if(zoneEl.classList.contains('filled')) return false;
+    if(tileEl.getAttribute('data-name') !== zoneEl.getAttribute('data-name')){
+      zoneEl.classList.add('shake'); setTimeout(function(){ zoneEl.classList.remove('shake'); }, 430);
+      return false;
+    }
+    tileEl.classList.remove('armed','dragging'); tileEl.classList.add('locked');
+    tileEl.setAttribute('draggable','false'); tileEl.removeAttribute('tabindex');
+    zoneEl.textContent = ''; zoneEl.appendChild(tileEl); zoneEl.classList.add('filled');
+    matched++; updateMsg();
+    return true;
+  }
+
+  function build(){
+    matched = 0; armedTile = null; tileId = 0;
+    var isMixed = current.id === 'mixed';
+    if(caption){
+      caption.textContent = isMixed
+        ? 'Mixed review \u2014 terms drawn from objectives 1.1\u20131.5'
+        : objLabel(current);
+    }
+    slotsWrap.innerHTML = ''; poolWrap.innerHTML = '';
+    var source = current.terms;
+    var pool = shuffle(source).slice(0, isMixed ? 6 : Math.min(6, source.length));
+    roundTotal = pool.length;
+    if(hintEl){
+      if(isMixed){
+        hintEl.hidden = false;
+        hintEl.textContent = 'Chapter review mode: definitions may come from any objective. Pick an objective chip to focus on one LO at a time.';
+      }else if(current.terms.length < 6){
+        hintEl.hidden = false;
+        hintEl.textContent = 'This objective has only '+current.terms.length+' terms in the glossary — shorter round ('+roundTotal+' matches).';
+      }else{
+        hintEl.hidden = true;
+        hintEl.textContent = '';
+      }
+    }
+    updateMsg();
+    pool.forEach(function(term, idx){
+      var slot = document.createElement('div'); slot.className = 'match-slot';
+      slot.innerHTML = '<div class="match-slotlabel"><span class="sn">'+(idx+1)+'</span>'+term.t+'</div>';
+      var zone = document.createElement('div'); zone.className = 'match-zone'; zone.setAttribute('data-name', term.t);
+      zone.textContent = 'Drop the matching definition here';
+      zone.setAttribute('tabindex','0'); zone.setAttribute('role','button'); zone.setAttribute('aria-label','Drop zone for '+term.t);
+      zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('hover'); });
+      zone.addEventListener('dragleave', function(){ zone.classList.remove('hover'); });
+      zone.addEventListener('drop', function(e){
+        e.preventDefault(); zone.classList.remove('hover');
+        var id = e.dataTransfer.getData('text/plain'), tileEl = document.getElementById(id);
+        if(tileEl) tryPlace(tileEl, zone);
+      });
+      zone.addEventListener('click', function(){
+        if(!armedTile) return;
+        var t = armedTile; var ok = tryPlace(t, zone); if(ok) armedTile = null;
+      });
+      zone.addEventListener('keydown', function(e){
+        if((e.key==='Enter'||e.key===' ') && armedTile){ e.preventDefault(); var t=armedTile; var ok=tryPlace(t,zone); if(ok) armedTile=null; }
+      });
+      slot.appendChild(zone); slotsWrap.appendChild(slot);
+    });
+    shuffle(pool).forEach(function(term){
+      var b = document.createElement('div'); b.className = 'match-tile'; b.textContent = term.d;
+      b.id = 'matchTile'+(tileId++); b.setAttribute('data-name', term.t);
+      b.setAttribute('draggable','true'); b.setAttribute('tabindex','0'); b.setAttribute('role','button');
+      b.setAttribute('aria-label','Definition: '+term.d);
+      b.addEventListener('dragstart', function(e){
+        e.dataTransfer.setData('text/plain', b.id); e.dataTransfer.effectAllowed = 'move';
+        setTimeout(function(){ b.classList.add('dragging'); }, 0);
+      });
+      b.addEventListener('dragend', function(){ b.classList.remove('dragging'); });
+      b.addEventListener('click', function(){ armTile(b); });
+      b.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); armTile(b); } });
+      poolWrap.appendChild(b);
+    });
+  }
+  resetBtn.addEventListener('click', build);
+  build();
+})();
+
+/* ---------- Beat the Clutter ---------- */
+(function(){
+  var allTerms = [];
+  OBJECTIVES.forEach(function(obj){ obj.terms.forEach(function(t){ allTerms.push(t); }); });
+  var stage = document.getElementById('clutterStage'), card = document.getElementById('clutterCard');
+  var scoreEl = document.getElementById('clutterScore'), countEl = document.getElementById('clutterCount'), resetBtn = document.getElementById('clutterReset');
+  var round = [], idx = 0, score = 0, TOTAL = 10;
+  var scrapWords = ['SALE!','NEW!','LIMITED TIME','AS SEEN ON TV','ACT NOW','SPECIAL OFFER','BREAKING','HURRY IN'];
+
+  function spawnScraps(){
+    stage.querySelectorAll('.clutter-scrap').forEach(function(s){ s.remove(); });
+    var stageRect = stage.getBoundingClientRect(), cardRect = card.getBoundingClientRect();
+    var top = cardRect.top - stageRect.top, bottom = cardRect.bottom - stageRect.top;
+    var left = cardRect.left - stageRect.left, right = cardRect.right - stageRect.left;
+    var stageW = stage.clientWidth, stageH = stage.clientHeight;
+    var scrapW = 110, scrapH = 30;
+    var bands = [];
+    if(top > scrapH + 6) bands.push({x0:0, x1:stageW-scrapW, y0:2, y1:top-scrapH-2});
+    if(stageH-bottom > scrapH + 6) bands.push({x0:0, x1:stageW-scrapW, y0:bottom+2, y1:stageH-scrapH-2});
+    if(left > scrapW + 6) bands.push({x0:2, x1:left-scrapW-2, y0:0, y1:stageH-scrapH});
+    if(stageW-right > scrapW + 6) bands.push({x0:right+2, x1:stageW-scrapW-2, y0:0, y1:stageH-scrapH});
+    if(bands.length === 0) return; // no safe space at this size — skip decoration rather than risk covering the card
+    for(var k=0; k<7; k++){
+      var band = bands[k % bands.length];
+      var x = band.x0 + Math.random() * Math.max(1, band.x1 - band.x0);
+      var y = band.y0 + Math.random() * Math.max(1, band.y1 - band.y0);
+      var s = document.createElement('span');
+      s.className = 'clutter-scrap';
+      s.textContent = scrapWords[k % scrapWords.length];
+      s.style.left = x + 'px';
+      s.style.top = y + 'px';
+      s.style.transform = 'rotate('+(Math.round(Math.random()*30-15))+'deg)';
+      stage.insertBefore(s, card);
+    }
+  }
+
+  function buildRound(){
+    round = shuffle(allTerms).slice(0, TOTAL);
+    idx = 0; score = 0;
+    scoreEl.textContent = 'Score: 0';
+    renderQuestion();
+    spawnScraps();
+  }
+
+  function renderQuestion(){
+    if(idx >= round.length){
+      card.innerHTML = '<div class="clutter-done">You cut through '+score+' / '+TOTAL+'</div>';
+      countEl.textContent = TOTAL+' / '+TOTAL;
+      return;
+    }
+    countEl.textContent = (idx+1)+' / '+TOTAL;
+    var item = round[idx];
+    var decoys = shuffle(allTerms.filter(function(t){ return t.t !== item.t; })).slice(0, 3).map(function(t){ return t.d; });
+    var opts = shuffle([item.d].concat(decoys));
+    card.innerHTML = '<div class="term-prompt">'+item.t+'</div><div class="clutter-opts"></div>';
+    var optsWrap = card.querySelector('.clutter-opts');
+    opts.forEach(function(optText){
+      var b = document.createElement('button');
+      b.type='button'; b.className='clutter-opt'; b.textContent=optText;
+      b.addEventListener('click', function(){
+        if(card.querySelector('.clutter-opt.good') || card.querySelector('.clutter-opt.bad')) return;
+        var correct = optText === item.d;
+        card.querySelectorAll('.clutter-opt').forEach(function(o){
+          if(o.textContent === item.d) o.classList.add('good');
+          else if(o===b) o.classList.add('bad');
+        });
+        if(correct){ score++; scoreEl.textContent = 'Score: '+score; }
+        setTimeout(function(){ idx++; renderQuestion(); spawnScraps(); }, 700);
+      });
+      optsWrap.appendChild(b);
+    });
+  }
+
+  resetBtn.addEventListener('click', buildRound);
+  buildRound();
+  window.__clutterRespawn = spawnScraps;
+})();
+</script>
+</body>
+</html>

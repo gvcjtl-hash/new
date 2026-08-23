@@ -1,0 +1,18 @@
+# Static multi-page site. Login is Supabase Auth (codename + PIN), not Netlify Identity.
+#
+# After the first deploy, add this site in Supabase → Authentication → URL Configuration:
+#   Site URL:     https://YOUR-SITE.netlify.app
+#   Redirect URLs: https://YOUR-SITE.netlify.app/**  and  https://*.netlify.app/**
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/shared/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
