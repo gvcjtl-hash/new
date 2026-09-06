@@ -26,6 +26,7 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 :focus-visible{outline:2px solid var(--camel);outline-offset:3px}
 .skip-link{position:absolute;left:-999px;top:0;z-index:500;background:var(--oxblood);color:#fff;padding:10px 16px;font-weight:600}
 .skip-link:focus{left:0}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* —— thin 1978 chrome rail —— */
 .rail{
@@ -56,7 +57,7 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   position:absolute;inset:0;z-index:0;
   background:
     linear-gradient(180deg,rgba(14,16,18,.25) 0%,rgba(14,16,18,.15) 35%,rgba(14,16,18,.78) 72%,rgba(14,16,18,.96) 100%),
-    url('../assets/study/week4-hero-1978.png') center 40%/cover no-repeat,
+    url('../assets/study/week4-hero-1978.jpg') center 40%/cover no-repeat,
     var(--smoke);
   transform:scale(1.04);animation:heroDrift 18s var(--ease) infinite alternate
 }
@@ -154,7 +155,7 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   position:absolute;inset:0;z-index:0;opacity:.35;
   background:
     linear-gradient(180deg,var(--smoke) 0%,transparent 18%,rgba(14,16,18,.55) 55%,var(--smoke) 100%),
-    url('../assets/study/week4-doors-1978.png') center/cover no-repeat
+    url('../assets/study/week4-doors-1978.jpg') center/cover no-repeat
 }
 .doors-inner{position:relative;z-index:1;width:min(1080px,92vw);margin:0 auto}
 .doors{
@@ -198,6 +199,17 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   );pointer-events:none
 }
 
+
+/* —— practice / Canvas note —— */
+.practice-note{
+  margin:0 0 20px;padding:14px 16px;
+  background:rgba(26,36,51,.88);border:1px solid rgba(198,164,106,.45);
+  border-left:5px solid var(--camel);color:var(--ink-dim);font-size:.92rem;line-height:1.45
+}
+.practice-note b{color:#F3EEE3}
+.practice-note a{color:var(--camel);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.practice-note a:hover{color:#E8C76A}
+
 .foot{
   border-top:1px solid rgba(197,203,208,.18);padding:22px;
   display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;
@@ -240,14 +252,15 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
     <h1 class="hero-brand">Sterling <span>&amp; Vale</span></h1>
     <p class="hero-line">The IMC planning process — research to budget, under new management.</p>
     <div class="hero-cta">
-      <a class="cta-primary" href="#floor">Enter the floor</a>
+      <a class="cta-primary" href="replay.html">Open Replay</a>
+      <a class="cta-ghost" href="#doors">Enter the floor</a>
     </div>
   </div>
   <div class="hero-year" aria-hidden="true">1978</div>
 </section>
 
 <aside class="sam-strip" aria-label="Sam briefing">
-  <img src="../assets/characters/sam-portrait.png" alt="Sam">
+  <img src="../assets/characters/sam-portrait.png" alt="Sam, your new boss at Sterling and Vale" width="144" height="144" loading="eager">
   <div>
     <p class="kicker">Your new boss · Sam</p>
     <p><b>Welcome to 1978.</b> Dana’s stamps are in the drawer. Planning starts with research — then segment, position, objectives, budget, and the international door. Don’t skip a step.</p>
@@ -274,7 +287,10 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   <div class="doors-inner">
     <p class="section-kicker">The floor</p>
     <h2 class="section-title" id="doors-title">Four doors. Same year.</h2>
-    <p class="section-lede" style="margin-top:-8px;margin-bottom:18px">Replay is open for practice. Playbook, Sim, and Study land next — none of the floor doors are graded. Graded work is in <a href="https://iowacconline.instructure.com/courses/132513" target="_blank" rel="noopener noreferrer">Canvas</a>.</p>
+    <div class="practice-note">
+      <b>Practice only.</b> Replay, Playbook, Sim, and Study do not affect your grade — skip them or run them cold.
+      Graded work lives in <a href="https://iowacconline.instructure.com/courses/132513" target="_blank" rel="noopener noreferrer">Canvas<span class="visually-hidden"> (opens in a new tab)</span></a>.
+    </div>
     <div class="doors">
       <a class="door live" href="replay.html">
         <span class="slot">Step 01</span>
