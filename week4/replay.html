@@ -2001,120 +2001,36 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
 
 /* 4.1.1 path teach — dense plaques, not full flipset height */
 
-/* Floor-plan hallway — blueprint corridor (teach-only) */
+/* Floor-plan hallway — illustrated corridor still (teach-only) */
 .floor-plan{margin:0 0 10px;padding:0;border:0}
 .floor-plan-cap{
   display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;
   margin:0 0 6px;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.1em;
   text-transform:uppercase;font-size:.62rem;color:var(--camel)}
 .floor-plan-cap em{font-style:normal;color:#E8C76A;letter-spacing:.08em}
-.hall-scene{
-  --ink-line:#1E2A3A;--print:#D8E4F0;--print-deep:#C5D4E4;--accent:#7A2E2E;--brass:#A8843E;
-  position:relative;overflow:hidden;border:2px solid #1A1208;
-  border-radius:2px;pointer-events:none;user-select:none;
-  background:
-    linear-gradient(90deg,rgba(30,42,58,.04) 0 1px,transparent 1px 24px),
-    linear-gradient(0deg,rgba(30,42,58,.04) 0 1px,transparent 1px 24px),
-    linear-gradient(180deg,#EAF1F7 0%,var(--print) 55%,var(--print-deep) 100%);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.5), 0 8px 18px rgba(0,0,0,.28)}
-.hall-rail{
-  display:flex;justify-content:space-between;align-items:center;gap:8px;
-  padding:6px 10px 4px;border-bottom:1px solid rgba(30,42,58,.28);
-  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  font-size:.52rem;color:rgba(30,42,58,.55)}
-.hall-rail b{color:var(--accent);letter-spacing:.14em}
-.hall-bays{
-  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
-  gap:clamp(6px,1.2vw,10px);padding:10px 10px 6px;align-items:end}
-.hall-bay{
-  min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;
-  opacity:0;transform:translateY(8px);
-  animation:hallBayIn .45s cubic-bezier(.2,.8,.2,1) forwards;
-  animation-delay:calc(var(--i,0) * .07s)}
-@keyframes hallBayIn{to{opacity:1;transform:translateY(0)}}
-.hall-door{
-  width:100%;aspect-ratio:3/5;max-height:128px;position:relative;
-  background:
-    linear-gradient(180deg,#F7FBFF 0 28%, #E7EEF6 28% 30%, #F4F8FC 30% 100%);
-  border:2px solid var(--ink-line);
-  border-radius:1px 1px 0 0;
-  box-shadow:3px 3px 0 rgba(30,42,58,.18);
-  display:flex;flex-direction:column;align-items:center;padding:6% 8% 10%;box-sizing:border-box}
-.hall-door .hd-glass{
-  flex:0 0 28%;width:100%;margin-bottom:8%;
-  background:
-    repeating-linear-gradient(90deg,transparent 0 33%,rgba(30,42,58,.12) 33% 34%),
-    linear-gradient(180deg,rgba(120,160,190,.15),rgba(120,160,190,.05));
-  border:1.5px solid var(--ink-line);
-  display:flex;align-items:center;justify-content:center}
-.hall-door .hd-n{
-  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.12em;
-  font-size:clamp(.6rem,1.2vw,.78rem);color:#F7FBFF;
-  background:var(--ink-line);padding:2px 6px;line-height:1.15}
-.hall-door .hd-panel{
-  flex:1;width:100%;border:1.5px solid var(--ink-line);
-  background:
-    linear-gradient(180deg,transparent 0 12%,rgba(30,42,58,.08) 12% 13%,transparent 13%),
-    linear-gradient(90deg,transparent 0 12%,rgba(30,42,58,.08) 12% 13%,transparent 13% 87%,rgba(30,42,58,.08) 87% 88%,transparent 88%),
-    linear-gradient(180deg,#F7FBFF,#E8EFF6)}
-.hall-door .hd-knob{
-  position:absolute;right:11%;top:58%;width:7px;height:7px;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,#E8C76A,var(--brass));
-  box-shadow:0 0 0 1.5px var(--ink-line)}
-.hall-door .hd-sill{
-  position:absolute;left:-4%;right:-4%;bottom:-3px;height:3px;background:var(--ink-line)}
-.hall-bay .hd-label{
-  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.06em;
-  text-transform:uppercase;font-size:clamp(.55rem,1.15vw,.72rem);line-height:1.1;
-  text-align:center;color:var(--ink-line);max-width:100%;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hall-bay.is-start .hall-door{
-  border-color:var(--accent);
-  box-shadow:3px 3px 0 rgba(122,46,46,.28), 0 0 0 1px var(--accent);
-  background:
-    linear-gradient(180deg,#FFF8F0 0 28%, #F0D8C8 28% 30%, #FFF6EE 30% 100%)}
-.hall-bay.is-start .hall-door .hd-n{background:var(--accent)}
-.hall-bay.is-start .hd-label{color:var(--accent)}
-.hall-bay.is-start .hall-door::after{
-  content:"START";position:absolute;left:50%;top:-9px;transform:translateX(-50%) rotate(-2deg);
-  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.12em;font-size:.48rem;
-  color:#1A1208;background:#E8C76A;padding:2px 5px;border:1px solid #1A1208;
-  box-shadow:1px 1px 0 rgba(0,0,0,.25);white-space:nowrap}
-.hall-bay.is-end .hd-panel{
-  background:
-    radial-gradient(circle at 50% 45%,rgba(122,46,46,.12),transparent 55%),
-    linear-gradient(180deg,#F7FBFF,#E8EFF6)}
-.hall-floor{
-  position:relative;margin:2px 8px 8px;padding:8px 6px 6px;
-  border-top:2px solid var(--ink-line)}
-.hall-path{
-  position:relative;height:0;margin:0 2%;
-  border-top:2px dashed var(--accent);opacity:.85;overflow:visible}
-.hall-path span{
-  position:absolute;top:-6px;width:0;height:0;
-  border-top:5px solid transparent;border-bottom:5px solid transparent;
-  border-left:8px solid var(--accent);
-  animation:hallWalk 3s cubic-bezier(.4,0,.2,1) infinite}
-.hall-path span:nth-child(1){animation-delay:0s}
-.hall-path span:nth-child(2){animation-delay:1s}
-.hall-path span:nth-child(3){animation-delay:2s}
-@keyframes hallWalk{
-  0%{left:0;opacity:0}
-  12%{opacity:1}
-  88%{opacity:1}
-  100%{left:calc(100% - 8px);opacity:0}
-}
-.hall-start-tag{display:none}
-@media(max-width:640px){
-  .hall-bays{gap:4px;padding:8px 6px 4px}
-  .hall-door{max-height:108px}
-  .hall-bay .hd-label{font-size:.5rem;letter-spacing:.04em}
-  .hall-bay.is-start .hall-door::after{font-size:.42rem;top:-8px}
-  .hall-rail{font-size:.48rem;padding:5px 8px 3px}
+.hall-still{
+  margin:0;border:2px solid #1A1208;border-radius:2px;overflow:hidden;
+  background:#1A1208;box-shadow:0 8px 18px rgba(0,0,0,.35);
+  pointer-events:none;user-select:none}
+.hall-still img{
+  display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:center 42%;
+  animation:hallStillIn .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes hallStillIn{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
+.hall-legend{
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;
+  margin:6px 0 0;padding:0;list-style:none}
+.hall-legend li{
+  text-align:center;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;font-size:clamp(.52rem,1.05vw,.68rem);line-height:1.15;
+  color:rgba(243,238,227,.78);padding:4px 2px;border-top:2px solid rgba(198,164,106,.35)}
+.hall-legend li b{display:block;color:#E8C76A;font-size:.58rem;letter-spacing:.12em;margin-bottom:1px}
+.hall-legend li.is-start{color:#E8C76A;border-top-color:#7A2E2E}
+@media(max-width:560px){
+  .hall-legend{grid-template-columns:repeat(3,1fr);gap:2px 4px}
+  .hall-still img{aspect-ratio:16/10}
 }
 @media(prefers-reduced-motion:reduce){
-  .hall-bay{opacity:1;transform:none;animation:none}
-  .hall-path span{animation:none;display:none}
+  .hall-still img{animation:none}
 }
 
 .flipset.path-doors{
@@ -2295,68 +2211,17 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
       <p class="act-how path-how">This is teaching, not a test. Walk Sam's hallway left to right, then open each door below.</p>
       <figure class="floor-plan">
         <figcaption class="floor-plan-cap"><em>Fig. 4.1</em><span>Sam's floor · walk left → right</span></figcaption>
-        <div class="hall-scene" role="img" aria-label="Agency hallway in order: Research, Segments, Position, Objectives, Budget, International">
-          <div class="hall-rail" aria-hidden="true"><b>S&amp;V</b><span>IMC planning corridor · Fig. 4.1</span></div>
-          <div class="hall-bays">
-            <div class="hall-bay is-start" style="--i:0">
-              <div class="hall-door">
-                <span class="hd-glass"><span class="hd-n">01</span></span>
-                <span class="hd-panel" aria-hidden="true"></span>
-                <span class="hd-knob" aria-hidden="true"></span>
-                <span class="hd-sill" aria-hidden="true"></span>
-              </div>
-              <span class="hd-label">Research</span>
-            </div>
-            <div class="hall-bay" style="--i:1">
-              <div class="hall-door">
-                <span class="hd-glass"><span class="hd-n">02</span></span>
-                <span class="hd-panel" aria-hidden="true"></span>
-                <span class="hd-knob" aria-hidden="true"></span>
-                <span class="hd-sill" aria-hidden="true"></span>
-              </div>
-              <span class="hd-label">Segments</span>
-            </div>
-            <div class="hall-bay" style="--i:2">
-              <div class="hall-door">
-                <span class="hd-glass"><span class="hd-n">03</span></span>
-                <span class="hd-panel" aria-hidden="true"></span>
-                <span class="hd-knob" aria-hidden="true"></span>
-                <span class="hd-sill" aria-hidden="true"></span>
-              </div>
-              <span class="hd-label">Position</span>
-            </div>
-            <div class="hall-bay" style="--i:3">
-              <div class="hall-door">
-                <span class="hd-glass"><span class="hd-n">04</span></span>
-                <span class="hd-panel" aria-hidden="true"></span>
-                <span class="hd-knob" aria-hidden="true"></span>
-                <span class="hd-sill" aria-hidden="true"></span>
-              </div>
-              <span class="hd-label">Objectives</span>
-            </div>
-            <div class="hall-bay" style="--i:4">
-              <div class="hall-door">
-                <span class="hd-glass"><span class="hd-n">05</span></span>
-                <span class="hd-panel" aria-hidden="true"></span>
-                <span class="hd-knob" aria-hidden="true"></span>
-                <span class="hd-sill" aria-hidden="true"></span>
-              </div>
-              <span class="hd-label">Budget</span>
-            </div>
-            <div class="hall-bay is-end" style="--i:5">
-              <div class="hall-door">
-                <span class="hd-glass"><span class="hd-n">06</span></span>
-                <span class="hd-panel" aria-hidden="true"></span>
-                <span class="hd-knob" aria-hidden="true"></span>
-                <span class="hd-sill" aria-hidden="true"></span>
-              </div>
-              <span class="hd-label">International</span>
-            </div>
-          </div>
-          <div class="hall-floor" aria-hidden="true">
-            <div class="hall-path"><span></span><span></span><span></span></div>
-          </div>
+        <div class="hall-still">
+          <img src="../assets/study/week4-41-hallway-corridor.jpg" alt="1978 Sterling and Vale hallway with six labeled doors in order: Research, Segments, Position, Objectives, Budget, International. Research door is open with warm light." width="1600" height="900" fetchpriority="high">
         </div>
+        <ol class="hall-legend" aria-label="Figure 4.1 door order">
+          <li class="is-start"><b>01</b>Research</li>
+          <li><b>02</b>Segments</li>
+          <li><b>03</b>Position</li>
+          <li><b>04</b>Objectives</li>
+          <li><b>05</b>Budget</li>
+          <li><b>06</b>International</li>
+        </ol>
       </figure>
       <p class="flipset-count path-count">0 of 6 opened</p>
       <div class="flipset path-doors flipset-teach" data-activity="flipset" data-points="6">
