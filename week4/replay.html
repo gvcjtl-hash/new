@@ -1739,12 +1739,14 @@ body.calibrate .calib-readout{display:block}
 
 /* ---------- bottom nav rail ---------- */
 .navbar{position:fixed;left:0;right:0;bottom:0;height:80px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 24px 6px;z-index:30;
-  background:linear-gradient(180deg,rgba(200,166,116,0),rgba(190,155,104,.90) 42%,rgba(180,145,95,.97));
-  border-top:2px solid rgba(43,33,26,.28)}
+  background:linear-gradient(180deg,#E8D2AA,#D6BA8C 40%,#C9A878);
+  border-top:2px solid rgba(43,33,26,.45);box-shadow:0 -6px 18px rgba(0,0,0,.22)}
 .navbar .gate-note{position:absolute;left:0;right:0;bottom:6px;text-align:center}
-.gate-note{display:block;font-family:'Oswald',sans-serif;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--red-dark);font-weight:700}
+.gate-note{display:block;font-family:'Oswald',sans-serif;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:#6E1818;font-weight:700;
+  text-shadow:0 1px 0 rgba(255,248,230,.4)}
 .gate-note[hidden]{display:none}
-.navbar .nav-where{color:rgba(60,38,18,.72)}
+.navbar .nav-where{color:#1A1208;font-weight:700;letter-spacing:.08em;
+  text-shadow:0 1px 0 rgba(255,248,230,.5)}
 .btn{font-family:'Oswald',sans-serif;font-size:.88rem;letter-spacing:.4px;cursor:pointer;background:linear-gradient(180deg,var(--red-bright),var(--red-dark));color:var(--white);border:2px solid var(--red-dark);border-radius:20px;padding:11px 22px;transition:transform .12s,box-shadow .12s,background .15s;box-shadow:0 3px 0 rgba(43,33,26,.55),inset 0 1px 0 rgba(255,255,255,.25);white-space:nowrap;text-decoration:none;display:inline-block}
 .btn[hidden]{display:none}
 .btn:hover:not([disabled]){background:linear-gradient(180deg,var(--red),var(--red-dark))}
@@ -1816,10 +1818,17 @@ body.calibrate .calib-readout{display:block}
 @media(max-width:900px){.flipset.teach-seven{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.flipset.teach-seven{grid-template-columns:1fr}}
 .flipset.teach-seven .flip-card,.flipset.teach-seven .flip-inner{min-height:200px}
-.teach-payoff{margin-top:14px;padding:12px 14px;background:rgba(47,107,103,.1);border-left:4px solid var(--teal);
-  font-size:.9rem;line-height:1.45;color:var(--ink-2)}
+.teach-payoff{margin-top:14px;padding:12px 14px;
+  background:linear-gradient(180deg,#FBF6EA,#EFE4CE);
+  border:2px solid #1A1208;border-left:6px solid #2F6B63;
+  box-shadow:3px 3px 0 rgba(0,0,0,.28);
+  font-size:.9rem;line-height:1.45;color:#1A1208}
 .teach-payoff[hidden]{display:none}
-.teach-payoff b{color:var(--teal-dark)}
+.teach-payoff b{color:#1A4F48}
+.leather .teach-payoff,
+.leather-tight .teach-payoff{
+  background:linear-gradient(180deg,#FBF6EA,#EFE4CE);
+  color:#1A1208}
 
 /* ---------- wrap-up / chapter finale ---------- */
 .wrapup{text-align:center}
@@ -2157,10 +2166,11 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
 .flipset.path-doors .flip-card[aria-pressed="true"] .door-still{filter:brightness(.92) saturate(.95)}
 .step-tight .path-how{margin:0 0 6px;font-size:.82rem}
 .step-tight .path-count{margin:0 0 6px}
-.step-tight .teach-payoff,
 .step-tight .teach-payoff{
-  margin-top:8px;padding:8px 10px;font-size:.82rem;line-height:1.35;
-  background:rgba(61,107,90,.12);border:1px solid rgba(61,107,90,.35)}
+  margin-top:8px;padding:10px 12px;font-size:.84rem;line-height:1.4;
+  background:linear-gradient(180deg,#FBF6EA,#EFE4CE);
+  border:2px solid #1A1208;border-left:6px solid #2F6B63;
+  color:#1A1208}
 .sam-line.sam-solo{display:flex;gap:12px;align-items:flex-start;margin:0 0 10px;
   padding:10px 12px;background:rgba(251,246,234,.92);border:2px solid var(--ink);border-left:5px solid var(--oxblood)}
 .sam-line.sam-solo .av{flex:0 0 44px;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--camel)}
