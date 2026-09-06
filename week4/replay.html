@@ -6043,6 +6043,7 @@ document.querySelectorAll('[data-activity="flipset"]').forEach(function(wrap){
   var stepEl = wrap.closest('.step');
   var points = parseInt(wrap.getAttribute('data-points') || '0', 10);
   var cards  = Array.prototype.slice.call(wrap.querySelectorAll('.flip-card'));
+  var pathDoors = wrap.classList.contains('path-doors');
   var countEl = stepEl.querySelector('.flipset-count');
   var payoff  = stepEl.querySelector('[data-flipset-payoff], [data-flip-payoff]');
   var stage   = stepEl.querySelector('[data-room-stage]');
@@ -6060,7 +6061,9 @@ document.querySelectorAll('[data-activity="flipset"]').forEach(function(wrap){
       if(countEl){
         countEl.textContent = roomSeats
           ? (turned + ' of ' + cards.length + ' nameplates turned')
-          : (turned + ' of ' + cards.length + ' turned over');
+          : pathDoors
+            ? (turned + ' of ' + cards.length + ' opened')
+            : (turned + ' of ' + cards.length + ' turned over');
       }
       if(roomSeats){
         var seat = card.getAttribute('data-seat');
