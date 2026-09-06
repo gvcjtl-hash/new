@@ -1957,11 +1957,56 @@ body.ch-end .wrap{max-width:980px;padding:0 16px 56px}
 .open-still.still-sm{flex:0 0 168px;width:168px;margin:0;box-shadow:4px 4px 0 rgba(0,0,0,.4)}
 .open-still.still-sm img{aspect-ratio:4/3;object-position:center}
 .open-still.still-sm figcaption{padding:18px 8px 8px;font-size:.58rem;letter-spacing:.1em}
-.still-sm-row .sam-row{margin:0;flex:1}
+.still-sm-row .sam-row,
+.still-sm-row .sam-line{margin:0;flex:1;min-width:0}
 @media(max-width:560px){
   .still-sm-row{flex-direction:column;align-items:flex-start}
   .open-still.still-sm{width:min(220px,70vw);flex-basis:auto}
 }
+
+/* 4.1.1 — opener without a full-bleed scroll tax */
+.step-tight{padding-bottom:0}
+.step-tight .still-sm-row{margin:0 0 10px;gap:12px}
+.step-tight .open-still.still-sm{flex-basis:132px;width:132px}
+.step-tight .sam-line{gap:10px}
+.step-tight .sam-line .av{width:44px;height:44px}
+.step-tight .sam-line p{font-size:.86rem;line-height:1.4}
+.step-tight .key-chip{
+  margin:0 0 10px;padding:8px 10px;font-size:.8rem;line-height:1.35;color:var(--ink-2);
+  background:rgba(251,246,234,.94);border:2px solid var(--ink);border-left:5px solid var(--oxblood);
+  box-shadow:2px 2px 0 rgba(26,18,8,.28)}
+.step-tight .key-chip b{color:var(--oxblood)}
+.step-tight .imc-ribbon{margin-bottom:6px;padding:6px 8px;gap:4px}
+.step-tight .imc-ribbon span{font-size:.58rem;padding:4px 7px}
+.step-tight .fig-kicker{margin:0 0 8px;font-size:.62rem}
+.leather-tight{padding:12px 12px 10px;margin-bottom:0}
+.leather-tight .act-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:6px}
+.leather-tight .act-label{margin:0}
+.leather-tight .act-head h3{margin:0;font-size:.98rem;line-height:1.15}
+.ladder-dense .ladder-hud{margin-bottom:6px;padding-bottom:4px}
+.ladder-dense .ladder-pool{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ladder-dense .rung{padding:8px 10px;font-size:.8rem;line-height:1.25;box-shadow:0 2px 8px rgba(0,0,0,.22)}
+.ladder-dense .rung::before{width:20px;height:20px;font-size:.68rem}
+.ladder-dense .ladder-done{margin-top:8px}
+@media(max-width:640px){
+  .ladder-dense .ladder-pool{grid-template-columns:1fr}
+}
+/* Collapse the tall chapter lede while this opener is on screen */
+body:has(.step.step-tight.active) .lede-card{padding:12px 16px 10px;margin-bottom:10px}
+body:has(.step.step-tight.active) .lede-card .lo{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+  font-size:.9rem;line-height:1.35;max-width:none}
+body:has(.step.step-tight.active) .lede-card .screen-title{margin-top:8px;padding-top:8px;font-size:1rem}
+body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.55rem)}
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
+  font-size:.9rem;line-height:1.35;max-width:none}
+body:has(.step.step-tight.active) .lede-card .screen-title{margin-top:8px;padding-top:8px;font-size:1rem}
+body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.55rem)}
+/* Collapse the tall chapter lede while this opener is on screen */
+body:has(.step.step-tight.active) .lede-card{padding:12px 16px 10px;margin-bottom:10px}
+body:has(.step.step-tight.active) .lede-card .lo{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:.9rem;line-height:1.35;max-width:none}
+body:has(.step.step-tight.active) .lede-card .screen-title{margin-top:8px;padding-top:8px;font-size:1rem}
+body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.55rem)}
 
 /* IMC process ribbon — recurring Figure 4.1 anchor */
 .imc-ribbon{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;
@@ -2078,24 +2123,18 @@ body.ch-end .wrap{max-width:980px;padding:0 16px 56px}
          data-title="Communications Research"
          data-obj="Before a co-marketing deal ships, you research. Three named approaches — <b>product-specific</b>, <b>consumer-oriented</b>, and <b>target-market</b> — plus focus groups. Statistics alone is not one of the three.">
 
-  <div class="step" data-screen="Before the deal" data-gate>
-    <figure class="open-still">
-      <img src="../assets/study/week4-41-before-deal.png" alt="1978 agency research desk with co-marketing briefs laid out before a partnership deal" width="1600" height="900" fetchpriority="high">
-      <figcaption>Research desk · before either brand says yes</figcaption>
-    </figure>
-    <div class="brief-panel">
+  <div class="step step-tight" data-screen="Before the deal" data-gate>
+    <div class="still-sm-row">
+      <figure class="open-still still-sm">
+        <img src="../assets/study/week4-41-before-deal.png" alt="1978 agency research desk with co-marketing briefs laid out before a partnership deal" width="800" height="600" fetchpriority="high">
+        <figcaption>Before either brand says yes</figcaption>
+      </figure>
       <div class="sam-line">
         <span class="av"><img src="../assets/characters/sam-portrait.png" alt="Sam, your new boss at Sterling and Vale" onerror="this.parentElement.style.display='none'"></span>
-        <p>"1978. New floor, same rule. Two brands, one pitch — co-marketing. Cute when it works. Before either client says yes, they walk the whole hallway. You do not invent the deal first and research later. You research so the deal does not embarrass us."</p>
-      </div>
-      <div class="key-line">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <div class="kl-body">
-          <b>Co-marketing is the hook — research is the door</b>
-          <p>Two companies join to sell separate but related products. <b>Textbook cases (modern files on your desk):</b> <b>T-Mobile ONE™ with Netflix On Us</b> and the <b>Capital One Venture Rewards / Hotels.com 10x</b> partnership. Same hallway in any decade — both only work if every step below is compatible <em>before</em> either brand says yes.</p>
-        </div>
+        <p>"1978. Two brands, one pitch — co-marketing. Cute when it works. Research first so the deal does not embarrass us."</p>
       </div>
     </div>
+    <p class="key-chip"><b>Research is the door.</b> Textbook co-marketing files (modern): T-Mobile/Netflix · Capital One/Hotels.com — same hallway before either brand says yes.</p>
 
     <div class="imc-ribbon" aria-label="Figure 4.1 The IMC Planning Process">
       <span class="on">Research</span><span class="rb-arrow" aria-hidden="true">→</span>
@@ -2105,24 +2144,25 @@ body.ch-end .wrap{max-width:980px;padding:0 16px 56px}
       <span>Budget</span><span class="rb-arrow" aria-hidden="true">→</span>
       <span>International</span>
     </div>
-    <p class="fig-kicker">Figure 4.1 · every planner walks this hallway — including the international door. Rebuild it below, research first.</p>
+    <p class="fig-kicker">Figure 4.1 · rebuild the hallway, research first.</p>
 
-    <div class="leather">
-      <span class="act-label">Hallway drill</span>
-      <h3>Rebuild the path from memory</h3>
-      <p class="act-how">Tap the six doors in the ribbon order. Reset anytime before the last door.</p>
-      <div class="ladder" data-activity="order" data-points="8">
+    <div class="leather leather-tight">
+      <div class="act-head">
+        <span class="act-label">Hallway drill</span>
+        <h3>Tap the six doors in order</h3>
+      </div>
+      <div class="ladder ladder-dense" data-activity="order" data-points="8">
         <div class="ladder-hud">
           <span class="ld-count"></span>
           <button class="ld-reset" type="button" hidden>Start over</button>
         </div>
         <div class="ladder-pool">
-          <button class="rung" type="button" data-rank="3" data-label="Position" data-why="Positioning comes after you know who the segment is.">Plant the position</button>
-          <button class="rung" type="button" data-rank="1" data-label="Research" data-why="Research opens the hallway — before the deal invents itself.">Run communications research</button>
-          <button class="rung" type="button" data-rank="5" data-label="Budget" data-why="Budget funds the work after objectives are named.">Set the budget &amp; schedule</button>
-          <button class="rung" type="button" data-rank="6" data-label="International" data-why="International / GIMC runs the same hallway with border-aware choices — after the domestic plan is funded.">Take the hallway abroad</button>
-          <button class="rung" type="button" data-rank="2" data-label="Segments" data-why="Target markets follow research — cut who is viable.">Cut viable segments</button>
-          <button class="rung" type="button" data-rank="4" data-label="Objectives" data-why="Communications objectives cascade from company goals after position is set.">Write communications objectives</button>
+          <button class="rung" type="button" data-rank="3" data-label="Position" data-why="Positioning comes after you know who the segment is.">Position</button>
+          <button class="rung" type="button" data-rank="1" data-label="Research" data-why="Research opens the hallway — before the deal invents itself.">Research</button>
+          <button class="rung" type="button" data-rank="5" data-label="Budget" data-why="Budget funds the work after objectives are named.">Budget &amp; schedule</button>
+          <button class="rung" type="button" data-rank="6" data-label="International" data-why="International / GIMC runs the same hallway with border-aware choices — after the domestic plan is funded.">International</button>
+          <button class="rung" type="button" data-rank="2" data-label="Segments" data-why="Target markets follow research — cut who is viable.">Segments</button>
+          <button class="rung" type="button" data-rank="4" data-label="Objectives" data-why="Communications objectives cascade from company goals after position is set.">Objectives</button>
         </div>
         <div class="ladder-done" hidden>
           <div class="ld-steps" data-ld-steps></div>
