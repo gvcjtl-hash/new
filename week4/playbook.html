@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4: Playbook &mdash; Sterling &amp; Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;600;700&family=Barlow+Condensed:wght@500;600;700&family=Special+Elite&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* 1978 palette, matched to week4/index.html — smoke, oxblood, camel, chrome */
+  --red:#B85A32;--red-dark:#7A2E2E;--red-bright:#C46A42;--red-glow:rgba(122,46,46,.35);
+  --gold:#C6A46A;--gold-dark:#8E7344;--harvest:#C6A46A;
+  --teal:#1A2433;--teal-dark:#0E1012;
+  --avocado:#7A2E2E;--avocado-dark:#4A1A1A;--avocado-bright:#9A4444;
+  --chrome:#C5CBD0;--chrome-dark:#7A848C;
+  --ink:#1A1410;--ink-2:#2A221C;--gray:#EDE6D6;--gray-soft:#F4EFE4;--gray-line:#C9BFA0;
+  --muted:#6B6256;--white:#F7F1E0;--paper:#EDE6D6;
+  --good:#3D6B5E;--good-bg:#DCE8E2;--bad:#A32B2B;--bad-bg:#F4E3DE;
+  --wood-light:#2A323C;--wood-dark:#0E1012;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --panel:radial-gradient(130% 110% at 28% -12%,rgba(198,164,106,.14),transparent 58%),
+          radial-gradient(90% 80% at 100% 100%,rgba(0,0,0,.4),transparent 62%),
+          linear-gradient(163deg,#1A2433,#171A1E 58%,#0E1012);
+  --panel-shadow:inset 0 0 34px rgba(0,0,0,.55),inset 0 1px 0 rgba(232,238,240,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',Georgia,serif;color:var(--paper);line-height:1.55;min-height:100vh;
+  background:
+    radial-gradient(900px 520px at 18% 8%,rgba(122,46,46,.28),transparent 55%),
+    radial-gradient(800px 480px at 92% 88%,rgba(198,164,106,.14),transparent 50%),
+    radial-gradient(1100px 700px at 50% 40%,rgba(26,36,51,.55),transparent 60%),
+    linear-gradient(168deg,#171A1E 0%,#0E1012 45%,#1A2433 100%);
+  background-attachment:fixed;
+}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.055;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px 180px}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(31,36,24,.08),transparent 18%,transparent 78%,rgba(31,36,24,.22));
+  box-shadow:inset 0 0 0 10px rgba(60,50,28,.14),inset 0 0 80px rgba(31,36,24,.2)}
+.topbar,.wrap{position:relative;z-index:1}
+h1,h2,h3,h4{font-family:'Libre Baskerville',Georgia,serif;font-weight:400}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px 60px}
+:focus-visible{outline:3px solid var(--gold-dark);outline-offset:2px}
+.skip-link{position:absolute;left:-999px;top:0;z-index:500;background:var(--ink);color:#fff;padding:10px 16px;font-weight:bold;text-decoration:none}
+.skip-link:focus{left:0}
+
+/* topbar — chrome accents, 1978 agency */
+.topbar{height:60px;display:flex;align-items:center;gap:14px;padding:0 24px;border-bottom:3px solid var(--gold-dark);position:relative;
+  background:
+    linear-gradient(180deg,rgba(197,203,208,.18),transparent 40%),
+    repeating-linear-gradient(90deg,transparent 0 22px,rgba(212,160,23,.12) 22px 23px),
+    linear-gradient(105deg,var(--wood-light),var(--wood-dark) 58%,#2A2216);
+  box-shadow:0 3px 12px rgba(0,0,0,.35);margin-bottom:28px}
+.topbar::before,.topbar::after{
+  content:"";position:absolute;top:50%;width:9px;height:9px;transform:translateY(-50%);border-radius:1px;
+  background:linear-gradient(145deg,#E8EEF0,var(--chrome-dark));border:1px solid #4A5056;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)
+}
+.topbar::before{left:10px}
+.topbar::after{right:10px}
+.header-card{position:relative;display:flex;align-items:baseline;gap:9px;background:linear-gradient(180deg,#F8F2E0,#E8DFC4);
+  border:1px solid rgba(43,33,26,.4);border-radius:2px;padding:5px 14px 4px 12px;box-shadow:0 3px 8px rgba(0,0,0,.4);transform:rotate(-.3deg)}
+.header-card::before{content:"";position:absolute;top:-5px;left:16px;width:28px;height:8px;
+  background:linear-gradient(180deg,#E8EEF0,var(--chrome-dark));border:1px solid #4A5056}
+.header-card .to-label{font-family:'Special Elite',Courier,monospace;font-size:.58rem;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.header-card .mark{font-family:'Special Elite',Courier,monospace;font-weight:400;letter-spacing:.5px;color:var(--avocado-dark);font-size:.82rem;white-space:nowrap}
+.topbar .era{margin-left:auto;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.12em;font-size:.78rem;color:var(--harvest);text-transform:uppercase;max-width:min(42vw,280px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar .era.bad{color:#f0b3a4;letter-spacing:0;text-transform:none;font-family:'Special Elite',Courier,monospace;font-weight:400;font-size:.72rem}
+.topbar .era a{color:inherit;text-decoration:underline}
+.topbar .back-link{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.06em;font-size:.78rem;color:rgba(247,241,224,.75);text-decoration:none;text-transform:uppercase}
+.topbar .back-link:hover{color:var(--harvest)}
+
+/* hero — brand first, laminate desk memo */
+.hero-era{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  margin:4px 0 18px;padding:18px 4px 14px;border-bottom:3px solid rgba(198,164,106,.45);
+  background:
+    linear-gradient(90deg,rgba(122,46,46,.28),transparent 40%),
+    linear-gradient(180deg,rgba(14,16,18,.2),transparent)
+}
+.hero-era .brand{
+  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  font-size:clamp(1.35rem,3.6vw,2.1rem);color:#F3EEE3;line-height:1.05
+}
+.hero-era .brand small{display:block;font-size:.42em;letter-spacing:.28em;color:var(--harvest);margin-top:6px;font-weight:600}
+.hero-era .year{
+  font-family:'Special Elite',Courier,monospace;font-size:.85rem;color:var(--avocado-dark);
+  padding:8px 12px;border:2px solid var(--ink);background:linear-gradient(180deg,#E8EEF0,var(--chrome));
+  box-shadow:3px 3px 0 var(--ink)
+}
+.memo-sheet{
+  position:relative;margin-bottom:26px;overflow:hidden;
+  background:
+    repeating-linear-gradient(180deg,transparent 0 31px,rgba(31,36,24,.08) 31px 32px),
+    linear-gradient(90deg,transparent 36px,rgba(196,92,38,.22) 36px 37px,transparent 37px),
+    linear-gradient(160deg,#FDF9EE 0%,#F2EBD6 55%,#E6DFC8 100%);
+  border:2px solid var(--ink);border-radius:2px;
+  box-shadow:7px 7px 0 var(--ink),0 16px 32px rgba(31,36,24,.22);
+  padding:32px 30px 26px 52px;
+  animation:dealIn .45s var(--ease)
+}
+.memo-sheet::before{
+  content:"";position:absolute;top:-8px;left:28px;width:52px;height:11px;z-index:2;
+  background:linear-gradient(180deg,#F4F7F8,#9AA3AA 70%,var(--chrome-dark));border:1px solid #4A5056;
+  box-shadow:0 2px 4px rgba(0,0,0,.35)
+}
+.memo-sheet::after{
+  content:"PLAYBOOK";position:absolute;top:14px;right:-28px;transform:rotate(12deg);
+  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.14em;font-size:.68rem;
+  background:var(--red-dark);color:#fff;border:2px solid var(--ink);padding:6px 34px;
+  box-shadow:2px 2px 0 var(--ink)
+}
+.memo-kicker{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;color:var(--avocado-dark);margin:0 0 8px}
+.memo-sheet h1{font-size:clamp(1.7rem,3.5vw,2.15rem);color:var(--ink);margin-bottom:6px;line-height:1.1}
+.memo-sheet h1 em{font-style:normal;color:var(--red-dark)}
+.memo-sheet p{font-size:1rem;color:var(--ink-2);max-width:58ch}
+.memo-sheet .count{
+  display:inline-block;margin-top:14px;padding:6px 12px;
+  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem;
+  color:var(--ink);background:linear-gradient(180deg,var(--harvest),var(--gold-dark));border:2px solid var(--ink);
+  box-shadow:2px 2px 0 var(--ink)
+}
+.muted{color:var(--muted)}
+@keyframes dealIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* chrome radio strip tabs */
+.tool-tabs{
+  display:flex;flex-wrap:wrap;gap:0;margin-bottom:24px;padding:6px;
+  background:linear-gradient(180deg,#3F3220,#2A2216);border:2px solid var(--ink);
+  box-shadow:4px 4px 0 rgba(31,36,24,.45),inset 0 1px 0 rgba(232,238,240,.12)
+}
+.tool-tab{
+  font-family:'Oswald',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;border-radius:2px;padding:12px 18px;border:2px solid transparent;flex:1 1 auto;min-width:120px;
+  background:transparent;color:rgba(247,241,224,.72);
+  transition:transform .12s,box-shadow .12s,background .15s,color .15s
+}
+.tool-tab:hover{color:#fff;background:rgba(247,241,224,.08)}
+.tool-tab:active{transform:translateY(1px)}
+.tool-tab[data-tool="glossary"][aria-pressed="true"]{background:linear-gradient(180deg,var(--red-bright),var(--red-dark));color:#fff;border-color:rgba(0,0,0,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.tool-tab[data-tool="flash"][aria-pressed="true"]{background:linear-gradient(180deg,var(--harvest),var(--gold-dark));color:#2A2216;border-color:rgba(0,0,0,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.tool-tab[data-tool="match"][aria-pressed="true"]{background:linear-gradient(180deg,#5A8A7A,var(--teal-dark));color:#fff;border-color:rgba(0,0,0,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.tool-tab[data-tool="parity"][aria-pressed="true"]{background:linear-gradient(180deg,var(--avocado-bright),var(--avocado-dark));color:#fff;border-color:rgba(0,0,0,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.tool-panel{display:none}
+.tool-panel.active{display:block;animation:fadePanel .35s var(--ease)}
+@keyframes fadePanel{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tool-intro{margin:0 0 12px;font-size:.92rem;font-weight:600;color:var(--ink);padding:10px 12px;background:rgba(247,241,224,.75);border-left:5px solid var(--gold-dark)}
+
+/* objective selector */
+.obj-selector{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 10px;padding:14px;background:var(--panel);
+  border-radius:4px;box-shadow:var(--panel-shadow)}
+.obj-selector button{font-family:'Oswald',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.04em;cursor:pointer;background:var(--gray-soft);color:var(--ink);border:2px solid var(--ink);padding:10px 16px;box-shadow:3px 3px 0 rgba(0,0,0,.35);transition:transform .18s,box-shadow .18s}
+.obj-selector button:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,.4)}
+.obj-selector button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--harvest),3px 3px 0 rgba(0,0,0,.4);background:var(--white)}
+.obj-caption{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.86rem;color:var(--harvest);margin:0 0 14px}
+
+/* glossary */
+.obj-heading{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem;color:var(--harvest);font-weight:700;margin:24px 0 12px;padding:8px 0 8px 12px;border-left:4px solid var(--red);background:linear-gradient(90deg,rgba(31,36,24,.55),transparent)}
+.obj-heading:first-child{margin-top:0}
+.term-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));padding:16px;margin-bottom:8px;background:var(--panel);
+  border-radius:4px;box-shadow:var(--panel-shadow);border:1px solid rgba(232,184,74,.2)}
+.term-card{position:relative;background:linear-gradient(165deg,#FBF6EA,#F0E8D2);border:2px solid var(--ink);border-left:6px solid var(--teal);padding:14px 15px 14px 16px;box-shadow:3px 3px 0 rgba(0,0,0,.35);border-radius:2px;transition:transform .15s var(--ease)}
+.term-card:nth-child(even){border-left-color:var(--avocado)}
+.term-card:nth-child(3n){border-left-color:var(--red)}
+.term-card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,.4)}
+.term-name{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:700;color:var(--red-dark);font-size:.95rem;margin-bottom:6px}
+.term-def{font-size:.87rem;line-height:1.55;color:var(--ink-2)}
+.term-ex{font-size:.8rem;line-height:1.5;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--gray-line)}
+.term-ex b{color:var(--ink)}
+
+/* flashcards */
+.dd-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.dd-card{font-family:inherit;text-align:left;background:none;border:none;padding:0;cursor:pointer;perspective:1100px;min-height:170px}
+.dd-inner{position:relative;width:100%;height:100%;min-height:150px;transition:transform .55s var(--ease);transform-style:preserve-3d}
+.dd-card.flipped .dd-inner{transform:rotateY(180deg)}
+.dd-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;padding:15px 16px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 4px 9px rgba(0,0,0,.3);border:2px solid var(--ink);border-radius:2px}
+.dd-front{background:var(--gray-soft)}
+.dd-front .tag{font-family:'Oswald',sans-serif;font-size:.66rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;color:var(--teal-dark);margin-bottom:8px}
+.dd-front .term{font-weight:bold;font-size:1.05rem;line-height:1.3;color:var(--ink);font-family:'Libre Baskerville',Georgia,serif}
+.dd-front .flip-hint{margin-top:auto;padding-top:8px;font-size:.72rem;color:var(--muted);font-weight:bold}
+.dd-back{background:
+    radial-gradient(circle at 30% 15%,rgba(255,255,255,.18),transparent 45%),
+    linear-gradient(145deg,var(--avocado-bright),var(--avocado-dark) 55%,#2A2216);color:#fff;transform:rotateY(180deg);box-shadow:0 12px 26px rgba(74,86,40,.45)}
+.dd-card:nth-child(even) .dd-back{background:
+    radial-gradient(circle at 30% 15%,rgba(255,255,255,.18),transparent 45%),
+    linear-gradient(145deg,var(--red-bright),var(--red-dark) 55%,#5A2410)}
+.dd-back .tag{font-family:'Oswald',sans-serif;font-size:.64rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;opacity:.9;margin-bottom:6px}
+.dd-back p{font-size:.83rem;line-height:1.42;margin:0}
+.dd-back .ex{font-size:.76rem;margin-top:8px;opacity:.9;font-style:italic}
+
+/* match-up */
+.match-msg{font-size:.9rem;font-weight:bold;color:var(--harvest);margin-bottom:10px}
+.match-wrap{display:grid;gap:20px;grid-template-columns:1.15fr 1fr;align-items:start;padding:14px;background:var(--panel);
+  border-radius:4px;box-shadow:var(--panel-shadow)}
+@media(max-width:640px){.match-wrap{grid-template-columns:1fr}}
+.match-slots{display:grid;gap:14px}
+.match-slot{display:grid;gap:5px}
+.match-slotlabel{font-size:.86rem;font-weight:800;color:var(--white);font-family:'Libre Baskerville',Georgia,serif;display:flex;gap:8px;align-items:center}
+.match-slotlabel .sn{flex:0 0 auto;width:22px;height:22px;border-radius:2px;background:linear-gradient(145deg,#E8EEF0,var(--chrome-dark));color:var(--ink);font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid #4A5056;box-shadow:inset 0 1px 0 rgba(255,255,255,.5);font-family:'Oswald',sans-serif}
+.match-zone{min-height:54px;border:2px dashed rgba(247,241,224,.4);border-radius:4px;padding:9px 11px;font-size:.78rem;color:rgba(247,241,224,.6);display:flex;align-items:center;transition:all .18s;background:rgba(0,0,0,.15)}
+.match-zone.hover{border-color:var(--harvest);background:rgba(232,184,74,.15);transform:scale(1.02)}
+.match-zone.shake{animation:shake .43s}
+.match-zone.filled{border-style:solid;border-color:var(--good);background:var(--good-bg);padding:0}
+.match-pool{display:flex;flex-direction:column;gap:10px}
+.match-tile{font-family:inherit;font-size:.83rem;font-weight:bold;cursor:grab;background:var(--white);border:2px solid var(--red);padding:11px 14px;transition:transform .18s,box-shadow .18s,opacity .18s;user-select:none;text-align:left;box-shadow:3px 3px 0 rgba(0,0,0,.25);border-radius:2px}
+.match-tile:hover{transform:translateY(-2px);box-shadow:5px 5px 0 var(--red-glow)}
+.match-tile.armed{box-shadow:0 0 0 3px var(--harvest)}
+.match-tile.dragging{opacity:.35}
+.match-tile.locked{cursor:default;border:none;background:transparent;padding:9px 11px;box-shadow:none;width:100%;color:#12401f;animation:kfcIn .35s var(--ease)}
+.match-tile.locked::before{content:"\2713 ";color:var(--good);font-weight:800}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes kfcIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* beat the noise */
+.parity-stage{position:relative;padding:56px 24px;background:var(--panel);
+  border-radius:4px;box-shadow:var(--panel-shadow);overflow:hidden;min-height:300px;
+  border:1px solid rgba(232,184,74,.25)}
+.parity-stage::before{
+  content:"";position:absolute;inset:12px;border:1px dashed rgba(232,184,74,.25);pointer-events:none
+}
+.parity-scrap{position:absolute;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.62rem;
+  background:linear-gradient(180deg,#F7F1E0,#E6DFC8);color:#8F3F16;border:2px solid var(--ink);padding:5px 8px;box-shadow:2px 2px 0 rgba(0,0,0,.45);pointer-events:none;
+  transform:rotate(-6deg)}
+.parity-card{position:relative;z-index:1;background:linear-gradient(165deg,#FBF6EA,#F0E8D2);padding:24px 24px 22px;box-shadow:6px 6px 0 rgba(0,0,0,.4);max-width:560px;margin:0 auto;
+  border:2px solid var(--ink);border-radius:2px}
+.parity-card::before{
+  content:"";position:absolute;top:-7px;left:22px;width:40px;height:9px;
+  background:linear-gradient(180deg,#E8EEF0,var(--chrome-dark));border:1px solid #4A5056
+}
+.parity-card .term-prompt{font-family:'Libre Baskerville',Georgia,serif;font-size:1.3rem;color:var(--red-dark);margin-bottom:14px;text-align:center}
+.parity-opts{display:flex;flex-direction:column;gap:9px}
+.parity-opt{font-family:inherit;font-size:.88rem;text-align:left;cursor:pointer;background:var(--white);border:2px solid var(--gray-line);border-radius:3px;padding:11px 14px;transition:all .15s}
+.parity-opt:hover{border-color:var(--red)}
+.parity-opt.good{border-color:var(--good);background:var(--good-bg)}
+.parity-opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.parity-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-family:'Oswald',sans-serif;font-weight:700;color:var(--gold-dark);font-size:.95rem;letter-spacing:.04em}
+.parity-done{text-align:center;color:var(--harvest);font-family:'Libre Baskerville',Georgia,serif;font-size:1.4rem}
+.parity-done small{display:block;font-family:'Barlow',Georgia,serif;font-size:.85rem;color:var(--muted);margin-top:8px;font-weight:400}
+
+/* shared action button */
+.btn{font-family:'Special Elite',Courier,monospace;font-size:.88rem;letter-spacing:.4px;font-weight:400;cursor:pointer;background:linear-gradient(180deg,var(--red-bright),var(--red-dark));color:var(--white);border:2px solid var(--red-dark);border-radius:3px;padding:10px 20px;transition:transform .12s,box-shadow .12s,background .15s;box-shadow:3px 3px 0 rgba(31,36,24,.5),inset 0 1px 0 rgba(255,255,255,.25)}
+.btn:hover{background:linear-gradient(180deg,var(--red),var(--red-dark))}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(31,36,24,.5)}
+.btn.ghost{background:linear-gradient(180deg,#fff,#e6ddc8);color:var(--ink);border-color:var(--ink)}
+.center{text-align:center;margin-top:16px}
+.back{display:inline-block;margin-top:30px;font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:.04em;color:var(--camel,#C6A46A);text-decoration:none;
+  background:rgba(26,36,51,.72);border:1px solid rgba(197,203,208,.28);border-radius:2px;padding:7px 14px;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.back:hover{background:rgba(26,36,51,.95);color:#F3EEE3;border-color:var(--harvest)}
+.back + .back{margin-left:10px}
+@media (prefers-reduced-motion:reduce){
+  .dd-inner,.match-tile,.obj-selector button,.term-card,.tool-panel.active,.memo-sheet{transition:none;animation:none}
+  .match-zone.shake{animation:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <div class="header-card">
+    <span class="to-label">To:</span>
+    <span class="mark">MKT 150 &middot; CH.4 Playbook</span>
+  </div>
+  <span class="era" id="authLine">New York &middot; 1978</span>
+  <a class="back-link" href="index.html">&larr; Week 4 floor</a>
+</header>
+
+<div class="wrap" id="main">
+  <div class="hero-era">
+    <div class="brand">Sterling &amp; Vale<small>IMC Planning · Term Floor</small></div>
+    <div class="year">Madison Ave · 1978</div>
+  </div>
+  <div class="memo-sheet">
+    <p class="memo-kicker">Chapter 4 Playbook</p>
+    <h1>Stamp the <em>line</em></h1>
+    <p>Every key term from the IMC planning process, plus four ways to drill them: glossary, flashcards, Match-Up, and Stamp the Line. Not graded, not recorded in Canvas.</p>
+    <span class="count" id="termCount"></span>
+  </div>
+
+  <div class="tool-tabs" role="tablist">
+    <button class="tool-tab" data-tool="glossary" aria-pressed="true">Glossary</button>
+    <button class="tool-tab" data-tool="flash" aria-pressed="false">Flashcards</button>
+    <button class="tool-tab" data-tool="match" aria-pressed="false">Match-Up</button>
+    <button class="tool-tab" data-tool="parity" aria-pressed="false">Stamp the Line</button>
+  </div>
+
+  <div class="tool-panel active" id="panel-glossary"></div>
+
+  <div class="tool-panel" id="panel-flash">
+    <p class="tool-intro">Pick an objective below. Tap a card to flip it over and see the definition.</p>
+    <div class="obj-selector" id="flashObjSel"></div>
+    <p class="obj-caption" id="flashCaption"></p>
+    <div class="dd-grid" id="flashGrid"></div>
+  </div>
+
+  <div class="tool-panel" id="panel-match">
+    <p class="tool-intro">Drag each definition onto the term it matches. On a phone, tap a definition first, then tap the slot you want it in.</p>
+    <div class="obj-selector" id="matchObjSel"></div>
+    <p class="obj-caption" id="matchCaption"></p>
+    <div class="match-msg" id="matchMsg">0 / 6 matched</div>
+    <div class="match-wrap">
+      <div class="match-slots" id="matchSlots"></div>
+      <div class="match-pool" id="matchPool"></div>
+    </div>
+    <div class="center"><button class="btn ghost" id="matchReset" type="button">&#8635; New round</button></div>
+  </div>
+
+  <div class="tool-panel" id="panel-parity">
+    <p class="tool-intro">Definitions all look close. Stamp the line that is actually right. Three are decoys from other terms.</p>
+    <div class="parity-hud"><span id="parityScore">Score: 0</span><span id="parityCount">1 / 10</span></div>
+    <div class="parity-stage" id="parityStage">
+      <div class="parity-card" id="parityCard"></div>
+    </div>
+    <div class="center"><button class="btn ghost" id="parityReset" type="button">&#8635; Play again</button></div>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Week 4 floor</a>
+  <a class="back" href="../index.html">All chapters</a>
+</div>
+
+<script>
+var OBJECTIVES = [
+  {
+    id: '4.1', title: 'Communications research',
+    terms: [
+      { t: 'Product-specific research', d: 'Communications research that identifies key product characteristics that become selling points \u2014 including the benefits customers get from those features, not just a spec list.', e: 'A smartphone team learns some apps pass the time while others deliver a restaurant location \u2014 and that benefit becomes the line.' },
+      { t: 'Consumer-oriented research', d: 'Communications research that discovers the context of product use through anthropological, sociological, or psychological analysis.', e: 'Scotts Miracle-Gro: people would change lawn-care behavior if a neighborhood expert told them to \u2014 which produced the spokesperson \u201cScotts.\u201d' },
+      { t: 'Target-market research', d: 'Communications research that identifies who should actually receive the planned campaign, combining what product and consumer research already revealed.' },
+      { t: 'Focus group', d: 'A set of consumers who talk about a topic, product, or brand in front of a moderator or panel who tracks comments and ideas.' },
+      { t: 'Anthropological analysis', d: 'A consumer-oriented lens: direct observation of people using the product at home, at work, or on vacation.' },
+      { t: 'The three research approaches', d: 'Product-specific, consumer-oriented, and target-market. Statistics and data analysis support the work but are not a fourth named approach.', e: 'Test-bank trap: \u201cGot milk?\u201d is product-specific plus consumer-oriented \u2014 not target-market research.' }
+    ]
+  },
+  {
+    id: '4.2', title: 'Consumer segments',
+    terms: [
+      { t: 'Market segment', d: 'A set of businesses or a group of individual customers with distinct characteristics.' },
+      { t: 'Market segmentation', d: 'Identifying specific groups (target markets) based on needs, attitudes, and interests.' },
+      { t: 'Viable segment tests', d: 'A campaign segment must be internally homogeneous, distinct from other groups, large enough to fund a separate campaign, and reachable through some media or channel. Fail any one and it is not a campaign segment.' },
+      { t: 'Demographics', d: 'Population characteristics such as gender, age, educational levels, income, and ethnicity.' },
+      { t: 'Psychographics', d: 'Patterns of responses that reveal a person\u2019s activities, interests, and opinions (AIO).' },
+      { t: 'VALS', d: 'Values and Lifestyles typology from Strategic Business Insights: eight groups based on resources and how action-oriented people are (Innovators through Survivors).', e: 'Visit South Walton aimed at Experiencers; Progressive Bank aimed at Thinkers.' },
+      { t: 'Generational segmentation', d: 'Cutting the market by cohort \u2014 shared events in late adolescence or early adulthood that shape music, food, and brand preferences \u2014 without needing a full psychographic survey.' },
+      { t: 'Geo-targeting', d: 'Marketing appeals made to people in a geographic area or region.' },
+      { t: 'Geodemographics (PRIZM)', d: 'Neighborhood-level clustering that combines geography with demographics. Claritas PRIZM identifies 66 U.S. market segments and categorizes every ZIP code.', e: 'Use 66, not the older 62 figure from a stale instructor manual.' },
+      { t: 'Benefit segmentation', d: 'Grouping customers by the benefit they want from the product, not by who they are on paper.', e: 'Gym-goers split into weight-loss, social, and performance motives.' },
+      { t: 'Usage segmentation', d: 'Grouping customers by how much or how they use the product \u2014 often heavy users who generate most of the sales.', e: '10 to 30 percent of customers often generate 70 to 90 percent of total sales.' }
+    ]
+  },
+  {
+    id: '4.3', title: 'B2B segments',
+    terms: [
+      { t: 'Industry (NAICS)', d: 'Clustering business buyers by the industry they operate in, using NAICS codes \u2014 not consumer tools like VALS or generations.', e: 'NAICS sector 62 lists healthcare firms: ambulatory, hospitals, nursing, social assistance.' },
+      { t: 'Firm size', d: 'A B2B cut by number of employees, sales volume, or similar size measures. Contact method and offer often change with size.' },
+      { t: 'B2B geography', d: 'Clustering organizations by where they operate \u2014 region, climate, or density \u2014 when location changes the sale.' },
+      { t: 'B2B product usage', d: 'Clustering firms by how they use the product (end use, volume, or application), not by consumer AIO.' },
+      { t: 'Customer value', d: 'Clustering accounts by what they are worth to the seller \u2014 often A/B/C tiers \u2014 so spend follows value.' },
+      { t: 'Consumer vs B2B hallway', d: 'Demographics, psychographics, generations, and VALS are consumer tools. Organizations get clustered five ways: industry, size, geography, product usage, and customer value.' }
+    ]
+  },
+  {
+    id: '4.4', title: 'Product positioning',
+    terms: [
+      { t: 'Product positioning', d: 'The perception in the consumer\u2019s mind of the nature of a company and its products relative to the competition.' },
+      { t: 'Attributes', d: 'Positioning on a product feature or characteristic that becomes the reason to choose you.' },
+      { t: 'Competitors', d: 'Positioning by naming or implying the rival set so the brand sits as the better alternative.' },
+      { t: 'Use or application', d: 'Positioning on when, where, or how the product is used.' },
+      { t: 'Price-quality', d: 'Positioning on the price\u2013quality relationship \u2014 luxury at a premium, or value that still performs.' },
+      { t: 'Product user', d: 'Positioning by the type of person who uses the brand, so the user becomes the cue.' },
+      { t: 'Product class', d: 'Positioning against a category rather than a single rival \u2014 \u201cthis is a different kind of thing.\u201d' },
+      { t: 'Cultural symbol', d: 'Positioning by tying the brand to a cultural icon or meaning that competitors cannot easily copy.', e: 'Chevrolet as American as baseball and apple pie; Silverado on independence and commitment.' }
+    ]
+  },
+  {
+    id: '4.5', title: 'Communications objectives',
+    terms: [
+      { t: 'Marketing objectives', d: 'Sales-side targets: market share, annual sales, profits, ROI, brand loyalty, or industry position. Communications work supports these; it does not replace them.' },
+      { t: 'Communications objectives', d: 'What the messages must move in the mind: awareness, knowledge, demand, beliefs, or image \u2014 matched to the product, target, and position.' },
+      { t: 'Benchmark measure', d: 'A starting point studied against the degree of change after a promotional campaign. Without a before-number, you cannot prove the after.' },
+      { t: 'Figure 4.7 cascade', d: 'Marketing objectives sit above communications objectives. Share, sales, profits, and ROI are marketing jobs. Awareness, demand, beliefs, and image are communications jobs.' },
+      { t: 'Neither trap', d: 'Lines such as \u201cassess the economy\u201d or \u201cadd SKUs\u201d are operations or analysis, not marketing or communications objectives.' },
+      { t: 'Dual job (Bombas)', d: 'A brand can hold a marketing objective (sales, share) and a communications objective (belief, image) at the same time \u2014 two jobs, two measures, not one mushy wish.' }
+    ]
+  },
+  {
+    id: '4.6', title: 'Budgets and schedules',
+    terms: [
+      { t: 'Percentage-of-sales budget', d: 'Communications spending based on last year\u2019s sales or anticipated sales for next year. When sales dip, the budget dips with them.' },
+      { t: 'Meet-the-competition budget', d: 'Expenditures raised or lowered to match what rivals spend.', e: 'Burger King matching McDonald\u2019s spend is this method.' },
+      { t: '\u201cWhat we can afford\u201d budget', d: 'Communications money set after (or while) other company budgets are set, based on what leaders feel they can spare. Not tied to a communications task.' },
+      { t: 'Objective-and-task budget', d: 'List the communications objectives for the year, cost each one, and sum them. Experts often call this the best method because dollars follow tasks.', e: 'About half of firms now use some form of it; a huge portfolio like P&G can still find it time-consuming.' },
+      { t: 'Payout-planning budget', d: 'A method that sets a ratio of advertising to sales or market share, often used when a brand is being built and early years \u201cpay out\u201d later.' },
+      { t: 'Quantitative models', d: 'Computer or statistical models that estimate the sales or share return of different spend levels. Rare as a sole method; sometimes used as a check.' },
+      { t: 'Pulsating schedule', d: 'Advertising that runs continuously through the year with bursts of higher intensity at specific times.' },
+      { t: 'Flighting schedule', d: 'Communications present only at peak times during the year \u2014 off in the valleys, on in the peaks.' },
+      { t: 'Continuous campaign schedule', d: 'Level amounts of spending and messages throughout the year, with no planned bursts or dark periods.' }
+    ]
+  },
+  {
+    id: '4.7', title: 'International IMC (GIMC)',
+    terms: [
+      { t: 'GIMC', d: 'Globally integrated marketing communications: the same IMC planning hallway, run with language, culture, laws, and local partners in view.' },
+      { t: 'Borderless marketing plan', d: 'One basic marketing approach across markets, with each subsidiary free to implement it locally \u2014 think globally, act locally.' },
+      { t: 'Local partnerships', d: 'Research or advertising firms fluent in the local language and culture; sometimes a cultural assimilator who understands both markets.' },
+      { t: 'Cultural assimilator', d: 'A person who understands cultural differences and helps the firm adapt communications and selling across countries.' },
+      { t: 'Linguistic hurdle (sizzle)', d: 'Exact word translations often do not exist. Ruth\u2019s Chris could not render \u201csizzle\u201d into Spanish; the translator found an idiom that still sold the steak.' },
+      { t: 'GIMC objectives last', d: 'Solid communications objectives are set only after international-market understanding, the borderless plan, local partners, segmentation, and competitor analysis \u2014 not before.' },
+      { t: 'Communication segmentation', d: 'Building a communications package that reaches every viable target market in the new country \u2014 often both consumer and B2B.' }
+    ]
+  }
+];
+
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)),t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+/* ---------- term count ---------- */
+(function(){
+  var n = 0;
+  OBJECTIVES.forEach(function(o){ n += o.terms.length; });
+  document.getElementById('termCount').textContent = n + ' terms across ' + OBJECTIVES.length + ' objectives';
+})();
+
+/* ---------- tab switching ---------- */
+document.querySelectorAll('.tool-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.tool-tab').forEach(function(t){ t.setAttribute('aria-pressed', t===tab ? 'true':'false'); });
+    document.querySelectorAll('.tool-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById('panel-'+tab.getAttribute('data-tool')).classList.add('active');
+    if(tab.getAttribute('data-tool') === 'parity' && window.__parityRespawn){
+      setTimeout(window.__parityRespawn, 0);
+    }
+  });
+});
+
+/* ---------- Glossary ---------- */
+(function(){
+  var root = document.getElementById('panel-glossary');
+  OBJECTIVES.forEach(function(obj){
+    var heading = document.createElement('div');
+    heading.className = 'obj-heading';
+    heading.textContent = obj.id + ' \u2014 ' + obj.title;
+    root.appendChild(heading);
+    var grid = document.createElement('div');
+    grid.className = 'term-grid';
+    obj.terms.forEach(function(term){
+      var card = document.createElement('div');
+      card.className = 'term-card';
+      card.innerHTML = '<div class="term-name">'+term.t+'</div><div class="term-def">'+term.d+'</div>' +
+        (term.e ? '<div class="term-ex"><b>Example:</b> '+term.e+'</div>' : '');
+      grid.appendChild(card);
+    });
+    root.appendChild(grid);
+  });
+})();
+
+/* ---------- Flashcards ---------- */
+(function(){
+  var sel = document.getElementById('flashObjSel'), grid = document.getElementById('flashGrid');
+  var caption = document.getElementById('flashCaption');
+  OBJECTIVES.forEach(function(obj, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = obj.id; b.setAttribute('aria-pressed', i===0 ? 'true':'false');
+    b.addEventListener('click', function(){
+      sel.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+      renderFlash(obj);
+    });
+    sel.appendChild(b);
+  });
+  function fitCard(card){
+    var inner = card.querySelector('.dd-inner');
+    var front = card.querySelector('.dd-front');
+    var back = card.querySelector('.dd-back');
+    front.style.position = 'static';
+    var frontH = front.scrollHeight;
+    front.style.position = '';
+    back.style.position = 'static';
+    var backH = back.scrollHeight;
+    back.style.position = '';
+    var h = Math.max(frontH, backH, 170);
+    inner.style.minHeight = h + 'px';
+    card.style.minHeight = h + 'px';
+  }
+  function renderFlash(obj){
+    caption.textContent = obj.id + ' \u2014 ' + obj.title + ' (' + obj.terms.length + ' cards)';
+    grid.innerHTML = '';
+    obj.terms.forEach(function(term){
+      var card = document.createElement('button');
+      card.type = 'button'; card.className = 'dd-card';
+      card.innerHTML = '<div class="dd-inner">' +
+        '<div class="dd-face dd-front"><span class="tag">Term</span><span class="term">'+term.t+'</span><span class="flip-hint">Tap to reveal \u21bb</span></div>' +
+        '<div class="dd-face dd-back"><span class="tag">Definition</span><p>'+term.d+'</p>' + (term.e ? '<p class="ex">'+term.e+'</p>' : '') + '</div>' +
+        '</div>';
+      card.addEventListener('click', function(){ card.classList.toggle('flipped'); });
+      grid.appendChild(card);
+    });
+    var cards = grid.querySelectorAll('.dd-card');
+    cards.forEach(fitCard);
+    window.addEventListener('resize', function(){ cards.forEach(fitCard); });
+  }
+  renderFlash(OBJECTIVES[0]);
+})();
+
+/* ---------- Match-Up ---------- */
+(function(){
+  var sel = document.getElementById('matchObjSel'), slotsWrap = document.getElementById('matchSlots'), poolWrap = document.getElementById('matchPool');
+  var msgEl = document.getElementById('matchMsg'), resetBtn = document.getElementById('matchReset');
+  var caption = document.getElementById('matchCaption');
+  var current = OBJECTIVES[0], matched = 0, roundTotal = 6, armedTile = null, tileId = 0;
+
+  OBJECTIVES.forEach(function(obj, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = obj.id; b.setAttribute('aria-pressed', i===0 ? 'true':'false');
+    b.addEventListener('click', function(){
+      sel.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+      current = obj; build();
+    });
+    sel.appendChild(b);
+  });
+
+  function updateMsg(){
+    msgEl.textContent = matched+' / '+roundTotal+' matched';
+    if(matched === roundTotal) msgEl.textContent = '\u2713 All matched. Try another objective, or start a new round.';
+  }
+  function armTile(t){
+    if(armedTile === t){ t.classList.remove('armed'); armedTile = null; return; }
+    if(armedTile) armedTile.classList.remove('armed');
+    armedTile = t; t.classList.add('armed');
+  }
+  function tryPlace(tileEl, zoneEl){
+    if(zoneEl.classList.contains('filled')) return false;
+    if(tileEl.getAttribute('data-name') !== zoneEl.getAttribute('data-name')){
+      zoneEl.classList.add('shake'); setTimeout(function(){ zoneEl.classList.remove('shake'); }, 430);
+      return false;
+    }
+    tileEl.classList.remove('armed','dragging'); tileEl.classList.add('locked');
+    tileEl.setAttribute('draggable','false'); tileEl.removeAttribute('tabindex');
+    zoneEl.textContent = ''; zoneEl.appendChild(tileEl); zoneEl.classList.add('filled');
+    matched++; updateMsg();
+    return true;
+  }
+
+  function build(){
+    caption.textContent = current.id + ' \u2014 ' + current.title;
+    matched = 0; armedTile = null; tileId = 0;
+    slotsWrap.innerHTML = ''; poolWrap.innerHTML = '';
+    var pool = shuffle(current.terms).slice(0, 6);
+    roundTotal = pool.length;
+    updateMsg();
+    pool.forEach(function(term, idx){
+      var slot = document.createElement('div'); slot.className = 'match-slot';
+      slot.innerHTML = '<div class="match-slotlabel"><span class="sn">'+(idx+1)+'</span>'+term.t+'</div>';
+      var zone = document.createElement('div'); zone.className = 'match-zone'; zone.setAttribute('data-name', term.t);
+      zone.textContent = 'Drop the matching definition here';
+      zone.setAttribute('tabindex','0'); zone.setAttribute('role','button'); zone.setAttribute('aria-label','Drop zone for '+term.t);
+      zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('hover'); });
+      zone.addEventListener('dragleave', function(){ zone.classList.remove('hover'); });
+      zone.addEventListener('drop', function(e){
+        e.preventDefault(); zone.classList.remove('hover');
+        var id = e.dataTransfer.getData('text/plain'), tileEl = document.getElementById(id);
+        if(tileEl) tryPlace(tileEl, zone);
+      });
+      zone.addEventListener('click', function(){
+        if(!armedTile) return;
+        var t = armedTile; var ok = tryPlace(t, zone); if(ok) armedTile = null;
+      });
+      zone.addEventListener('keydown', function(e){
+        if((e.key==='Enter'||e.key===' ') && armedTile){ e.preventDefault(); var t=armedTile; var ok=tryPlace(t,zone); if(ok) armedTile=null; }
+      });
+      slot.appendChild(zone); slotsWrap.appendChild(slot);
+    });
+    shuffle(pool).forEach(function(term){
+      var b = document.createElement('div'); b.className = 'match-tile'; b.textContent = term.d;
+      b.id = 'matchTile'+(tileId++); b.setAttribute('data-name', term.t);
+      b.setAttribute('draggable','true'); b.setAttribute('tabindex','0'); b.setAttribute('role','button');
+      b.setAttribute('aria-label','Definition: '+term.d);
+      b.addEventListener('dragstart', function(e){
+        e.dataTransfer.setData('text/plain', b.id); e.dataTransfer.effectAllowed = 'move';
+        setTimeout(function(){ b.classList.add('dragging'); }, 0);
+      });
+      b.addEventListener('dragend', function(){ b.classList.remove('dragging'); });
+      b.addEventListener('click', function(){ armTile(b); });
+      b.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); armTile(b); } });
+      poolWrap.appendChild(b);
+    });
+  }
+  resetBtn.addEventListener('click', build);
+  build();
+})();
+
+/* ---------- Beat the Noise ---------- */
+(function(){
+  var allTerms = [];
+  OBJECTIVES.forEach(function(obj){ obj.terms.forEach(function(t){ allTerms.push(t); }); });
+  var stage = document.getElementById('parityStage'), card = document.getElementById('parityCard');
+  var scoreEl = document.getElementById('parityScore'), countEl = document.getElementById('parityCount'), resetBtn = document.getElementById('parityReset');
+  var round = [], idx = 0, score = 0, TOTAL = 10;
+  var scrapWords = ['SIZZLE','SHARE POINTS','VALS','PRIZM 66','ROI','BENCHMARK','GOT MILK','THINK GLOBALLY'];
+
+  function spawnScraps(){
+    stage.querySelectorAll('.parity-scrap').forEach(function(s){ s.remove(); });
+    var stageRect = stage.getBoundingClientRect(), cardRect = card.getBoundingClientRect();
+    var top = cardRect.top - stageRect.top, bottom = cardRect.bottom - stageRect.top;
+    var left = cardRect.left - stageRect.left, right = cardRect.right - stageRect.left;
+    var stageW = stage.clientWidth, stageH = stage.clientHeight;
+    var scrapW = 130, scrapH = 30;
+    var bands = [];
+    if(top > scrapH + 6) bands.push({x0:0, x1:stageW-scrapW, y0:2, y1:top-scrapH-2});
+    if(stageH-bottom > scrapH + 6) bands.push({x0:0, x1:stageW-scrapW, y0:bottom+2, y1:stageH-scrapH-2});
+    if(left > scrapW + 6) bands.push({x0:2, x1:left-scrapW-2, y0:0, y1:stageH-scrapH});
+    if(stageW-right > scrapW + 6) bands.push({x0:right+2, x1:stageW-scrapW-2, y0:0, y1:stageH-scrapH});
+    if(bands.length === 0) return;
+    for(var k=0; k<7; k++){
+      var band = bands[k % bands.length];
+      var x = band.x0 + Math.random() * Math.max(1, band.x1 - band.x0);
+      var y = band.y0 + Math.random() * Math.max(1, band.y1 - band.y0);
+      var s = document.createElement('span');
+      s.className = 'parity-scrap';
+      s.textContent = scrapWords[k % scrapWords.length];
+      s.style.left = x + 'px';
+      s.style.top = y + 'px';
+      s.style.transform = 'rotate('+(Math.round(Math.random()*30-15))+'deg)';
+      stage.insertBefore(s, card);
+    }
+  }
+
+  function buildRound(){
+    round = shuffle(allTerms).slice(0, TOTAL);
+    idx = 0; score = 0;
+    scoreEl.textContent = 'Score: 0';
+    renderQuestion();
+    spawnScraps();
+  }
+
+  function renderQuestion(){
+    if(idx >= round.length){
+      var note = score >= 8 ? 'You stamped the line. That is the real definition.'
+               : score >= 5 ? 'Getting there. Run the glossary once more, then play again.'
+               : 'Everything still sounds the same. Work the flashcards first, then come back.';
+      card.innerHTML = '<div class="parity-done">You stamped '+score+' / '+TOTAL+'<small>'+note+'</small></div>';
+      countEl.textContent = TOTAL+' / '+TOTAL;
+      return;
+    }
+    countEl.textContent = (idx+1)+' / '+TOTAL;
+    var item = round[idx];
+    var decoys = shuffle(allTerms.filter(function(t){ return t.t !== item.t; })).slice(0, 3).map(function(t){ return t.d; });
+    var opts = shuffle([item.d].concat(decoys));
+    card.innerHTML = '<div class="term-prompt">'+item.t+'</div><div class="parity-opts"></div>';
+    var optsWrap = card.querySelector('.parity-opts');
+    opts.forEach(function(optText){
+      var b = document.createElement('button');
+      b.type='button'; b.className='parity-opt'; b.textContent=optText;
+      b.addEventListener('click', function(){
+        if(card.querySelector('.parity-opt.good') || card.querySelector('.parity-opt.bad')) return;
+        var correct = optText === item.d;
+        card.querySelectorAll('.parity-opt').forEach(function(o){
+          if(o.textContent === item.d) o.classList.add('good');
+          else if(o===b) o.classList.add('bad');
+        });
+        if(correct){ score++; scoreEl.textContent = 'Score: '+score; }
+        setTimeout(function(){ idx++; renderQuestion(); spawnScraps(); }, 700);
+      });
+      optsWrap.appendChild(b);
+    });
+  }
+
+  resetBtn.addEventListener('click', buildRound);
+  buildRound();
+  window.__parityRespawn = spawnScraps;
+})();
+</script>
+<script type="module">
+  import { paintAuthLine } from '../shared/sv-auth.js';
+  paintAuthLine(document.getElementById('authLine'));
+</script>
+</body>
+</html>
