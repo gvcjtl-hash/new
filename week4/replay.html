@@ -247,6 +247,91 @@ body.debug .flip-card .art.no-art .art-fallback{display:block}
 .flipset.flip-stills .flip-card .face.back p + p{margin-top:4px}
 .flipset.flip-stills .flip-card .face.back b{color:var(--ink)}
 .flipset.flip-stills .flip-card .face.back em{font-style:italic;color:var(--muted)}
+
+/* 4.1.3 research desks — three materials, not one beige pad */
+.flipset.flip-desks{gap:14px}
+.flipset.flip-desks .flip-card,
+.flipset.flip-desks .flip-inner{min-height:380px}
+.flipset.flip-desks .flip-card .face.front{
+  padding:0;justify-content:flex-end;align-items:stretch;text-align:left;border-width:2px}
+.flipset.flip-desks .flip-card .art{
+  position:absolute;inset:0;height:auto;margin:0;border:0}
+.flipset.flip-desks .flip-card .art img{
+  width:100%;height:100%;object-fit:cover;object-position:center}
+.flipset.flip-desks .desk-veil{
+  position:relative;z-index:1;margin-top:auto;padding:12px 12px 11px;
+  display:flex;flex-direction:column;gap:2px}
+.flipset.flip-desks .desk-veil .fc-claim{
+  padding:0;margin:0;font-family:'Oswald',sans-serif;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;font-size:1.05rem;line-height:1.1}
+.flipset.flip-desks .desk-veil .flip-cta{
+  padding:0;margin:2px 0 0;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase}
+.flipset.flip-desks .desk-tag{
+  display:inline-block;align-self:flex-start;margin-bottom:4px;
+  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  font-size:.58rem;padding:2px 7px;border:1px solid currentColor}
+
+/* Product = walnut catalog desk */
+.flipset.flip-desks .desk-product .face.front{
+  background:#3A2818;border-color:#1A1208;
+  box-shadow:5px 5px 0 #1A1208}
+.flipset.flip-desks .desk-product .desk-veil{
+  background:linear-gradient(180deg,transparent,rgba(26,18,8,.78) 24%,rgba(26,18,8,.94));
+  color:#F3E8D4}
+.flipset.flip-desks .desk-product .desk-tag{color:#E8C76A;border-color:#E8C76A}
+.flipset.flip-desks .desk-product .fc-claim{color:#F7F0DE}
+.flipset.flip-desks .desk-product .flip-cta{color:rgba(232,199,106,.9)}
+.flipset.flip-desks .desk-product .face.back{
+  background:
+    linear-gradient(180deg,rgba(255,248,236,.96),rgba(236,220,190,.96)),
+    repeating-linear-gradient(90deg,rgba(90,60,30,.05) 0 1px,transparent 1px 18px);
+  border-left:6px solid #7A2E2E;color:#2B211A}
+.flipset.flip-desks .desk-product .face.back > b:first-child{color:#7A2E2E}
+.flipset.flip-desks .desk-product .face.back em{color:#8A6A28}
+
+/* Consumer = field notebook */
+.flipset.flip-desks .desk-consumer .face.front{
+  background:#2A3A28;border-color:#142018;
+  box-shadow:5px 5px 0 #142018}
+.flipset.flip-desks .desk-consumer .desk-veil{
+  background:linear-gradient(180deg,transparent,rgba(20,32,24,.8) 24%,rgba(20,32,24,.95));
+  color:#E8F0E0}
+.flipset.flip-desks .desk-consumer .desk-tag{color:#A8C47A;border-color:#A8C47A}
+.flipset.flip-desks .desk-consumer .fc-claim{color:#F0F6E8}
+.flipset.flip-desks .desk-consumer .flip-cta{color:rgba(168,196,122,.95)}
+.flipset.flip-desks .desk-consumer .face.back{
+  background:
+    linear-gradient(90deg,rgba(180,60,50,.12) 0 28px,transparent 28px),
+    repeating-linear-gradient(180deg,transparent 0 27px,rgba(40,80,50,.18) 27px 28px),
+    linear-gradient(180deg,#F4F7EC,#E4EBD4);
+  border-left:6px solid #3D6B4F;color:#1E2A1C;padding-left:18px}
+.flipset.flip-desks .desk-consumer .face.back > b:first-child{color:#2F5A3E}
+.flipset.flip-desks .desk-consumer .face.back em{color:#4A6A38}
+
+/* Target = blueprint */
+.flipset.flip-desks .desk-target .face.front{
+  background:#1A3A58;border-color:#0E2030;
+  box-shadow:5px 5px 0 #0E2030}
+.flipset.flip-desks .desk-target .desk-veil{
+  background:linear-gradient(180deg,transparent,rgba(10,28,48,.82) 24%,rgba(10,28,48,.96));
+  color:#D8E8F8}
+.flipset.flip-desks .desk-target .desk-tag{color:#8EC4E8;border-color:#8EC4E8}
+.flipset.flip-desks .desk-target .fc-claim{color:#F0F6FC}
+.flipset.flip-desks .desk-target .flip-cta{color:rgba(142,196,232,.95)}
+.flipset.flip-desks .desk-target .face.back{
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,transparent 1px 24px),
+    linear-gradient(0deg,rgba(255,255,255,.08) 0 1px,transparent 1px 24px),
+    linear-gradient(180deg,#2A5A7A,#1E4868);
+  border-left:6px solid #E8C76A;color:#EAF3FA}
+.flipset.flip-desks .desk-target .face.back > b:first-child{color:#E8C76A}
+.flipset.flip-desks .desk-target .face.back p{color:rgba(234,243,250,.9)}
+.flipset.flip-desks .desk-target .face.back b{color:#F7FBFF}
+.flipset.flip-desks .desk-target .face.back em{color:#A8D0F0}
+@media(max-width:760px){
+  .flipset.flip-desks .flip-card,
+  .flipset.flip-desks .flip-inner{min-height:340px}
+}
 .flipset.flip-vals{grid-template-columns:repeat(4,1fr);gap:12px}
 .flipset.flip-vals .flip-card,.flipset.flip-vals .flip-inner{min-height:248px}
 .flipset.flip-vals .flip-card .art{height:148px}
@@ -2347,13 +2432,16 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
       <h3>Turn the three approaches</h3>
       <p class="act-how">Flip every card. Payoff opens when the board is complete — including why statistics is not a fourth named approach.</p>
       <p class="flipset-count">0 of 3 turned over</p>
-      <div class="flipset flip-stills flipset-teach" data-activity="flipset" data-points="8">
-        <button class="flip-card" type="button" aria-pressed="false">
+      <div class="flipset flip-stills flip-desks flipset-teach" data-activity="flipset" data-points="8">
+        <button class="flip-card desk-product" type="button" aria-pressed="false">
           <span class="flip-inner">
             <span class="face front">
-              <span class="art"><img src="../assets/study/week4-41-product.png" alt=""></span>
-              <span class="fc-claim">Product-specific</span>
-              <span class="flip-cta">Tap to open →</span>
+              <span class="art"><img src="../assets/study/week4-41-desk-product.jpg" alt="Walnut desk with open product catalog" width="900" height="600" loading="lazy"></span>
+              <span class="desk-veil">
+                <span class="desk-tag">Desk 01 · Catalog</span>
+                <span class="fc-claim">Product-specific</span>
+                <span class="flip-cta">Open the catalog →</span>
+              </span>
             </span>
             <span class="face back">
               <b>Product-specific</b>
@@ -2363,12 +2451,15 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
             </span>
           </span>
         </button>
-        <button class="flip-card" type="button" aria-pressed="false">
+        <button class="flip-card desk-consumer" type="button" aria-pressed="false">
           <span class="flip-inner">
             <span class="face front">
-              <span class="art"><img src="../assets/study/week4-41-consumer.png" alt=""></span>
-              <span class="fc-claim">Consumer-oriented</span>
-              <span class="flip-cta">Tap to open →</span>
+              <span class="art"><img src="../assets/study/week4-41-desk-consumer.jpg" alt="Field research notebook with handwritten notes" width="900" height="600" loading="lazy"></span>
+              <span class="desk-veil">
+                <span class="desk-tag">Desk 02 · Field notes</span>
+                <span class="fc-claim">Consumer-oriented</span>
+                <span class="flip-cta">Open the notebook →</span>
+              </span>
             </span>
             <span class="face back">
               <b>Consumer-oriented</b>
@@ -2380,12 +2471,15 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
             </span>
           </span>
         </button>
-        <button class="flip-card" type="button" aria-pressed="false">
+        <button class="flip-card desk-target" type="button" aria-pressed="false">
           <span class="flip-inner">
             <span class="face front">
-              <span class="art"><img src="../assets/study/week4-41-target.png" alt=""></span>
-              <span class="fc-claim">Target-market</span>
-              <span class="flip-cta">Tap to open →</span>
+              <span class="art"><img src="../assets/study/week4-41-desk-target.jpg" alt="Blueprint audience map on a drafting table" width="900" height="600" loading="lazy"></span>
+              <span class="desk-veil">
+                <span class="desk-tag">Desk 03 · Blueprint</span>
+                <span class="fc-claim">Target-market</span>
+                <span class="flip-cta">Open the blueprint →</span>
+              </span>
             </span>
             <span class="face back">
               <b>Target-market</b>
