@@ -2001,13 +2001,56 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
 
 /* 4.1.1 path teach — dense plaques, not full flipset height */
 
-.path-map{list-style:none;margin:0 0 10px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.path-map li{display:flex;flex-direction:column;gap:2px;padding:8px 10px;background:rgba(251,246,234,.92);
-  border:1px solid rgba(43,33,26,.28);border-left:4px solid var(--oxblood)}
-.path-map b{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-  font-size:.78rem;color:var(--oxblood)}
-.path-map span{font-size:.78rem;line-height:1.3;color:var(--ink-2)}
-@media(max-width:560px){.path-map{grid-template-columns:1fr}}
+/* Floor-plan hallway strip — teach-only, not clickable */
+.floor-plan{margin:0 0 10px;padding:0;border:0}
+.floor-plan-cap{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;
+  margin:0 0 6px;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.62rem;color:var(--camel)}
+.floor-plan-cap em{font-style:normal;color:var(--oxblood);letter-spacing:.08em}
+.floor-hall{
+  display:flex;align-items:stretch;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  padding:10px 8px 8px;border:2px solid var(--ink);
+  background:
+    linear-gradient(180deg,rgba(43,33,26,.06),transparent 28%),
+    repeating-linear-gradient(90deg,rgba(43,33,26,.05) 0 1px,transparent 1px 18px),
+    linear-gradient(180deg,#EDE4CF 0%,#E2D7BC 72%,#C9B896 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.floor-door{
+  flex:1 1 0;min-width:4.6rem;max-width:7.2rem;display:flex;flex-direction:column;align-items:center;
+  gap:4px;padding:0 3px;pointer-events:none;user-select:none}
+.floor-door .fd-frame{
+  width:100%;aspect-ratio:3/4;max-height:88px;display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-start;padding:6px 5px 8px;box-sizing:border-box;
+  background:linear-gradient(180deg,#F8F1DE,#E8DFC4);
+  border:2px solid #2B211A;border-radius:2px 2px 0 0;
+  box-shadow:inset 0 0 0 1px rgba(184,144,74,.45),3px 3px 0 rgba(43,33,26,.18);
+  position:relative}
+.floor-door .fd-frame::after{
+  content:"";position:absolute;right:5px;top:42%;width:5px;height:5px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#E8C76A,#8A6A28);box-shadow:0 0 0 1px rgba(43,33,26,.35)}
+.floor-door .fd-n{
+  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.14em;font-size:.58rem;
+  color:#FBF6EA;background:linear-gradient(180deg,#B8904A,#8A6A28);padding:2px 6px;border:1px solid #2B211A;
+  margin-bottom:4px}
+.floor-door .fd-name{
+  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  font-size:clamp(.58rem,.95vw,.72rem);line-height:1.15;text-align:center;color:var(--ink)}
+.floor-door .fd-sill{
+  width:108%;height:4px;background:#2B211A;border-radius:0 0 1px 1px;margin-top:-1px}
+.floor-arrow{
+  flex:0 0 auto;align-self:center;width:14px;min-width:14px;height:14px;margin:0 -1px;
+  background:var(--oxblood);clip-path:polygon(0 20%,60% 20%,60% 0,100% 50%,60% 100%,60% 80%,0 80%);
+  opacity:.85}
+.floor-door.is-start .fd-frame{border-color:var(--oxblood);box-shadow:inset 0 0 0 1px rgba(122,46,46,.35),3px 3px 0 rgba(43,33,26,.18)}
+.floor-door.is-end .fd-frame{
+  background:linear-gradient(180deg,#F3E8D0,#D9C9A4)}
+@media(max-width:560px){
+  .floor-hall{padding:8px 6px 6px}
+  .floor-door{min-width:4.1rem}
+  .floor-door .fd-frame{max-height:76px}
+  .floor-arrow{width:10px;min-width:10px;height:10px}
+}
 
 .flipset.path-doors{
   grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 8px;perspective:900px}
@@ -2184,15 +2227,41 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
         <span class="act-label">Hallway lesson</span>
         <h3>Learn the order — then we quiz it</h3>
       </div>
-      <p class="act-how path-how">This is teaching, not a test. Open each door in sequence. The backs say what that stop decides.</p>
-      <ol class="path-map" aria-label="Figure 4.1 order">
-        <li><b>1. Research</b><span>Product, buyer, market — before copy</span></li>
-        <li><b>2. Segments</b><span>Who gets a separate campaign</span></li>
-        <li><b>3. Position</b><span>How the brand sits vs. the set</span></li>
-        <li><b>4. Objectives</b><span>What communications must move</span></li>
-        <li><b>5. Budget</b><span>How the money is set and timed</span></li>
-        <li><b>6. International</b><span>Same hallway, border-aware choices</span></li>
-      </ol>
+      <p class="act-how path-how">This is teaching, not a test. Read the floor plan left to right, then open each door below.</p>
+      <figure class="floor-plan">
+        <figcaption class="floor-plan-cap"><em>Fig. 4.1</em><span>Sam's floor · walk left → right</span></figcaption>
+        <div class="floor-hall" role="img" aria-label="Hallway map in order: Research, Segments, Position, Objectives, Budget, International">
+          <div class="floor-door is-start">
+            <div class="fd-frame"><span class="fd-n">01</span><span class="fd-name">Research</span></div>
+            <span class="fd-sill" aria-hidden="true"></span>
+          </div>
+          <span class="floor-arrow" aria-hidden="true"></span>
+          <div class="floor-door">
+            <div class="fd-frame"><span class="fd-n">02</span><span class="fd-name">Segments</span></div>
+            <span class="fd-sill" aria-hidden="true"></span>
+          </div>
+          <span class="floor-arrow" aria-hidden="true"></span>
+          <div class="floor-door">
+            <div class="fd-frame"><span class="fd-n">03</span><span class="fd-name">Position</span></div>
+            <span class="fd-sill" aria-hidden="true"></span>
+          </div>
+          <span class="floor-arrow" aria-hidden="true"></span>
+          <div class="floor-door">
+            <div class="fd-frame"><span class="fd-n">04</span><span class="fd-name">Objectives</span></div>
+            <span class="fd-sill" aria-hidden="true"></span>
+          </div>
+          <span class="floor-arrow" aria-hidden="true"></span>
+          <div class="floor-door">
+            <div class="fd-frame"><span class="fd-n">05</span><span class="fd-name">Budget</span></div>
+            <span class="fd-sill" aria-hidden="true"></span>
+          </div>
+          <span class="floor-arrow" aria-hidden="true"></span>
+          <div class="floor-door is-end">
+            <div class="fd-frame"><span class="fd-n">06</span><span class="fd-name">International</span></div>
+            <span class="fd-sill" aria-hidden="true"></span>
+          </div>
+        </div>
+      </figure>
       <p class="flipset-count path-count">0 of 6 opened</p>
       <div class="flipset path-doors flipset-teach" data-activity="flipset" data-points="6">
         <button class="flip-card" type="button" aria-pressed="false">
