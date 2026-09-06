@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 4 · 1978 — Sterling &amp; Vale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* 1978 agency: smoke, oxblood, camel, chrome — not avocado */
+  --smoke:#0E1012;--smoke-2:#171A1E;--ink:#E8E2D6;--ink-dim:rgba(232,226,214,.72);
+  --oxblood:#7A2E2E;--oxblood-deep:#4A1A1A;--rust:#B85A32;
+  --camel:#C6A46A;--camel-dim:#8E7344;--chrome:#C5CBD0;--chrome-dim:#7A848C;
+  --navy:#1A2433;--paper:#EDE6D6;--ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Barlow',system-ui,sans-serif;color:var(--ink);background:var(--smoke);
+  line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--camel);outline-offset:3px}
+.skip-link{position:absolute;left:-999px;top:0;z-index:500;background:var(--oxblood);color:#fff;padding:10px 16px;font-weight:600}
+.skip-link:focus{left:0}
+
+/* —— thin 1978 chrome rail —— */
+.rail{
+  position:fixed;top:0;left:0;right:0;z-index:40;height:48px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 22px;
+  background:linear-gradient(180deg,rgba(197,203,208,.14),transparent 70%),rgba(14,16,18,.72);
+  backdrop-filter:blur(10px);border-bottom:1px solid rgba(197,203,208,.22)
+}
+.rail .mark{
+  font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.2em;font-size:.72rem;
+  color:var(--camel);text-transform:uppercase
+}
+.rail .era{font-family:'Libre Baskerville',Georgia,serif;font-style:italic;font-size:.82rem;color:var(--ink-dim);max-width:min(42vw,280px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rail .era.bad{color:#f0b3a4;font-style:normal;font-family:'Barlow',sans-serif;font-size:.72rem}
+.rail .era a{color:inherit;text-decoration:underline}
+.rail .back{
+  font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-dim);border:1px solid rgba(197,203,208,.28);padding:8px 12px
+}
+.rail .back:hover{color:var(--camel);border-color:var(--camel)}
+
+/* —— HERO: one composition —— */
+.hero{
+  position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;
+  padding:0 0 72px;overflow:hidden;isolation:isolate
+}
+.hero-still{
+  position:absolute;inset:0;z-index:0;
+  background:
+    linear-gradient(180deg,rgba(14,16,18,.25) 0%,rgba(14,16,18,.15) 35%,rgba(14,16,18,.78) 72%,rgba(14,16,18,.96) 100%),
+    url('../assets/study/week4-hero-1978.png') center 40%/cover no-repeat,
+    var(--smoke);
+  transform:scale(1.04);animation:heroDrift 18s var(--ease) infinite alternate
+}
+@keyframes heroDrift{from{transform:scale(1.04) translate3d(0,0,0)}to{transform:scale(1.08) translate3d(-1.2%,-0.8%,0)}}
+.hero-grain{
+  position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.18;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+}
+.hero-inner{
+  position:relative;z-index:2;width:min(1080px,92vw);margin:0 auto;padding-top:88px
+}
+.hero-brand{
+  font-family:'Bebas Neue',Impact,sans-serif;font-weight:400;
+  font-size:clamp(3.6rem,12vw,8.5rem);line-height:.88;letter-spacing:.02em;
+  color:#F3EEE3;text-shadow:0 4px 40px rgba(0,0,0,.55);margin:0 0 10px;max-width:14ch
+}
+.hero-brand span{display:block;color:var(--camel)}
+.hero-line{
+  font-family:'Libre Baskerville',Georgia,serif;font-size:clamp(1.05rem,2.2vw,1.35rem);
+  color:var(--ink-dim);max-width:34ch;margin:0 0 28px;line-height:1.45
+}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cta-primary{
+  font-family:'Oswald',sans-serif;letter-spacing:.14em;text-transform:uppercase;font-size:.82rem;font-weight:600;
+  background:linear-gradient(180deg,#C6A46A,#8E7344);color:#1A1208;
+  border:1px solid #5A4420;padding:16px 22px;box-shadow:0 10px 30px rgba(0,0,0,.45)
+}
+.cta-primary:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.cta-ghost{
+  font-family:'Oswald',sans-serif;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;
+  color:var(--ink-dim);border-bottom:1px solid rgba(198,164,106,.45);padding:8px 2px
+}
+.cta-ghost:hover{color:var(--camel)}
+.hero-year{
+  position:absolute;right:0;bottom:8px;z-index:2;
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,14vw,9rem);line-height:1;
+  color:rgba(243,238,227,.08);letter-spacing:.08em;pointer-events:none;user-select:none
+}
+
+/* —— Sam strip —— */
+.sam-strip{
+  position:relative;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;
+  width:min(920px,92vw);margin:-36px auto 0;padding:18px 20px;
+  background:rgba(26,36,51,.82);border:1px solid rgba(197,203,208,.22);
+  box-shadow:0 20px 50px rgba(0,0,0,.45);backdrop-filter:blur(8px);z-index:5
+}
+.sam-strip img{
+  width:72px;height:72px;object-fit:cover;border-radius:50%;
+  border:2px solid var(--camel);box-shadow:0 0 0 4px rgba(122,46,46,.35)
+}
+.sam-strip .kicker{
+  font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--camel);margin:0 0 4px
+}
+.sam-strip p{margin:0;font-family:'Libre Baskerville',Georgia,serif;font-size:.95rem;color:var(--ink-dim);line-height:1.5}
+.sam-strip b{color:#F3EEE3;font-weight:700}
+
+/* —— Process rail (not LO cards) —— */
+.floor{
+  width:min(1080px,92vw);margin:0 auto;padding:72px 0 40px
+}
+.section-kicker{
+  font-family:'Oswald',sans-serif;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--camel);margin:0 0 10px
+}
+.section-title{
+  font-family:'Libre Baskerville',Georgia,serif;font-size:clamp(1.6rem,3.5vw,2.2rem);
+  color:#F3EEE3;font-weight:400;margin:0 0 12px;max-width:22ch;line-height:1.2
+}
+.section-lede{
+  font-size:1rem;color:var(--ink-dim);max-width:54ch;margin:0 0 28px
+}
+.process{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:0;
+  border-top:1px solid rgba(197,203,208,.25);border-bottom:1px solid rgba(197,203,208,.25);
+  overflow:hidden
+}
+.process .step{
+  padding:22px 14px 20px;border-right:1px solid rgba(197,203,208,.18);
+  background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)
+}
+.process .step:last-child{border-right:0}
+.process .n{
+  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--oxblood);letter-spacing:.04em;display:block;margin-bottom:8px
+}
+.process .t{
+  font-family:'Oswald',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:#F3EEE3;margin:0 0 6px;line-height:1.25
+}
+.process .d{font-size:.78rem;color:var(--ink-dim);margin:0;line-height:1.35}
+
+/* —— Doors (destinations) —— */
+.doors-block{padding:48px 0 80px;position:relative}
+.doors-still{
+  position:absolute;inset:0;z-index:0;opacity:.35;
+  background:
+    linear-gradient(180deg,var(--smoke) 0%,transparent 18%,rgba(14,16,18,.55) 55%,var(--smoke) 100%),
+    url('../assets/study/week4-doors-1978.png') center/cover no-repeat
+}
+.doors-inner{position:relative;z-index:1;width:min(1080px,92vw);margin:0 auto}
+.doors{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px
+}
+.door{
+  display:flex;flex-direction:column;justify-content:flex-end;min-height:220px;padding:18px 16px;
+  background:
+    linear-gradient(180deg,transparent 20%,rgba(14,16,18,.92) 100%),
+    linear-gradient(145deg,rgba(197,203,208,.12),rgba(26,36,51,.55));
+  border:1px solid rgba(197,203,208,.28);position:relative;overflow:hidden;
+  transition:transform .2s var(--ease),border-color .2s,box-shadow .2s
+}
+.door::before{
+  content:"";position:absolute;top:14px;right:14px;width:8px;height:8px;border-radius:50%;
+  background:var(--chrome-dim);box-shadow:inset 0 1px 0 rgba(255,255,255,.35)
+}
+.door .slot{
+  font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--camel);margin:0 0 8px
+}
+.door h3{
+  font-family:'Libre Baskerville',Georgia,serif;font-size:1.35rem;font-weight:400;
+  color:#F3EEE3;margin:0 0 8px
+}
+.door p{font-size:.86rem;color:var(--ink-dim);margin:0 0 16px;line-height:1.4;flex:1}
+.door .state{
+  font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(232,226,214,.45)
+}
+.door.live{cursor:pointer}
+.door.live:hover{
+  transform:translateY(-4px);border-color:var(--camel);
+  box-shadow:0 16px 40px rgba(0,0,0,.4)
+}
+.door.live .state{color:var(--camel)}
+.door.soon{opacity:.78;cursor:default}
+.door.soon::after{
+  content:"";position:absolute;inset:0;background:repeating-linear-gradient(
+    -32deg,transparent 0 10px,rgba(14,16,18,.12) 10px 12px
+  );pointer-events:none
+}
+
+.foot{
+  border-top:1px solid rgba(197,203,208,.18);padding:22px;
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;
+  color:var(--ink-dim);font-size:.82rem
+}
+.foot a{color:var(--camel)}
+.foot a:hover{text-decoration:underline}
+
+@media(max-width:900px){
+  .process{grid-template-columns:repeat(3,1fr)}
+  .process .step:nth-child(3){border-right:0}
+  .process .step:nth-child(n+4){border-top:1px solid rgba(197,203,208,.18)}
+  .doors{grid-template-columns:1fr 1fr}
+  .hero-year{opacity:.5}
+}
+@media(max-width:560px){
+  .process{grid-template-columns:1fr 1fr}
+  .doors{grid-template-columns:1fr}
+  .sam-strip{grid-template-columns:1fr;text-align:left}
+  .hero{padding-bottom:48px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-still{animation:none}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#floor">Skip to floor</a>
+
+<header class="rail">
+  <a class="back" href="../index.html">← Chapters</a>
+  <span class="mark">Sterling &amp; Vale</span>
+  <span class="era" id="authLine">Chapter 4 · 1978</span>
+</header>
+
+<section class="hero" aria-label="Week 4 opening">
+  <div class="hero-still" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <h1 class="hero-brand">Sterling <span>&amp; Vale</span></h1>
+    <p class="hero-line">The IMC planning process — research to budget, under new management.</p>
+    <div class="hero-cta">
+      <a class="cta-primary" href="#floor">Enter the floor</a>
+    </div>
+  </div>
+  <div class="hero-year" aria-hidden="true">1978</div>
+</section>
+
+<aside class="sam-strip" aria-label="Sam briefing">
+  <img src="../assets/characters/sam-portrait.png" alt="Sam">
+  <div>
+    <p class="kicker">Your new boss · Sam</p>
+    <p><b>Welcome to 1978.</b> Dana’s stamps are in the drawer. Planning starts with research — then segment, position, objectives, budget, and the international door. Don’t skip a step.</p>
+  </div>
+</aside>
+
+<main id="floor" class="floor">
+  <p class="section-kicker">Chapter 4 · The IMC Planning Process</p>
+  <h2 class="section-title">Every planner walks the same corridor.</h2>
+  <p class="section-lede">Communications research feeds the target. The target feeds positioning. Positioning feeds objectives. Objectives feed the budget — and the mix that spends it. International work runs the same hallway with more doors.</p>
+
+  <div class="process" aria-label="IMC planning sequence">
+    <div class="step"><span class="n">01</span><p class="t">Research</p><p class="d">Product, consumer, target — before a line of copy.</p></div>
+    <div class="step"><span class="n">02</span><p class="t">Segments</p><p class="d">Who’s worth a separate campaign — consumer and B2B.</p></div>
+    <div class="step"><span class="n">03</span><p class="t">Position</p><p class="d">How the brand sits in the mind vs. the set.</p></div>
+    <div class="step"><span class="n">04</span><p class="t">Objectives</p><p class="d">What communications must move, measurably.</p></div>
+    <div class="step"><span class="n">05</span><p class="t">Budget</p><p class="d">How the money is set — and why.</p></div>
+    <div class="step"><span class="n">06</span><p class="t">International</p><p class="d">Same process, border-aware choices.</p></div>
+  </div>
+</main>
+
+<section class="doors-block" id="doors" aria-labelledby="doors-title">
+  <div class="doors-still" aria-hidden="true"></div>
+  <div class="doors-inner">
+    <p class="section-kicker">The floor</p>
+    <h2 class="section-title" id="doors-title">Four doors. Same year.</h2>
+    <p class="section-lede" style="margin-top:-8px;margin-bottom:18px">Replay is open for practice. Playbook, Sim, and Study land next — none of the floor doors are graded. Graded work is in <a href="https://iowacconline.instructure.com/courses/132513" target="_blank" rel="noopener noreferrer">Canvas</a>.</p>
+    <div class="doors">
+      <a class="door live" href="replay.html">
+        <span class="slot">Step 01</span>
+        <h3>Replay</h3>
+        <p>Full lecture on the IMC planning process — research through international.</p>
+        <span class="state">Open</span>
+      </a>
+      <div class="door soon" aria-disabled="true">
+        <span class="slot">Step 02</span>
+        <h3>Playbook</h3>
+        <p>Terms, flash, and speed for segments, positioning, objectives, budget.</p>
+        <span class="state">On the floor soon</span>
+      </div>
+      <div class="door soon" aria-disabled="true">
+        <span class="slot">Step 03</span>
+        <h3>Sim</h3>
+        <p>Live account under Sam — plan the campaign or live with the miss.</p>
+        <span class="state">On the floor soon</span>
+      </div>
+      <div class="door soon" aria-disabled="true">
+        <span class="slot">Step 04</span>
+        <h3>Study</h3>
+        <p>Practice desks for research, segments, position, and budget calls.</p>
+        <span class="state">On the floor soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>Sterling &amp; Vale · MKT 150 · Chapter 4 · The IMC Planning Process</span>
+  <span><a href="../week3/index.html">← Week 3</a> · <a href="../week5/index.html">Week 5 →</a></span>
+</footer>
+<script type="module">
+  import { paintAuthLine } from '../shared/sv-auth.js';
+  paintAuthLine(document.getElementById('authLine'));
+</script>
+</body>
+</html>
