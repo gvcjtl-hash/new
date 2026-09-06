@@ -1999,6 +1999,48 @@ body:has(.step.step-tight.active) .lede-card .lo{
 body:has(.step.step-tight.active) .lede-card .screen-title{margin-top:8px;padding-top:8px;font-size:1rem}
 body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.55rem)}
 
+/* 4.1.1 path teach — dense plaques, not full flipset height */
+.flipset.path-doors{
+  grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 8px;perspective:900px}
+.flipset.path-doors .flip-card,
+.flipset.path-doors .flip-inner{min-height:112px}
+.flipset.path-doors .flip-card .face{padding:10px 10px 8px;gap:4px;border-radius:2px}
+.flipset.path-doors .flip-card .face.front{
+  background:linear-gradient(180deg,#F7F0DE,#E8DFC8);justify-content:center}
+.flipset.path-doors .flip-card .face.back{
+  justify-content:flex-start;padding:10px 11px;overflow:auto;
+  background:#FFFaf0;border-left:4px solid var(--oxblood)}
+.flipset.path-doors .path-n{
+  display:block;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.14em;
+  font-size:.62rem;color:var(--oxblood);margin-bottom:2px}
+.flipset.path-doors .fc-claim{
+  display:block;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;font-size:.95rem;color:var(--ink);margin:0}
+.flipset.path-doors .flip-cta{
+  display:block;margin-top:4px;font-family:'Oswald',sans-serif;font-size:.62rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--camel)}
+.flipset.path-doors .face.back b{
+  font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  font-size:.78rem;color:var(--oxblood)}
+.flipset.path-doors .face.back p{margin:2px 0 0;font-size:.78rem;line-height:1.3;color:var(--ink-2)}
+.step-tight .path-how{margin:0 0 6px;font-size:.82rem}
+.step-tight .path-count{margin:0 0 6px}
+.step-tight .teach-payoff,
+.step-tight .teach-payoff{
+  margin-top:8px;padding:8px 10px;font-size:.82rem;line-height:1.35;
+  background:rgba(61,107,90,.12);border:1px solid rgba(61,107,90,.35)}
+.sam-line.sam-solo{display:flex;gap:12px;align-items:flex-start;margin:0 0 10px;
+  padding:10px 12px;background:rgba(251,246,234,.92);border:2px solid var(--ink);border-left:5px solid var(--oxblood)}
+.sam-line.sam-solo .av{flex:0 0 44px;width:44px;height:44px;border-radius:50%;overflow:hidden;border:2px solid var(--camel)}
+.sam-line.sam-solo .av img{width:100%;height:100%;object-fit:cover;display:block}
+.sam-line.sam-solo p{margin:0;font-family:'Libre Baskerville',Georgia,serif;font-size:.88rem;line-height:1.4;font-style:italic;color:var(--ink-2)}
+@media(max-width:720px){
+  .flipset.path-doors{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .flipset.path-doors{grid-template-columns:1fr;max-width:320px;margin-left:auto;margin-right:auto}
+}
+
 
 /* IMC process ribbon — recurring Figure 4.1 anchor */
 .imc-ribbon{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;
@@ -2136,7 +2178,65 @@ body:has(.step.step-tight.active) .lede-card h1{font-size:clamp(1.2rem,2.4vw,1.5
       <span>Budget</span><span class="rb-arrow" aria-hidden="true">→</span>
       <span>International</span>
     </div>
-    <p class="fig-kicker">Figure 4.1 · rebuild the hallway, research first.</p>
+    <p class="fig-kicker">Figure 4.1 · every planner walks this hallway. Open each door below — in order — before you rebuild it from memory.</p>
+
+    <div class="leather leather-tight">
+      <div class="act-head">
+        <span class="act-label">Hallway walk</span>
+        <h3>Learn the six doors</h3>
+      </div>
+      <p class="act-how path-how">Tap each plaque. Front = the stop. Back = what that stop decides. Open all six.</p>
+      <p class="flipset-count path-count">0 of 6 opened</p>
+      <div class="flipset path-doors flipset-teach" data-activity="flipset" data-points="6">
+        <button class="flip-card" type="button" aria-pressed="false">
+          <span class="flip-inner">
+            <span class="face front"><span class="path-n">01</span><span class="fc-claim">Research</span><span class="flip-cta">Open →</span></span>
+            <span class="face back"><b>Research</b><p>What is true about the product, the buyer, and the market — before a line of copy.</p></span>
+          </span>
+        </button>
+        <button class="flip-card" type="button" aria-pressed="false">
+          <span class="flip-inner">
+            <span class="face front"><span class="path-n">02</span><span class="fc-claim">Segments</span><span class="flip-cta">Open →</span></span>
+            <span class="face back"><b>Segments</b><p>Who is worth a separate campaign — consumer and B2B cuts that can actually be reached.</p></span>
+          </span>
+        </button>
+        <button class="flip-card" type="button" aria-pressed="false">
+          <span class="flip-inner">
+            <span class="face front"><span class="path-n">03</span><span class="fc-claim">Position</span><span class="flip-cta">Open →</span></span>
+            <span class="face back"><b>Position</b><p>How the brand should sit in the mind versus the competitive set.</p></span>
+          </span>
+        </button>
+        <button class="flip-card" type="button" aria-pressed="false">
+          <span class="flip-inner">
+            <span class="face front"><span class="path-n">04</span><span class="fc-claim">Objectives</span><span class="flip-cta">Open →</span></span>
+            <span class="face back"><b>Objectives</b><p>What communications must move, with a measurable benchmark — not a vague wish.</p></span>
+          </span>
+        </button>
+        <button class="flip-card" type="button" aria-pressed="false">
+          <span class="flip-inner">
+            <span class="face front"><span class="path-n">05</span><span class="fc-claim">Budget</span><span class="flip-cta">Open →</span></span>
+            <span class="face back"><b>Budget</b><p>How the money is set and scheduled so the plan can still breathe when sales dip.</p></span>
+          </span>
+        </button>
+        <button class="flip-card" type="button" aria-pressed="false">
+          <span class="flip-inner">
+            <span class="face front"><span class="path-n">06</span><span class="fc-claim">International</span><span class="flip-cta">Open →</span></span>
+            <span class="face back"><b>International</b><p>Same hallway abroad — standardize or adapt so the word still sells the steak.</p></span>
+          </span>
+        </button>
+      </div>
+      <div class="teach-payoff" data-flipset-payoff hidden>
+        <b>Path locked in.</b> Research → Segments → Position → Objectives → Budget → International. Next screen: rebuild it from memory.
+      </div>
+    </div>
+  </div>
+
+  <div class="step step-tight" data-screen="Rebuild the hallway" data-gate>
+    <div class="sam-line sam-solo">
+      <span class="av"><img src="../assets/characters/sam-portrait.png" alt="Sam" onerror="this.parentElement.style.display='none'"></span>
+      <p>"You walked it. Now rebuild it cold — research first, international last. No peeking at the plaques."</p>
+    </div>
+    <p class="key-chip"><b>From memory.</b> Tap the six doors in Figure 4.1 order.</p>
 
     <div class="leather leather-tight">
       <div class="act-head">
